@@ -12,19 +12,15 @@ require_once '../../classes/exam.class.php';
   if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     
+    $id   = $_POST["id"];
+    $marks   = $_POST["marks"];
 
-    $rank_type   = $_POST["rank_type"];
-
-    $min_marks = $_POST["min_marks"];
-
-    $max_marks  = $_POST["max_mark"];
-
-    $result_type  = $_POST["result_type"];
+    $type = $_POST["type"];
 
     $session  = $_POST["session"];
 
 
-    $result      = $classes->percentageType($rank_type, $min_marks, $max_marks, $result_type, $session);
+    $result      = $classes->updatepassMarks($type, $marks, $session, $id);
 
     
 

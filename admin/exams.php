@@ -22,7 +22,7 @@ $Admin              = new Admin();
 $Classes            = new Classes();
 $InstituteDetails   = new InstituteDetails();
 $Examination        = new Examination();
-$Utility                = new Utility();
+$Utility            = new Utility();
 
 
 $_SESSION['current-url'] = $Utility->currentUrl();
@@ -33,7 +33,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 }
 
 
-$result=$InstituteDetails->instituteShow();
+$results=$InstituteDetails->instituteShow();
 
 
 ?>
@@ -181,7 +181,7 @@ $result=$InstituteDetails->instituteShow();
 
                                 <?php
                                
-                                foreach($result as $row){   
+                                foreach($results as $row){   
                                 ?>
                                 <div class="row p-0 m-0 mb-3">
                                     <label for="inputText" class="col-sm-4 col-form-label">Session :</label>
@@ -212,201 +212,117 @@ $result=$InstituteDetails->instituteShow();
 
 
 
-        <section class="section dashboard" style="min-height: 62vh;">
+        <section class="section dashboard">
             <div class="row">
-                <div class="col-lg-6">
-                    <div class="card recent-sales overflow-auto">
-                        <div class="card-body">
-                            <h5 class="card-title mb-0 mt-0">Examinations </h5>
-                            <table class="table datatable">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">SL. NO.</th>
-                                        <th scope="col">Examinations</th>
-                                        <th scope="col"> Class Name</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $sl = 1;
-                                        $exams = $Examination->showExams();
-                                        foreach($exams as $row){
-                                    ?>
-                                    <tr>
-                                        <!-- <th scope="row"><?php    echo $row['id']  ?></th> -->
-                                        <th><?php echo $sl; ?></th>
-                                        <td><?php echo $row['exam_name']  ?></td>
-                                        <td><?php echo $row['class_name']  ?></td>
-                                        <td>
-                                            <i class="bi bi-eye-fill pe-2" data-bs-toggle="modal"
-                                                data-bs-target="#examFormModal" id="<?php echo $row['id']  ?>"
-                                                onclick="examShow(this.id);"></i>
-                                            <a href='ajax/exam-delete.ajax.php?id=<?php echo $row['id']  ?>'>
-                                                <i class="bi bi-trash" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteexamFormModal"
-                                                    onclick="return deleteexamForm();"></i></a>
-                                        </td>
-                                    </tr>
-                                    <?php
-                                    $sl++;
-                                        }
-                                    ?>
-                                </tbody>
-                            </table>
-                            <!-- End Table with stripped rows -->
+            <div class="col-lg-6">
+                    <div class="card m-0 ">
+                        <div class="card-body p-3">
+                        <h5 class="card-title">add Subject Pass marks</h5>
+                        <?php
+                           $type = "Subject Wise";
+                                $result=$Examination->passMarkshow($type);
+                                foreach($result as $row){   
+                                ?>
+                                    <form method="POST" action="./ajax/percentage.action.php">
+                                        <div class="row mb-3">
+                                            <label for="inputText" class="col-sm-4 col-form-label">Subject Pass Marks</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" maxlength="55" class="form-control"
+                                                    value="<?php echo $row['marks']  ?>" name="marks" required>
+                                                    <input type="hidden" maxlength="55" class="form-control"
+                                                    value="<?php echo $row['id']  ?>" name="id" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                           
+                                            <div class="col-sm-8">
+                                                <input type="hidden" maxlength="55" class="form-control"
+                                                    value="<?php echo $row['type']  ?>" name="type" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <?php
+                               
+                               foreach($results as $row){   
+                               ?>
+                               <div class="row p-0 m-0 mb-3">
+                               
+                                   <div class="col-sm-8">
+                                       <input type="hidden" maxlength="55" class="form-control"
+                                           value="<?php echo $row['session']  ?>" name="session" readonly required>
+                                   </div>
+                               </div><?php  } ?>
+
+                                        <div class="row mb-3">
+                                            <div class="col-sm-12  d-flex justify-content-center align-items-center">
+                                                <button class="btn btn-primary me-md-2" name="submitdata"
+                                                    type="submit">Update</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- End Session -->
+                                    <?php  } ?>
                         </div>
                     </div>
-                </div>
+                    </div>
                 <div class="col-lg-6">
                     <div class="card m-0 ">
                         <div class="card-body p-3">
-                        <h5 class="card-title">add marks rang and Grade Type</h5>
-                            <form method="POST" action="./ajax/percentage.action.php" class="row needs-validation  m-0"
-                                novalidate>
-                                <div class="row m-0 p-0 mb-3">
-                                    <label class="col-sm-4 col-form-label">type :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-select" aria-label="Default select example"
-                                            name="rank_type" required>
-                                            <option selected disabled value>Select Type</option>
-
-                                            <option value="subject ranking">Subject Wise</option>
-
-                                            <option value="total ranking">Overall Marks Wise</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Min rang :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control" name="min_marks"
-                                            required>
-                                    </div>
-                                </div>
-
-                                <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Max rang :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control" name="max_mark"
-                                            required>
-                                    </div>
-                                </div>
-
-
-                                <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Grade Type :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control" name="result_type"
-                                            required>
-                                    </div>
-                                </div>
-
-                                <?php
-                               
+                        <h5 class="card-title">add Overall Pass Marks</h5>
+                        <?php
+                         $types = "Overall Wise";
+                                $result=$Examination->passMarkshow($types);
                                 foreach($result as $row){   
                                 ?>
-                                <div class="row p-0 m-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Session :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control"
-                                            value="<?php echo $row['session']  ?>" name="session" readonly required>
-                                    </div>
-                                </div><?php  } ?>
+                                    <form method="POST" action="./ajax/percentage.action.php">
+                                    <div class="row mb-3">
+                                            <label for="inputText" class="col-sm-4 col-form-label">Overall Pass Marks</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" maxlength="55" class="form-control"
+                                                    value="<?php echo $row['marks']  ?>" name="marks" required>
+                                                    <input type="hidden" maxlength="55" class="form-control"
+                                                    value="<?php echo $row['id']  ?>" name="id" required>
+                                            </div>
+                                        </div>
 
-                                <div class="row mb-3 p-0 m-0">
-                                    <div class="col-sm-12  d-flex justify-content-center align-items-center">
-                                        <button type="submit" name="submitdata" class="btn btn-primary">Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
+                                        <div class="row mb-3">
+                                           
+                                            <div class="col-sm-8">
+                                                <input type="hidden" maxlength="55" class="form-control"
+                                                    value="<?php echo $row['type']  ?>" name="type" required>
+                                            </div>
+                                        </div>
+                                     
+
+                                        <?php
+                               
+                               foreach($results as $row){   
+                               ?>
+                               <div class="row p-0 m-0 mb-3">
+                                   <div class="col-sm-8">
+                                       <input type="hidden" maxlength="55" class="form-control"
+                                           value="<?php echo $row['session']  ?>" name="session" required>
+                                   </div>
+                               </div><?php  } ?>
+
+                                        <div class="row mb-3">
+                                            <div class="col-sm-12  d-flex justify-content-center align-items-center">
+                                                <button class="btn btn-primary me-md-2" name="Updatedata"
+                                                    type="submit">Update</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <!-- End Session -->
+                                    <?php
+                                    }            
+                                    ?>
                         </div>
                     </div>
-                </div>
-            </div>
-
-
-
-
-
-            
-            <div class="col-lg-6">
-                        <div class="card m-0 ">
-                        <div class="card-body p-3">
-                        <h5 class="card-title">pass marks Percentage wise</h5>
-                            <form method="POST" action="./ajax/percentage.action.php" class="row needs-validation  m-0"
-                                novalidate>
-                                <div class="row m-0 p-0 mb-3">
-                                    <label class="col-sm-4 col-form-label">Rank Type :</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-select" aria-label="Default select example"
-                                            name="rank_type" required>
-                                            <option selected disabled value>Select Type</option>
-
-                                            <option value="subject ranking">subject Wise</option>
-
-                                            <option value="total ranking">overall marks Wise</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Min rang :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control" name="min_marks"
-                                            required>
-                                    </div>
-                                </div>
-
-                                <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Max rang :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control" name="max_mark"
-                                            required>
-                                    </div>
-                                </div>
-
-
-                                <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Grade Type :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control" name="result_type"
-                                            required>
-                                    </div>
-                                </div>
-
-                                <?php
-                               
-                                foreach($result as $row){   
-                                ?>
-                                <div class="row p-0 m-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Session :</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control"
-                                            value="<?php echo $row['session']  ?>" name="session" readonly required>
-                                    </div>
-                                </div><?php  } ?>
-
-                                <div class="row mb-3 p-0 m-0">
-                                    <div class="col-sm-12  d-flex justify-content-center align-items-center">
-                                        <button type="submit" name="submitdata" class="btn btn-primary">Submit
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        </div>
-                        </div>
+                    </div>
+                    </div>
+        
         </section>
-
 
 
     </main><!-- End #main -->

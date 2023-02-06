@@ -123,6 +123,32 @@ class Examination extends DatabaseConnection{
         
         
 
+
+
+             // updatesession Academic Session
+     function updatepassMarks($type, $marks, $session, $id){
+
+        $sql = "UPDATE `pass_marks` SET `type` = '$type', `marks` = '$marks', `session` = '$session' where `id` = '$id'";
+        $result = $this->conn->query($sql);
+        return $result;
+
+    }//enf
+
+
+      // display start
+      function passMarkshow($type){
+
+        $data = array();
+        $sql = "SELECT * FROM `pass_marks` WHERE `type` = '$type'";
+        $res   = $this->conn->query($sql);
+        if ($res->num_rows != 0) {
+            while($row  = $res->fetch_array()){    
+                $data[]	= $row;
+            }
+        }
+        return $data;
+
+    }
         
 
 
