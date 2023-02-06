@@ -1,0 +1,360 @@
+/* ----------------------------------------------- */
+/* CAREERS PAGE CSS FOR FOOTER'S LIST */
+/* ---------------------------------------------- */
+.careers_section{
+    background-repeat: no-repeat;
+      background-size: cover;
+      background-image: linear-gradient(to bottom, #00000026, rgb(0 0 0 / 68%)), url(../img/careers.bg.png);
+      color: white;
+      object-fit: cover;
+      padding: 11px;
+      min-height: 450px;
+  }
+  .careers-banner{
+    margin: 3rem auto 0rem;
+  }
+  .career-quote{
+    padding: 3rem 13rem;
+    text-align: center;
+    align-items: center;
+    margin: auto;
+  }
+  .career-quote h3{
+    color: darkgreen;
+  }
+  .career-quote h1{
+  font-size: 3.5rem;
+  color: darkblue;
+  }
+  .careers_section h1{
+    align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 18rem 0rem;
+      /* color: black; */
+  }
+  .careers_section p{
+    align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding:0rem  6rem 10rem;
+   
+  }
+  .career-two-sec{
+    padding: 3rem;
+  }
+  .careers-para{
+    text-align: center;
+    margin: auto;
+  }
+  .waiting-div{
+    margin: 0rem auto 3rem;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    font-size: 7rem;
+  }
+  .waiting-line{
+    font-size: 3rem;
+    color: darkgreen;
+  }
+  /* job-opportunity section css */
+  .jobsec{
+    margin: 3rem;
+    padding: 3rem;
+  }
+
+  .fadeInLeft {
+    -webkit-animation-name: fadeInLeft;
+    animation-name: fadeInLeft;
+  }
+  .jobsform {
+    margin: 0;
+    padding: 0;
+  }
+  .jobs-table {
+    margin-bottom: 30px;
+  }
+  .jobsform .form-group {
+    width: 23.33%;
+    display: inline-block;
+    padding-right: 15px;
+  }
+  .departmnt-lvl {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+  }
+  .jobsform .form-select, .filter-custom .form-select {
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    border: 1px solid #000 !important;
+    cursor: pointer;
+    background: #fff url(../images/down-arrow-black.png) no-repeat right 6px bottom 10px;
+  }
+  .form-controling {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  }
+  .jobs-table h3 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #01468e; 
+    font-size: 2.2rem;
+  }
+  .jobsform #search {
+    background-color: #005cac;
+    border: 1px solid #005cac;
+    padding: 6px 25px;
+    display: inline-block;
+    color: #fff;
+    height: 34px;
+    font-family: 'Raleway', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: inherit;
+  }
+  .table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+  }
+  .table-bordered, .table-bordered > tbody > tr > td, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > td, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > thead > tr > th {
+    border: 1px solid #000;
+  }
+  .ttblle {
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+  .table-custom > thead > tr > th {
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #005cac;
+    color: #fff;
+  }
+  .table-custom > tbody > tr > td .applynow-job-btn {
+    background-color: #005cac;
+    border: 1px solid #005cac;
+    color: #fff;
+    padding: 2px 5px;
+    display: inline-block;
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: inherit;
+  }
+  .table>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+  }
+  tbody {
+    border-top: 1px solid #ccc;
+  }
+  .jobs-table .pager {
+    border: 0;
+    padding-left: 0;
+    margin: 20px 0;
+    text-align: center;
+  }
+  @media (max-width: 1440px){
+    .jobs-table ul {
+      background: #ffffff;
+  }
+  }
+  .table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: rgb(239 238 238 / 5%);
+    color: var(--bs-table-striped-color);
+  }
+  /* .btn-group-vertical>.btn-group:after, .btn-group-vertical>.btn-group:before, .btn-toolbar:after, .btn-toolbar:before, .clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .dl-horizontal dd:after, .dl-horizontal dd:before, .form-horizontal .form-group:after, .form-horizontal .form-group:before, .modal-footer:after, .modal-footer:before, .modal-header:after, .modal-header:before, .nav:after, .nav:before, .navbar-collapse:after, .navbar-collapse:before, .navbar-header:after, .navbar-header:before, .navbar:after, .navbar:before, .pager:after, .pager:before, .panel-body:after, .panel-body:before, .row:after, .row:before {
+    display: table;
+    content: " ";
+  } */
+  .jobs-table .pager li {
+    width: auto;
+    margin-right: 5px;
+  }
+  
+  element.style {
+  }
+  .jobs-table .pager li {
+      width: auto;
+      margin-right: 5px;
+  }
+  .jobs-table ul li {
+      display: inline-block;
+      padding: 0;
+      font-size: 14px;
+      color: #9f9f9f;
+      width: 10.5%;
+      text-align: center;
+  }
+  .pager li {
+      display: inline;
+  }
+  
+  .jobs-table .pager {
+      border: 0;
+      padding-left: 0;
+      margin: 20px 0;
+      text-align: center;
+  }
+  .pager {
+      padding-left: 0;
+      margin: 20px 0;
+      text-align: center;
+      list-style: none;
+  }
+  .jobs-table ul li a {
+    color: #0085c5;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: inherit;
+  }
+  .jobs-table ul li {
+    display: inline-block;
+    padding: 0;
+    font-size: 14px;
+    color: #9f9f9f;
+    width: 10.5%;
+    text-align: center;
+  }
+  .jobs-table .pager li.pager-current {
+    background-color: #005cac;
+    display: inline-block;
+    color: #fff;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: inherit;
+    padding: 5px 14px;
+    border: 1px solid #005cac;
+  }
+  .jobs-table .pager li a {
+    border-radius: 0;
+  }
+  
+  .jobs-table ul li {
+      display: inline-block;
+      padding: 0;
+      font-size: 14px;
+      color: #9f9f9f;
+      width: 10.5%;
+      text-align: center;
+  }
+  .jobs-table ul li:nth-last-of-type(2), .jobs-table ul li:nth-last-of-type(1) {
+    text-align: right;
+  }
+  .ttblle td{
+    text-align: center;
+  }
+  /* jobs and opportunities page css */
+   .jobspage{
+    margin: 3rem;
+    }
+  .applyformjob{
+  display: flex;
+  justify-content: center;
+  }
+  .ajstye{
+    border: 1px solid green;
+    border-radius: inherit;
+  }
+  .jobheadline{
+    text-align: center;
+    font-size: 2rem;
+    color: darkgreen;
+  }
+  
+  .paB{
+    align-items: center;
+      text-align: center;
+      padding: 1.5rem 1rem 0rem;
+      color: darkgreen;
+  }
+  
+
+
+  @media (min-width: 100px) and (max-width:575px){
+    .careers_section h1{
+     padding: 3rem 0rem 0rem;
+    }
+    .careers_section p{
+      padding: 0rem 0rem 0rem;
+     }
+     .waiting-line {
+      font-size: 2rem;
+  }
+  .career-two-sec {
+    padding: 1rem;
+}
+  }
+
+  @media (min-width:576px) and (max-width:1024px){
+    .careers_section h1{
+      padding: 4rem 6rem 0rem;
+    }
+  }
+  @media (min-width:100px) and (max-width:991px){
+.career-quote {
+    padding: 0rem 1rem;
+}
+  }
+  @media (min-width:100px) and (max-width:307px){
+    .career-quote h1 {
+      font-size: 2rem;
+  }
+  .jobheadline {
+    text-align: center;
+    font-size: 1.8rem;
+    color: darkgreen;
+}
+.paB {
+  padding: 1.5rem 0rem 0rem 0rem;
+  padding-bottom: .3rem;
+}
+  }
+  @media (min-width:308px) and (max-width:575px){
+    .career-quote h1 {
+      font-size: 2.5rem;
+  }
+  }
+  @media (min-width:992px) and (max-width:1100px){
+    .career-quote {
+      padding: 3rem 4rem;
+    }
+  }
+
+  @media (min-width:100px) and (max-width:767px){
+  .jobsec{
+    margin: 0rem;
+    padding: 1rem;
+  }
+  .jobs-table h3 {
+    font-size: 2rem;
+}
+.jobspage{
+  margin: 1rem;
+   }
+}

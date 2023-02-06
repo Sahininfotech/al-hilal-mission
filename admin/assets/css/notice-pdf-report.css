@@ -1,0 +1,49 @@
+body{
+    font-family: "Poppins", Poppins;
+}
+.notice-title-div{
+    margin: 0rem 0 2rem;
+    border-bottom: 10px solid black;
+    padding: 1rem 0;
+}
+.notice-title{
+    text-align: center;
+    color: darkblue;
+
+  }
+  .notice-title-div-p{
+    font-family: "Poppins", Poppins;
+    text-align: left;
+    color: #3f4450;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0rem;
+    line-height: 1.7;
+  }
+  .notice-title-div-subject{
+    font-family: "Poppins", Poppins;
+    text-align: center;
+    color: #3f4450;
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0rem;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+  .notice-signature{
+    font-family: "Poppins", Poppins;
+    text-align: left;
+    color: #3f4450;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0rem;
+    /* line-height: 1.7; */
+    border-bottom: 2px solid black;
+    width: 13rem;
+    padding-bottom: 1.5rem;
+  }
+  .custom-body{
+    /* border-width: 2px;
+    border-style: solid;
+    border-image: linear-gradient(to right, darkblue, #871919) 2; */
+  }

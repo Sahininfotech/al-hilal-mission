@@ -1,0 +1,24 @@
+[13-Sep-2022 02:08:24 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined method InstituteDetails::institutedisplaydata() in /home3/activaga/public_html/alhilalmission/principle.php:11
+Stack trace:
+#0 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/principle.php on line 11
+[13-Sep-2022 10:54:50 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined method InstituteDetails::institutedisplaydata() in /home3/activaga/public_html/alhilalmission/principle.php:11
+Stack trace:
+#0 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/principle.php on line 11
+[13-Sep-2022 10:54:55 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined method InstituteDetails::institutedisplaydata() in /home3/activaga/public_html/alhilalmission/teacher-profile.php:7
+Stack trace:
+#0 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/teacher-profile.php on line 7
+[14-Sep-2022 08:09:59 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined method InstituteDetails::institutedisplaydata() in /home3/activaga/public_html/alhilalmission/principle.php:11
+Stack trace:
+#0 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/principle.php on line 11
+[14-Sep-2022 08:10:05 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined method InstituteDetails::institutedisplaydata() in /home3/activaga/public_html/alhilalmission/teacher-profile.php:7
+Stack trace:
+#0 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/teacher-profile.php on line 7
+[14-Sep-2022 08:28:25 America/Boise] PHP Fatal error:  Uncaught Error: Call to undefined method InstituteDetails::institutedisplaydata() in /home3/activaga/public_html/alhilalmission/teacher-profile.php:7
+Stack trace:
+#0 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/teacher-profile.php on line 7
