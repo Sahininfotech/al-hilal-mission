@@ -261,7 +261,7 @@ $result=$InstituteDetails->instituteShow();
                 <div class="col-lg-6">
                     <div class="card m-0 ">
                         <div class="card-body p-3">
-                        <h5 class="card-title">Select marks rang and Grade Type</h5>
+                        <h5 class="card-title">add marks rang and Grade Type</h5>
                             <form method="POST" action="./ajax/percentage.action.php" class="row needs-validation  m-0"
                                 novalidate>
                                 <div class="row m-0 p-0 mb-3">
@@ -271,9 +271,9 @@ $result=$InstituteDetails->instituteShow();
                                             name="rank_type" required>
                                             <option selected disabled value>Select Type</option>
 
-                                            <option value="subject ranking">subject Wise</option>
+                                            <option value="subject ranking">Subject Wise</option>
 
-                                            <option value="total ranking">overall marks Wise</option>
+                                            <option value="total ranking">Overall Marks Wise</option>
 
                                         </select>
                                     </div>
