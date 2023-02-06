@@ -164,7 +164,7 @@ $result=$InstituteDetails->instituteShow();
                                     </div>
                                 </div>
                                 <div class="row m-0 p-0 mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Examination :</label>
+                                    <label for="inputText" class="col-sm-4 col-form-label"> Examination Examination :</label>
                                     <div class="col-sm-8">
                                         <input type="text" maxlength="55" class="form-control" name="exam_name"
                                             required>
