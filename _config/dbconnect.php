@@ -2,6 +2,9 @@
 
 
 
+date_default_timezone_set("Asia/Kolkata");   //India time (GMT+5:30)
+
+
 
 
 
@@ -14,15 +17,36 @@ class DatabaseConnection{
 
 
 
+
+
+
+
+
     private $servername;
+
+
 
     private $username;
 
+
+
     private $password;
+
+
 
     private $dbname;
 
+
+
     public $conn;
+
+
+
+
+
+
+
+
 
 
 
@@ -34,10 +58,21 @@ class DatabaseConnection{
 
 
 
+
+
+
+
         $this->db_connect();
 
 
+
+
+
       }
+
+
+
+
 
 
 
@@ -45,15 +80,14 @@ class DatabaseConnection{
 
 
 
-        $this->servername = 'localhost';
 
-        $this->username = 'root';
+        $this->servername = 'localhost';      
 
-        $this->password = '';
+        $this->username = 'activaga__al_hilal_user';
+
+        $this->password = 'bU55-=NXVax-';
 
         $this->dbname = 'activaga_al_hilal';
-
-
 
 
 
@@ -61,7 +95,15 @@ class DatabaseConnection{
 
 
 
+
+
+
+
         return $this->conn;
+
+
+
+
 
 
 
@@ -75,11 +117,33 @@ class DatabaseConnection{
 
 
 
+
+
+
+
+
+
+
+
+
+
 }
 
 
 
+
+
+
+
 // DatabaseConnection end
+
+
+
+
+
+
+
+
 
 
 

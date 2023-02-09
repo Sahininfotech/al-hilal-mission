@@ -8,8 +8,8 @@ function addtStudent($student_id, $name,  $email, $gurdian_name, $contact_no, $g
 
 
 
-$sql = "INSERT INTO `student` ( `student_id`,`name`, `email`, `gurdian_name`, `contact_no`, `gender`, `post_office`, `police_station`,`pin_code`, `sdo_or_bdo`, `district`, `state`, `date_of_birth`, `class`, `stream`,`address`, `academic_year`, `status`, `roll_no`,`image`, `date`)           
-VALUES ( '$student_id', '$name',  '$email', '$gurdian_name', '$contact_no',  '$gender', '$post_office', '$police_station', '$pin_code',  '$sdo', '$district', '$state', '$date_of_birth', '$class', '$stream','$address','$academic_year', '$status', '$roll_no','$image',current_timestamp())";
+$sql = "INSERT INTO `student` ( `student_id`,`name`, `email`, `gurdian_name`, `contact_no`, `gender`, `post_office`, `police_station`,`pin_code`, `sdo_or_bdo`, `district`, `state`, `date_of_birth`, `class`, `stream`,`address`, `academic_year`, `status`, `roll_no`, `image`, `date`)           
+VALUES ( '$student_id', '$name',  '$email', '$gurdian_name', '$contact_no',  '$gender', '$post_office', '$police_station', '$pin_code',  '$sdo', '$district', '$state', '$date_of_birth', '$class', '$stream','$address','$academic_year', '$status', '$roll_no', '$image', current_timestamp())";
 
 $insertEmpQuery = $this->conn->query($sql);
 
@@ -17,214 +17,6 @@ return $insertEmpQuery;
 
 
 }
-
-
-
-// function studentsummaryadd($names, $student_ids,  $roll_nos, 
-// $addresss, $contacts, $streams, $post_offices, $police_stations, $gurdians, $sdos, 
-// $total_amounts, $total_dues, $pin_codes, $academic_years, $states, $districts, $date_of_births, $dded_bys, $added_ons, $dates, $class){
-
-    
-//     $sql = "SELECT * FROM `student` WHERE `student`.`class` = '12'";
-        
-//     $selectdata   = $this->conn->query($sql);
-
-//     $rows = $selectdata->num_rows;
-
-//     if ($rows == 0) {
-
-//     $sql = "INSERT INTO `student_summary` (`name`,`student_id`, `roll_no`, `address`, `contact_no`, `stream`, `post_office`, 
-//     `police_station`,`guardian_name`, `sdo_or_bdo`, `total_amount`, `total_due`, `pin_code`, `academic_year`, `state`, `district`, `date_of_birth`, 
-//     `added_by`, `added_on`,  `date`, `class`)           
-//     VALUES ( '$names', '$student_ids',  '$roll_nos', '$addresss', '$contacts',  '$streams', '$post_offices', '$police_stations',  
-//     '$gurdians', '$sdos', '$total_amounts', '$total_dues', '$pin_codes', '$academic_years', '$states', '$districts', '$date_of_births','$dded_bys',
-//     '$added_ons', '$dates', '$class') ";
-    
-//     $insertEmpQuery = $this->conn->query($sql);
-    
-//     return $insertEmpQuery;
-    
-    
-//     }   else
-//     {
-        
-//         $sqldal = "DELETE FROM `student_summary` WHERE  `student_summary`.`class` = '12'";
-
-//         $result = $this->conn->query($sqldal);
-
-//         return $result;
-
-//     }
-    
-
-// }
-
-
-
-
-    function studentsummaryadd($names, $student_ids,  $roll_nos, 
-$addresss, $contacts, $streams, $post_offices, $police_stations, $gurdians, $sdos, 
-$total_amounts, $total_dues, $pin_codes, $academic_years, $states, $districts, $date_of_births, $dded_bys, $added_ons, $dates, $class, $examStatus){
-
-
-    $sql = "INSERT INTO `student_summary` (`name`,`student_id`, `roll_no`, `address`, `contact_no`, `stream`, `post_office`, 
-    `police_station`,`guardian_name`, `sdo_or_bdo`, `total_amount`, `total_due`, `pin_code`, `academic_year`, `state`, `district`, `date_of_birth`, 
-    `added_by`, `added_on`,  `date`, `class`, `exam_status`)           
-    VALUES ( '$names', '$student_ids',  '$roll_nos', '$addresss', '$contacts',  '$streams', '$post_offices', '$police_stations',  
-    '$gurdians', '$sdos', '$total_amounts', '$total_dues', '$pin_codes', '$academic_years', '$states', '$districts', '$date_of_births','$dded_bys',
-    '$added_ons', '$dates', '$class', '$examStatus') ";
-    
-    $insertEmpQuery = $this->conn->query($sql);
-    
-    return $insertEmpQuery;
-    
-    
-    }
-
-
-
-
-
-
-
-    //  //subjectupdate start 
-    //  function changedata($class_id, $total_amount, $class, $session){
-
-    //     $sql = "UPDATE  `student` SET `total_amount` = '$total_amount', `class` = '$class_id', `academic_year` = '$session' WHERE `student`.`class` = '$class'";
-    //     $result = $this->conn->query($sql);
-    //     return $result;
-
-    // }//enf
-
-    //  subjectupdate start 
-     function changedata($newclass, $class, $session, $student_ids){
-
-        $sql = "UPDATE  `student` SET `class` = '$newclass', `academic_year` = '$session' WHERE `student`.`class` = '$class' and `student`.`student_id` = '$student_ids'";
-        $result = $this->conn->query($sql);
-        return $result;
-
-    }//enf
-
- 
-
-     
-    // function feeschangedata($name, $student_id,  $roll_no, $gurdian_name, $class_id, $total_amount, $session){
-    
-    
-    //     $sql = "INSERT INTO `student_fees_dtls` (`name`,`student_id`, `roll_no`, `gurdian_name`, `class`, `payable_fee`, `total_due`, `session`, `added_on`)           
-    //     VALUES ( '$name', '$student_id',  '$roll_no', '$gurdian_name', '$class_id', '$total_amount', '$total_amount', '$session', current_timestamp()) ";
-        
-    //     $insertEmpQuery = $this->conn->query($sql);
-        
-    //     return $insertEmpQuery;
-        
-        
-    //     }
-   
-
-    //  //subjectupdate start 
-    //  function changedata($class, $examStatus){
-
-    //     if($examStatus == "Faill"){
-    //     $class_id   = $class;
-    //     }else{
-    //         $class_id   = $class + 1;
-    //     }
-
-    //     $sql = "UPDATE  `student` SET `class` = '$class_id' WHERE `student`.`class` = '$class'";
-    //     $result = $this->conn->query($sql);
-    //     return $result;
-
-    // }//enf
-
-
-
-
-    // function examStatus($marks, $session, $student_id, $class_id, $exam_id, $subject_id){
-
-
-
-    //     $sql = "SELECT * FROM `student` WHERE `student`.`student_id` = '$student_id' and `subject_marks`.`subject_id` = '$subject_id' and `subject_marks`.`class_id` = '$class_id' and `subject_marks`.`exam_id` = '$exam_id'";
-        
-    //      $selectdata   = $this->conn->query($sql);
- 
-    //      $rows = $selectdata->num_rows;
- 
-    //      if ($rows == 0) {
-              
-    //          $sql = "INSERT INTO `subject_marks` (`marks`, `session`, `student_id`, `class_id`, `exam_id`, `subject_id`) VALUES ( '$marks', '$session', '$student_id', '$class_id', '$exam_id', '$subject_id')";
-     
-    //          $result1 = $this->conn->query($sql);
-     
-    //          return "save";
-         
-    //      }
-    //          else
-    //          {
-                 
-    //              $sqledit = "UPDATE  `subject_marks` SET `marks` = '$marks' WHERE  `subject_marks`.`student_id` = '$student_id' and `subject_marks`.`subject_id` = '$subject_id' and `subject_marks`.`class_id` = '$class_id' and `subject_marks`.`exam_id` = '$exam_id'";
- 
-    //              $result1 = $this->conn->query($sqledit);
-         
-    //              return "save data update";
- 
-    //          }
-             
- 
-    //  }
- 
-   
-
-
-    //subjectupdate start 
-    function examStatus($student_id, $examStatus){
-
-        // $sql = "SELECT * FROM `student` WHERE `student`.`student_id` = '$student_id' ";
-        
-        //      $selectdata   = $this->conn->query($sql);
-     
-        //      $rows = $selectdata->num_rows;
-     
-        //      if ($rows != 0) {
-                  
-      
-        $sql = "UPDATE `student` SET `exam_status` = '$examStatus' WHERE `student`.`student_id` = '$student_id'";
-        $result = $this->conn->query($sql);
-        return $result;
-            //  }
-
-    }//enf
- 
-
-     
-    function feeschangedata($name, $student_id,  $roll_no, $gurdian_name, $class_id, $total_amount, $session){
-    
-    
-        $sql = "INSERT INTO `student_fees_dtls` (`name`,`student_id`, `roll_no`, `gurdian_name`, `class`, `payable_fee`, `total_due`, `session`, `added_on`)           
-        VALUES ( '$name', '$student_id',  '$roll_no', '$gurdian_name', '$class_id', '$total_amount', '$total_amount', '$session', current_timestamp()) ";
-        
-        $insertEmpQuery = $this->conn->query($sql);
-        
-        return $insertEmpQuery;
-        
-        
-        }
-
-    
-
-
-
-      //subjectupdate start 
-      function studentdelect($class){
-
-        $sqldal = "DELETE FROM `student` WHERE  `student`.`class` = '$class'";
-
-                $result = $this->conn->query($sqldal);
-        
-                return $result;
-
-    }//enf
-    
 
 
 
@@ -377,25 +169,6 @@ function studentsByFees($student_Id){
 }
 // end display 
 
-
-// display start
-function pen_student($showstuid){
-
-    $data = array();
-    // $sql = "SELECT * FROM `student_payment_dtls` WHERE `student_id` = '$student_Id'";
-
-    $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_id` = '$showstuid'";
-
-    $empQuery = $this->conn->query($sql);
-    if ($empQuery->num_rows > 0) {
-        while($row = $empQuery->fetch_array()){
-            $data[]	= $row;
-        }
-    }
-    return $data;
-
-}
-// end display 
 
 
 
@@ -565,7 +338,7 @@ function addattendance($roll_no, $name, $class, $status, $session, $student_id, 
         
         $insertEmpQuery = $this->conn->query($sql);
         
-        return $insertEmpQuery;
+        return "save";
         
         
     }
@@ -576,7 +349,7 @@ function addattendance($roll_no, $name, $class, $status, $session, $student_id, 
 
              $result1 = $this->conn->query($sqledit);
      
-             return $result1;
+             return "save data update";
 
     }
          
@@ -593,7 +366,27 @@ function addattendance($roll_no, $name, $class, $status, $session, $student_id, 
 
 function attendancechartday($student_chart, $class){
 
-    $sql = "SELECT * FROM `student_attendance` where day(dates)=(SELECT day(CURDATE())) and month(dates)=(SELECT MONTH(CURDATE())) AND year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' ";
+    $sql = "SELECT * FROM `student_attendance` where day(dates)=(SELECT day(CURDATE())) and month(dates)=(SELECT MONTH(CURDATE())) AND year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' GROUP BY dates";
+
+    $studentTypeQuery = $this->conn->query($sql);
+    $rows = $studentTypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $studentTypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+
+
+}
+
+
+
+function attendancechartdays($showdatewise, $class){
+
+    $sql = "SELECT * FROM `student_attendance` where day(dates)=(SELECT day(CURDATE())) and month(dates)=(SELECT MONTH(CURDATE())) AND year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' AND `dates` = '$showdatewise'";
 
     $studentTypeQuery = $this->conn->query($sql);
     $rows = $studentTypeQuery->num_rows;
@@ -614,7 +407,7 @@ function attendancechartday($student_chart, $class){
 
 function attendancechartmonth($student_chart, $class){
 
-    $sql = "SELECT * FROM `student_attendance` where month(dates)=(SELECT MONTH(CURDATE())) AND year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class'";
+    $sql = "SELECT * FROM `student_attendance` where month(dates)=(SELECT MONTH(CURDATE())) AND year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' GROUP BY dates";
 
     $studentTypeQuery = $this->conn->query($sql);
     $rows = $studentTypeQuery->num_rows;
@@ -631,9 +424,52 @@ function attendancechartmonth($student_chart, $class){
 }
 
 
+
+
+function attendancechartmonths($showdatewise, $class){
+
+    $sql = "SELECT * FROM `student_attendance` where month(dates)=(SELECT MONTH(CURDATE())) AND year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' AND `dates` = '$showdatewise'";
+
+    $studentTypeQuery = $this->conn->query($sql);
+    $rows = $studentTypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $studentTypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+
+
+}
+
+
+
+
+
 function attendancechartyear($student_chart, $class){
 
-    $sql = "SELECT * FROM `student_attendance` where year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class'";
+    $sql = "SELECT * FROM `student_attendance` where year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' GROUP BY dates";
+
+    $studentTypeQuery = $this->conn->query($sql);
+    $rows = $studentTypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $studentTypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+
+
+}
+
+
+function attendancechartyears($showdatewise, $class){
+
+    $sql = "SELECT * FROM `student_attendance` where year(dates)=(SELECT YEAR(CURDATE())) AND `classname` = '$class' AND `dates` = '$showdatewise'";
 
     $studentTypeQuery = $this->conn->query($sql);
     $rows = $studentTypeQuery->num_rows;
@@ -656,7 +492,7 @@ function attendancetotalreport($class){
 
     $empData = array();
 
-    $sql = "SELECT * FROM `student_attendance` where `classname` = '$class' order by id desc";
+    $sql = "SELECT * FROM `student_attendance` where `classname` = '$class' order by dates";
 
     $insertEmpQuery = $this->conn->query($sql);
 
@@ -672,11 +508,57 @@ function attendancetotalreport($class){
 // end display
 
 
+
+function attendancetotalsreport($showdatewise, $class){
+
+    $empData = array();
+
+    $sql = "SELECT * FROM `student_attendance` where `classname` = '$class' AND `dates` = '$showdatewise' order by id desc";
+
+    $insertEmpQuery = $this->conn->query($sql);
+
+    while($row      = $insertEmpQuery->fetch_array()){    
+
+    $empData[]	    = $row;
+
+    }
+
+    return $empData;
+
+}
+
+
+
+
+
 function attendancestudent($studentid){
 
     $empData = array();
 
-    $sql = "SELECT * FROM `student_attendance` where `student_id` = '$studentid'";
+    $sql = "SELECT * FROM `student_attendance` where `student_id` = '$studentid' order by dates";
+
+    $insertEmpQuery = $this->conn->query($sql);
+
+    while($row      = $insertEmpQuery->fetch_array()){    
+
+    $empData[]	    = $row;
+
+    }
+
+    return $empData;
+
+}
+// end display
+
+
+
+
+
+function attendancestudents($showdatewise, $studentid){
+
+    $empData = array();
+
+    $sql = "SELECT * FROM `student_attendance` where `student_id` = '$studentid' AND `dates` = '$showdatewise'";
 
     $insertEmpQuery = $this->conn->query($sql);
 
@@ -752,35 +634,110 @@ function attendancedate($searchstudent, $searchstudents){
 }
 
 
-  // ---------- attendance report end -------------
+// ---------- attendance report end -------------
 
 
 
-  function studentByold($stuclass, $showacademic_year){
+// ---------- Student summary start -------------
+
+function studentsummaryadd($names, $student_ids,  $roll_nos, 
+    $addresss, $contacts, $streams, $post_offices, $police_stations, $gurdians, $sdos, 
+    $total_amounts, $total_dues, $pin_codes, $academic_years, $states, $districts, $date_of_births, $dded_bys, $added_ons, $dates, $class, $Status){
+
+
+
+    $sql = "INSERT INTO `student_summary` (`name`,`student_id`, `roll_no`, `address`, `contact_no`, `stream`, `post_office`, 
+    `police_station`,`guardian_name`, `sdo_or_bdo`, `total_amount`, `total_due`, `pin_code`, `academic_year`, `state`, `district`, `date_of_birth`, 
+    `added_by`, `added_on`,  `date`, `class`, `exam_status`)           
+    VALUES ( '$names', '$student_ids',  '$roll_nos', '$addresss', '$contacts',  '$streams', '$post_offices', '$police_stations',  
+    '$gurdians', '$sdos', '$total_amounts', '$total_dues', '$pin_codes', '$academic_years', '$states', '$districts', '$date_of_births','$dded_bys',
+    '$added_ons', '$dates', '$class', '$Status') ";
+
+    $insertEmpQuery = $this->conn->query($sql);
+
+   return $insertEmpQuery;
+
+
+}
+
+//studentamount start 
+function studentamount($class_id, $total_amount, $class, $session){
+
+    $sql = "UPDATE  `student` SET `total_amount` = '$total_amount', `class` = '$class_id', `academic_year` = '$session' WHERE `student`.`class` = '$class'";
+    $result = $this->conn->query($sql);
+    return $result;
+
+}
+//enf
+
+
+//  changedata start 
+function changedata($newclass, $class, $session, $student_ids){
+
+    $sql = "UPDATE  `student` SET `class` = '$newclass', `academic_year` = '$session' WHERE `student`.`class` = '$class' and `student`.`student_id` = '$student_ids'";
+    $result = $this->conn->query($sql);
+    return $result;
+
+}//enf
+
+
+
+function feeschangedata($name, $student_id,  $roll_no, $gurdian_name, $class_id, $total_amount, $session){
+    
+    
+    $sql = "INSERT INTO `student_fees_dtls` (`name`,`student_id`, `roll_no`, `gurdian_name`, `class`, `payable_fee`, `total_due`, `session`, `added_on`)           
+    VALUES ( '$name', '$student_id',  '$roll_no', '$gurdian_name', '$class_id', '$total_amount', '$total_amount', '$session', current_timestamp()) ";
+    
+    $insertEmpQuery = $this->conn->query($sql);
+    
+    return $insertEmpQuery;
+    
+    
+}
+
+
+
+//studentdelect start 
+function studentdelect($class){
+
+    $sqldal = "DELETE FROM `student` WHERE  `student`.`class` = '$class'";
+
+            $result = $this->conn->query($sqldal);
+    
+            return $result;
+
+}
+//enf
+
+
+// ---------- Student summary end -------------
+
+
+
+   // display Totalmarks start
+   function Totalmarks($showstuid, $showclass1, $showacademic_year){
 
     $data = array();
-    $sql = "SELECT * FROM `student_summary` WHERE `student_summary`.`class` = '$stuclass' and `student_summary`.`academic_year` = '$showacademic_year'";
-    $res = $this->conn->query($sql);
-    if ($res->num_rows > 0) {
-        while ($result = $res->fetch_array()) {
-            $data[] = $result;
+
+    $sql = "SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year'";
+
+    $empQuery = $this->conn->query($sql);
+    if ($empQuery->num_rows > 0) {
+        while($row = $empQuery->fetch_array()){
+            $data[]	= $row;
         }
     }
     return $data;
 
 }
+// end display subject_marks
 
-
-
-
-    // SELECT *, SUM(marks) as sum FROM `total_marks` WHERE `student_id` = 'STUD41260'
-
-    // display start
-    function Totalmarks($showstuid, $showclass1, $showacademic_year){
+    // display maxmarks start
+    function maxmarks($showclass1, $showacademic_year){
 
         $data = array();
     
-        $sql = "SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year'";
+        $sql = "SELECT *, SUM(max_marks) as sum_marks FROM `exam` WHERE `class_name` = '$showclass1' and `year` = '$showacademic_year'";
     
         $empQuery = $this->conn->query($sql);
         if ($empQuery->num_rows > 0) {
@@ -791,25 +748,28 @@ function attendancedate($searchstudent, $searchstudents){
         return $data;
     
     }
-    // end display student_payment_dtls
-   
-        // display start
-        function maxmarks($showclass1, $showacademic_year){
+    // end display subject_marks
 
-            $data = array();
-        
-            $sql = "SELECT *, SUM(max_marks) as sum_marks FROM `exam` WHERE `class_name` = '$showclass1' and `year` = '$showacademic_year'";
-        
-            $empQuery = $this->conn->query($sql);
-            if ($empQuery->num_rows > 0) {
-                while($row = $empQuery->fetch_array()){
-                    $data[]	= $row;
-                }
-            }
-            return $data;
-        
+
+  
+
+
+   // display Totalmarks start
+   function subjectmarks($showstuid, $showclass1, $showacademic_year, $subjectshow){
+
+    $data = array();
+
+    $sql = "SELECT *, SUM(marks) as summark FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `subject_id` = '$subjectshow' and `session` = '$showacademic_year'";
+    $empQuery = $this->conn->query($sql);
+    if ($empQuery->num_rows > 0) {
+        while($row = $empQuery->fetch_array()){
+            $data[]	= $row;
         }
-        // end display student_payment_dtls
+    }
+    return $data;
+}
+// end display subject_marks
+
 
 }
 ?>

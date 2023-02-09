@@ -31,23 +31,23 @@
                         href="#"><span>Standard</span> <i class="bi bi-chevron-down"></i></a>
                     <ul>
 
-                         <div class="row" style="width: 30rem;">
-                         <?php
-                                                        
-                                                       
-                                                        $allClass = $Classes->classesList();
-                                                        foreach ($allClass as $class) { 
-                                                            $showclass = $class['id'];
-                                                          
-                                                            $showclassdtl = "standards.php?class=". $showclass."&session=".$showsession;
-                                                            
-                                                            echo ' <div class="col-lg-4 col-md-6">
-                                                         <li><a href="'.$showclassdtl.'"><span> Standards '.$class['id'].'</span> </a></li>
-                                                        </div>';
-                           
-                                                    }
-                                                ?>
-                                                    </div>
+                        <div class="row" style="width: 30rem;">
+                            <?php
+
+
+                            $allClass = $Classes->classesList();
+                            foreach ($allClass as $class) { 
+                            $showclass = $class['id'];
+
+                            $showclassdtl = "standards.php?class=". $showclass."&session=".$showsession;
+
+                            echo ' <div class="col-lg-4 col-md-6">
+                            <li><a href="'.$showclassdtl.'"><span> Standards '.$class['id'].'</span> </a></li>
+                            </div>';
+
+                            }
+                            ?>
+                        </div>
 
 
 

@@ -4,26 +4,11 @@ require_once '../_config/dbconnect.php';
 require_once '../classes/student.class.php';
 require_once '../includes/constant.php';
 $Students = new  Student();
-if(isset ($_GET['dayreport']) ){
-    $studentbox=$Students->attendancechartday($_GET['dayreport'], $_GET['class']);
-    }
-    if(isset ($_GET['monthreport']) ){
-    $studentbox=$Students->attendancechartmonth($_GET['monthreport'], $_GET['class']);
-    }
-    if(isset ($_GET['yearreport']) ){
-    $studentbox=$Students->attendancechartyear($_GET['yearreport'], $_GET['class']);
-    }
-
-    if(isset ($_GET['totalreport']) ){
-        $studentbox=$Students->attendancetotalreport($_GET['class']);
-        }
-        
-    if(isset ($_GET['studentid']) ){
-        $studentbox=$Students->attendancestudent($_GET['studentid']);
-        }
         if(isset ($_GET['searchstudents']) && isset ($_GET['searchstudent'])){
 
-            $studentbox = $Students->studentDetails($_GET['searchstudent'] , $_GET['searchstudents'] );
+           
+
+            $datewise = $Students->attendancedate($_GET['searchstudent'],$_GET['searchstudents']);
 
         }
   
@@ -100,18 +85,7 @@ if(isset ($_GET['dayreport']) ){
                         </div>
                         <div class="col-sm-3 border-start border-dark " style="line-height: 0.5rem;">
                             <h4 class="ps-4">Attendance Report Of Student</h4>
-                            <h6 class="ps-4">Student Attendance /
-                                <?php if(isset($_GET['dayreport'])){echo $_GET['dayreport'];}; 
-
-                                                         if(isset($_GET['monthreport'])){echo $_GET['monthreport'];};
-
-
-
-                                                         if(isset($_GET['yearreport'])){echo $_GET['yearreport'];}; 
-
-
-
-                                                         if(isset($_GET['totalreport'])){echo $_GET['totalreport'];}; ?>
+                            <h6 class="ps-4">Attendance /
 
                                 <?php if(isset($_GET['searchstudent'])){echo $_GET['searchstudent'];}; ?><br><?php if(isset($_GET['searchstudents'])){echo $_GET['searchstudents'];}; ?>
 
@@ -124,74 +98,103 @@ if(isset ($_GET['dayreport']) ){
                 </div>
                 <?php 
 
-if ($studentbox == 0) {
-    echo "<h2>No Data Avilable.</h2>";
-
-    }
-    else
-    {
-
-        $totalstudent = 00;
-        if ($studentbox != null || $studentbox != '') {
-
-        $totalstudent = count($studentbox);
-
-        }
-                       foreach ($studentbox as $showStudentDetailsshow) {
-                       $showname            = $showStudentDetailsshow['name'];
-                        $showstudent_id     = $showStudentDetailsshow['student_id'];
-                        $showsession        = $showStudentDetailsshow['session'];
-                        $showroll_no        = $showStudentDetailsshow['roll'];
-                        $showclass          = $showStudentDetailsshow['classname'];
-                        $showstatus         = $showStudentDetailsshow['status'];
-                        $showdate           = $showStudentDetailsshow['dates'];
                        
-                      echo '
-                
+                       
+
+                        foreach ($datewise as $date) {
+                            $showdatewise   = $date['dates'];  
+                            if ($_GET['studentatten'] == 1 || $_GET['studentatten'] == 2 || $_GET['studentatten'] == 3 || $_GET['studentatten'] == 4 || $_GET['studentatten'] == 5 || $_GET['studentatten'] == 6 || $_GET['studentatten'] == 7 || $_GET['studentatten'] == 8|| $_GET['studentatten'] == 9 || $_GET['studentatten'] == 10) {                      
+                          
+                      echo '               
                 <table class="table table-sm table-bordered mt-3">
                     <thead>
+                    <h6>Date ['.$showdatewise.'], Class ['.$_GET['studentatten'].']</h6>
                         <tr>
                             <th>Name</th>
                             <th>Roll No</th>
                             <th>Student id</th>
-                            <th>Class</th>
-                            <th>Batch</th>
                             <th>Status</th>
-                            <th>Date</th>
+                           
 
                         </tr>
 
-                    </thead>
+                    </thead>';}
+
+                    if ($_GET['studentatten'] == 11 || $_GET['studentatten'] == 12) {
+                    echo '               
+                    <table class="table table-sm table-bordered mt-3">
+                        <thead>
+                        <h6>Date ['.$showdatewise.'], Class ['.$_GET['studentatten'].']</h6>
+                            <tr>
+                                <th>Name</th>
+                                <th>Roll No</th>
+                                <th>Student id</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                               
+    
+                            </tr>
+    
+                        </thead>';}
+
+                    $studentbox = $Students->studentDetails($showdatewise, $_GET['studentatten']);
+                    $totalstudent = 00;
+                    if ($studentbox != null || $studentbox != '') {
+            
+                    $totalstudent = count($studentbox);
+            
+                    }
+                                   foreach ($studentbox as $showStudentDetailsshow) {
+                                   $showname            = $showStudentDetailsshow['name'];
+                                    $showstudent_id     = $showStudentDetailsshow['student_id'];
+                                    $showsession        = $showStudentDetailsshow['session'];
+                                    $showroll_no        = $showStudentDetailsshow['roll'];
+                                    $showclass          = $showStudentDetailsshow['classname'];
+                                    $showstatus         = $showStudentDetailsshow['status'];
+                                    $showdate           = $showStudentDetailsshow['dates'];
+                                    if ($_GET['studentatten'] == 11 || $_GET['studentatten'] == 12) {
+                                        $showsubject        = $showStudentDetailsshow['subject'];
+                                    }
+                                    if ($_GET['studentatten'] == 1 || $_GET['studentatten'] == 2 || $_GET['studentatten'] == 3 || $_GET['studentatten'] == 4 || $_GET['studentatten'] == 5 || $_GET['studentatten'] == 6 || $_GET['studentatten'] == 7 || $_GET['studentatten'] == 8|| $_GET['studentatten'] == 9 || $_GET['studentatten'] == 10) { 
+                    echo' 
 
                     <tbody>
 
-                    <tr>
+                   <tr>
 
                       <td>'.$showname.'        </td>
                       <td>'.$showroll_no.'     </td>
                       <td>'.$showstudent_id.'  </td>
-                      <td>'.$showclass.'       </td>
-                      <td>'.$showsession.'</td>
-                      <td>'.$showstatus.'  </td>
-                      <td>'.$showdate.'  </td>
+                      <td>'.$showstatus.'  </td>               
 
                       </tr>
 
-                    </tbody>
-                    <tr>
-                    <th></th>
+                    </tbody>';}
+                    if ($_GET['studentatten'] == 11 || $_GET['studentatten'] == 12) {
+                
+                    echo' 
 
-                    <th></th>
+                    <tbody>
 
-                    <th></th>
+                   <tr>
 
-                    <th></th>
-                    <th></th>
-                    <th> Total Student</th>
+                      <td>'.$showname.'        </td>
+                      <td>'.$showroll_no.'     </td>
+                      <td>'.$showstudent_id.'  </td>
+                      <td>'.$showsubject.'</td>
+                      <td>'.$showstatus.'  </td>               
 
-                    <th>'.$totalstudent.'</th>
-                    </tr>';}?>
-                    </thead>
+                      </tr>
+
+                    </tbody>';}
+                
+                }}
+                    
+                    
+                    
+                    ?>
+
+                </thead>
                 </table>
                 <p class="ps-4">date: <?php echo date("d.m.y");?></p>
             </div>

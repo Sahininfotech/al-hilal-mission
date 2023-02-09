@@ -1,7 +1,4 @@
 <?php
-session_start();
-$page = "Student Details";
-
 require_once '../../_config/dbconnect.php';
 require_once '../../classes/admin.class.php';
 require_once '../../classes/studdetails.class.php';
@@ -10,18 +7,11 @@ require_once '../../classes/studdetails.class.php';
 require_once '../../classes/fees-accounts.class.php';
 require_once '../../classes/student.class.php';
 
-
-
 $Admin                  = new Admin();
 $Institute              = new InstituteDetails();                                
 $StudentDetails         = new StudentDetails();
 $FeesAccount            = new FeesAccount();
-$Student     = new  Student();
-
-
-
-
-   
+$Student     = new  Student();   
 
 $insertEmpQuery=false;
 
@@ -57,10 +47,8 @@ $insertEmpQuery=false;
     $date      = $_POST["date"];
 
     $exam_status      = $_POST["exam_status"];
-    $new_class      = $_POST["newclass"];
- 
 
-    $s ="1";
+    $new_class      = $_POST["newclass"];
 
     for ($i = 0; $i < count($name); $i++)  {
 
@@ -102,6 +90,7 @@ $insertEmpQuery=false;
                                                 
                                                                                 for ($i = 0; $i < count($date); $i++)  {
                                                                                     for ($i = 0; $i < count($exam_status); $i++)  {
+
                                                                                         for ($i = 0; $i < count($new_class); $i++)  {
                                                                                 
         
@@ -134,29 +123,14 @@ $insertEmpQuery=false;
       
          $class   = $_POST["class"];
          $session  = $_POST["session"];
-        //  $class_id   = $_POST["class"] + $s;
-
-        // echo $names, $student_ids, $roll_nos, $addresss, $contacts, $streams, $post_offices, 
-        // $police_stations, $gurdians, $sdos, $total_amounts, $total_dues,    
-        // $pin_codes, $academic_years, $states, $districts, $date_of_births,    
-        // $dded_bys, $added_ons, $dates, $class, $Status;
-        // exit;
 
          $result=$Student->studentsummaryadd($names, $student_ids, $roll_nos, $addresss, $contacts, $streams, $post_offices, 
          $police_stations, $gurdians, $sdos, $total_amounts, $total_dues,    
          $pin_codes, $academic_years, $states, $districts, $date_of_births,    
          $dded_bys, $added_ons, $dates, $class, $Status); 
-         
+
          $results=$Student->changedata($newclass, $class, $session, $student_ids); 
-        //  if($Status == "Faill"){
-        //     $resultss=$Student->changedata($class, $class, $session);
-        //       }else{
-        //         $resultss=$Student->changedata($class_id, $class, $session);
-
-        
-        //       }
-      
-
+         
         }}}}}}
 
     }}}}}}

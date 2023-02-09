@@ -4,7 +4,7 @@
 
     require_once '../../classes/employee.class.php';
 
-    $expensesstatus = new Employee();
+    $expensesstatus = new  Employee();
 
     if($_SERVER['REQUEST_METHOD'] == 'GET'){
 

@@ -12,6 +12,7 @@ if(isset ( $_POST["submit"])){
 
     $student_id           = $_POST["student_id"];
     $query          = $_POST["query"];
+
   }
 
 ?>
@@ -85,15 +86,14 @@ if(isset ( $_POST["submit"])){
                             $showpolice_station    = $showStudentDetailsshow['police_station'];
                             $showdistrict          = $showStudentDetailsshow['district'];
                             $showuimage            = $showStudentDetailsshow['image'];
-
-                            $img =  "image/".$showuimage;
+                            $img                   =  "image/".$showuimage;
                             }}
                           ?>
 
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <!-- <source media="(min-width: 650px)" srcset="assets/img/profile-img.jpg"> -->
-                            <img src="<?php echo $img; ?>" width=120 height=110 alt=""
-                                onerror="this.src='assets/img/user.jpg';" width=120 height=120 class="rounded-circle">
+                            <img id="theImage" src="<?php echo $img; ?>" width=120 height=110 alt=""
+                                onerror="this.src='assets/img/user.jpg';" width=120 height=120 class="rounded-circle"
+                                onClick="makeFullScreen()">
                             <h2><?php echo $showname; ?></h2>
                         </div>
                         <div class="card-body profile-card d-flex flex-column">
@@ -270,13 +270,11 @@ if(isset ( $_POST["submit"])){
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body editstudentclass-modal-body">
 
                 </div>
-        
             </div>
         </div>
     </div>
@@ -293,6 +291,42 @@ if(isset ( $_POST["submit"])){
     }
     </script>
 
+
+    <script>
+    // <!-- image fullscreen -->
+
+    function makeFullScreen() {
+
+        var divObj = document.getElementById("theImage");
+
+        //Use the specification method before using prefixed versions
+
+        if (divObj.requestFullscreen) {
+
+            divObj.requestFullscreen();
+
+        } else if (divObj.msRequestFullscreen) {
+
+            divObj.msRequestFullscreen();
+
+        } else if (divObj.mozRequestFullScreen) {
+
+            divObj.mozRequestFullScreen();
+
+        } else if (divObj.webkitRequestFullscreen) {
+
+            divObj.webkitRequestFullscreen();
+
+        } else {
+
+            console.log("Fullscreen API is not supported");
+
+        }
+
+    }
+
+    // <!-- image fullscreen end -->
+    </script>
 </body>
 
 </html>

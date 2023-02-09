@@ -15,13 +15,10 @@
           }
 
           if($update){
-              echo "<script>alert('Student Data Cancel Sucessfull');document.location='https://alhilalmission.in/admin/studentdetails.php'</script>";
+              echo "<script>alert('Student Data Active Sucessfull');document.location='https://alhilalmission.in/admin/studentdetails.php'</script>";
           }
           else{
-              echo "<script>alert('Student Data Cancel Not Sucessfull');document.location='https://alhilalmission.in/admin/studentdetails.php'</script>";
+              echo "<script>alert('Student Data Active Not Sucessfull');document.location='https://alhilalmission.in/admin/studentdetails.php'</script>";
           }
 
 ?>
-
-
-

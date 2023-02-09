@@ -1,18 +1,29 @@
 <?php
 session_start();
-$page = "Vendor Details";
+$page = "Contact form";
 require_once '../_config/dbconnect.php';
 require_once '../classes/contact.class.php';
 require_once '../classes/admin.class.php';
 require_once '../classes/utility.class.php';
+require_once '../includes/constant.php';
 
 
 $Utility   = new Utility(); 
 $Admin     = new Admin();
 $Contact    = new Contact();
 
-$message   = $Contact->messageshow();
+$_SESSION['current-url'] = $Utility->currentUrl();
 
+
+if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
+
+    header("Location: login.php");
+  
+    exit;
+  
+  }
+
+  $message   = $Contact->messageshow();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +32,7 @@ $message   = $Contact->messageshow();
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Accountant/ Expenses - NiceAdmin Bootstrap Template</title>
+    <title>Contacts / Contact form Details || <?php echo SITE_NAME; ?></title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -64,13 +75,13 @@ $message   = $Contact->messageshow();
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Contacts Details</h1>
+            <h1>Contact form Details</h1>
             <nav>
                 <ol class="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                     <li class="breadcrumb-item">Pages</li>
-                    <li class="breadcrumb-item active">Contact Details</li>
+                    <li class="breadcrumb-item active">Contact form Details</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -123,9 +134,10 @@ $message   = $Contact->messageshow();
                                                 $showstatus        = $messageshow['status'];
                                                 $showdate          = $messageshow['date'];
                                                 $showid            = $messageshow['id'];
+                                                $datetring = date("Y-m-d", strtotime($showdate));
                                                 ?>
 
-                                            <tr <?php if ($showstatus == '0') echo 'style="color: #057811"' ;?>>
+                                            <tr>
                                                 <td>
                                                     <?php  echo $i                ?>
                                                 </td>
@@ -140,12 +152,12 @@ $message   = $Contact->messageshow();
                                                 </td>
                                                 <td>
                                                    
-                                                <?php  echo $showdate;      ?>
+                                                <?php  echo $datetring;            ?>
                                             
                                                 </td>
                                                 <td>
                                                   
-                                                    <a href='viwemessage.php?message=<?php    echo $showid;  ?>&approved=1'>
+                                                    <a href='viewmessage.php?message=<?php    echo $showid;  ?>&approved=1'>
                                                         <i class="bi bi-chat-left-text" onclick="return viwemessage();">
 
 
@@ -181,7 +193,9 @@ $message   = $Contact->messageshow();
 
             <!-- container-scroller -->
 
-
+            <div class="justify-content-center print-sec d-flex my-5" style="margin-top: -1rem!important;">
+            <button class="btn btn-primary shadow mx-2" onclick="history.back()">Go Back</button>
+        </div>
 
     </main><!-- End #main -->
 

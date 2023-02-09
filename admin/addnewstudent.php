@@ -7,14 +7,13 @@ require_once '../classes/admin.class.php';
 require_once '../classes/classes.class.php';
 require_once '../classes/department.class.php';
 require_once '../classes/institutedetails.class.php';
-require_once '../classes/student.class.php';
+require_once '../includes/constant.php';
 
 
 $Admin      = new Admin();
 $Classes    = new Classes();
 $Departments    = new Departments();
 $InstituteDetails   = new InstituteDetails();
-$Student   = new Student();
  ?>
 
 <!DOCTYPE html>
@@ -24,7 +23,7 @@ $Student   = new Student();
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Add new Student - NiceAdmin Bootstrap Template</title>
+    <title>Student Management /Add new Student - <?php echo SITE_NAME; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -82,7 +81,6 @@ $Student   = new Student();
                         <form method="POST" action="admission-fees-clearetion.php" ; class="needs-validation m-0"
                             enctype="multipart/form-data" runat="server" novalidate>
 
-
                             <div class="row m-0 p-0 mb-3">
                                 <label for="inputText" class="col-xl-2 col-lg-2 col-form-label">Profile Image :</label>
                                 <div class="col-sm-10">
@@ -92,13 +90,12 @@ $Student   = new Student();
                             </div>
 
                             <div class="row m-0 p-0 mb-3">
-                                <label for="inputText" class="col-xl-2 col-lg-2 col-form-label">Upload Image :</label>
+                                <label for="inputText" class="col-xl-2 col-lg-2 col-form-label">Image Upload :</label>
                                 <div class="col-xl-10 col-lg-10 p-0">
                                     <input class="form-control" id="formFile" type="file" name="image" accept="image/*"
-                                        onchange="loadFile(event)">
+                                        onchange="loadFile(event)" required>
                                 </div>
                             </div>
-
                             <div class="row m-0 p-0 mb-3">
                                 <label for="inputText" class="col-xl-2 col-lg-2 col-form-label">Name :</label>
                                 <div class="col-xl-10 col-lg-10 p-0">
@@ -217,7 +214,6 @@ $Student   = new Student();
                                 </div>
                             </div>
 
-
                             <div class="row m-0 p-0">
                                 <label for="inputText" class="col-xl-2 col-lg-2 col-form-label">Post Office :</label>
                                 <div class="col-xl-4 col-lg-4 mb-3 p-0">
@@ -252,9 +248,6 @@ $Student   = new Student();
                                         required>
                                 </div>
                             </div>
-
-
-
                             <div class="row mb-3 m-0 p-0" style="margin-top: 2.5rem;">
 
                                 <div class="col-xl-12 col-lg-12  d-flex justify-content-center align-items-center">
@@ -333,4 +326,3 @@ $Student   = new Student();
 </body>
 
 </html>
-<!-- padding-bottom: -0.5rem; -->

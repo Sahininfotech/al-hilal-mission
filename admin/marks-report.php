@@ -7,17 +7,16 @@ require_once '../classes/institutedetails.class.php';
 require_once '../classes/exam.class.php';
 $StudentDetails = new StudentDetails();
 $institute      = new  InstituteDetails();
-
 $classes        = new  Examination();
 
 $showStudentfinalexam = $StudentDetails->finalExampage($_GET['studentclass'], $_GET['session']);
+
 $marktotal = $StudentDetails->Studentmarktotal($_GET['studentid'], $_GET['session'], $_GET['studentclass']);
 $classnumber = $StudentDetails->numberOfClass($_GET['studentclass'], $_GET['stream']);
+
 $Studentdata = $StudentDetails->Studentmark($_GET['studentid']);
+
 $result=$institute->instituteShow();
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +24,11 @@ $result=$institute->instituteShow();
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
     <title>Student Management / Student Details / Studentclass-1- NiceAdmin Bootstrap Templatee</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
+
     <!-- Favicons -->
     <link href="../admin/assets/img/favicon.png" rel="icon" />
     <link href="../admin/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
@@ -113,6 +114,9 @@ foreach($result as $row){
                     <div class="row" style="align-items: center;">
                         <div class="col-sm-2  ">
                             <img src="assets/img/1mg121.jpg" alt="Profile" class="rounded-circle w-100">
+                            <!-- <h4 class="ps-4">Marksheet</h4>
+                            <h6 class="ps-4">Class / 1</h6>
+                            <p class="ps-4">date: 15/05/2022</p> -->
                         </div>
                         <div class="col-sm-10">
                             <h2><?php    echo $row['institute_name']  ?></h2>
@@ -136,7 +140,7 @@ foreach($result as $row){
                                             <div class="row info-student">
                                                 <div class="col-8">
                                                     <h6>Name : <?php    echo $rowdata['name']  ?></h6>
-                                                    <h6>Father's Name : <?php    echo $rowdata['gurdian_name'] ?></h6>
+                                                    <h6>Guardian's Name : <?php    echo $rowdata['gurdian_name'] ?></h6>
 
                                                 </div>
                                                 <div class="col-4">
@@ -151,7 +155,6 @@ foreach($result as $row){
                                             <table class="table">
                                                 <thead>
                                                     <tr>
-
                                                         <th colspan="2">Subject Name</th>
                                                         <?php
 
@@ -197,7 +200,6 @@ foreach($result as $row){
 
                                                     foreach ($showStudentDetails as $showStudentsDetails) {
                                                         $showstudentsubject = $showStudentsDetails['subject'];
-                                                        $showclassstudent   = $showStudentsDetails['class_name']; 
                                                         $showid             = $showStudentsDetails['id'];
                                                    
                                                        $showStudent= $StudentDetails->showStudentmark($showStudentsDetails['subject'], $_GET['studentid'], $_GET['session'], $_GET['studentclass']);
@@ -223,74 +225,47 @@ foreach($result as $row){
                                                         }  
 
                                                         ?>
-
                                                         <td><?php    echo $sum  ?>
                                                         </td>
 
                                                         <td><?php
-                                                        $rank_type = "subject ranking";
-            $Showsubrank = $classes->showPercen($rank_type);
-            foreach ($Showsubrank as $subrank) {
+                                                            $Showsubrank = $classes->showgrade();
+                                                            foreach ($Showsubrank as $subrank) {
 
-                $max_percentage       = $subrank['max_percentage'];
-                $min_percentage       = $subrank['min_percentage'];
-                $showchar       = $subrank['char'];
-
-
-          if ($subPercentage >=$min_percentage  & $subPercentage <=$max_percentage){ echo $showchar;}
-            }
+                                                            $min_mraks       = $subrank['Min_marks'];
+                                                            $max_mraks       = $subrank['Max_marks'];
+                                                            $showchar             = $subrank['grade_mane'];
 
 
-// elseif ($subPercentage >=11 & $subPercentage <= 20)
-// { echo "C";}
+                                                            if ($sum >=$min_mraks  && $sum <=$max_mraks){ echo $showchar;}
+                                                            }
 
-// elseif ($subPercentage >=21 & $subPercentage <= 40)
-// {echo "B";}
+                                                        
 
-// elseif ($subPercentage >=41 & $subPercentage <= 70)
-// {echo "B+";}
-
-// elseif ($subPercentage >=71 & $subPercentage <= 80)
-// { echo "A";}
-
-// elseif ($subPercentage >=81 & $subPercentage <= 90)
-// { echo "A+";}
-
-// elseif ($subPercentage >=91 & $subPercentage <= 100)
-// { echo "o";}
-// else {
-// echo "Over Of 100";}
-
-                                                    
-
-                                                        //     if ($subPercentage >=0 & $subPercentage <= 10){ echo $result1 = "Faill";
+                                                        //     if ($subPercentage >=0 & $subPercentage <= 10){ echo "Faill";
 
                                                         //     }elseif ($subPercentage >=11 & $subPercentage <= 20)
-                                                        //    { echo $result1 = "C";}
+                                                        //    { echo "C";}
 
                                                         //    elseif ($subPercentage >=21 & $subPercentage <= 40)
-                                                        //     {echo $result1 = "B";}
+                                                        //     {echo "B";}
 
                                                         //     elseif ($subPercentage >=41 & $subPercentage <= 70)
-                                                        //     {echo $result1 = "B+";}
+                                                        //     {echo "B+";}
 
                                                         //     elseif ($subPercentage >=71 & $subPercentage <= 80)
-                                                        //    { echo $result1 = "A";}
+                                                        //    { echo "A";}
 
                                                         //    elseif ($subPercentage >=81 & $subPercentage <= 90)
-                                                        //    { echo $result1 = "A+";}
+                                                        //    { echo "A+";}
 
                                                         //    elseif ($subPercentage >=91 & $subPercentage <= 100)
-                                                        //    { echo $result1 = "o";}
+                                                        //    { echo "o";}
                                                         //     else {
-                                                        //     echo $result1 = "Over Of 100";}
+                                                        //     echo "Over Of 100";}
 
-                                                        //     function marksupdate(){                                                              
+
                                                         
-                                                        //         return $result1;
-                                                        
-                                                        //     }
-                                                   
                                                           ?></td>
                                                     </tr>
                                                     <?php   $i++; }}}?>
@@ -308,7 +283,7 @@ foreach($result as $row){
 
                                                     <tr>
 
-                                                        <th colspan="2" class="text-center">Total Marks :</th>
+                                                        <th colspan="2" class="text-center">Max Marks :</th>
                                                         <th colspan="2" class="text-center">
                                                             <?php   echo "$totalnumber" ?></th>
                                                     </tr>
@@ -323,47 +298,25 @@ foreach($result as $row){
                                                         <th colspan="2" class="text-center">Percentage :</th>
                                                         <th colspan="2" class="text-center">
                                                             <?php  
-                                                            $Percentagenumber = $Percentage;
+                                                            $somenumber = $Percentage;
 
-                                                            $Percentagenumber = round($Percentagenumber,2);
+                                                            $somenumber = round($somenumber,2);
                                                             
-                                                            if($Percentagenumber == intval($Percentagenumber))
+                                                            if($somenumber == intval($somenumber))
                                                             {
-                                                                $Percentagenumber = intval($Percentagenumber);
-                                                            }                                                       
+                                                                $somenumber = intval($somenumber);
+                                                            }
                                                             
-                                                            echo "$Percentagenumber%" ?></th>
+                                                            echo "$somenumber%";
+                                                            ?></th>
                                                     </tr>
 
                                                     <tr>
                                                         <!-- <th colspan="4" class="text-center"></th> -->
-                                                        <th colspan="2" class="text-center">Class Rank :</th>
-                                                        <th colspan="2" class="text-center"><?php
-
-$rank_types = "total ranking";
-$Showtotalbrank = $classes->showPercen($rank_types);
-foreach ($Showtotalbrank as $subranks) {
-
-    $showmax_percentage       = $subranks['max_percentage'];
-    $showmin_percentage       = $subranks['min_percentage'];
-    $showchardata       = $subranks['char'];
-
-                                                            if ($Percentage >=$showmin_percentage & $Percentage <= $showmax_percentage){ echo $showchardata;}}
-                                                            
-//                                                             else
-                                                        //     if ($Percentage >=51 & $Percentage <= 60)
-                                                        //    { echo "2nd Division 3rd Division";}
-
-                                                        //    elseif ($Percentage >=61 & $Percentage <= 75)
-                                                        //     {echo "1st Division";}
-
-                                                        //     elseif ($Percentage >=75 & $Percentage <= 100)
-                                                        //     {echo "Star";}
-
-                                                        //   else {
-                                                        //     echo "Over Of 100";}
-                                                     
-                                                          ?></th>
+                                                        <th colspan="2" class="text-center">Rasult :</th>
+                                                        <th colspan="2" class="text-center">
+                                                        <?php    echo $_GET['status'];  ?>
+                                                        </th>
                                                     </tr>
 
                                                 </tbody>

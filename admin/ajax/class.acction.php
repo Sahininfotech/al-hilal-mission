@@ -1,10 +1,11 @@
 <?php
-
-
-
 require_once '../../_config/dbconnect.php';
 
+
+
 require_once '../../classes/institutedetails.class.php';
+
+
 
 $classes = new  InstituteDetails();
 
@@ -12,34 +13,73 @@ $classes = new  InstituteDetails();
 
 
 
-if(isset ($_GET["submitdata"])){
 
 
 
-    $classname   = ($_GET["classname"]);
 
-    $description = ($_GET["description"]);        
 
-    $resultclass = $classes->classInsert( $classname, $description);
+
+if(isset ($_POST["submitdata"])){
+
+
+
+
+
+
+
+    $classname    = $_POST["classname"];
+
+
+
+    $description  = $_POST["description"];        
+
+
+        //image uplod 
+
+        $image            = $_FILES[ 'upload_image' ][ 'name' ];
+
+        $image_size       = $_FILES[ 'upload_image' ][ 'size' ];
+  
+        $image_tmp_name   = $_FILES[ 'upload_image' ][ 'tmp_name' ];
+  
+        $image_folter     = '../image/'.$image;
+  
+      //   echo $image_tmp_name; exit;
+  
+  
+  
+          move_uploaded_file( $image_tmp_name, $image_folter );
+
+    $resultclass = $classes->classInsert($classname, $description, $image);
+
+
 
             
 
+
+
     if($resultclass){
+
+
 
         header("Location: https://alhilalmission.in/admin/classes.php");
 
+
+
     }else{
+
+
 
         header("Location: https://alhilalmission.in/admin/classes.php");      
 
+
+
     }
 
-        
+
+
 
 }
 
-    
 
-?>
-
-      
+?>     

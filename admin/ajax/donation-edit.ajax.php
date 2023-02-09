@@ -364,7 +364,7 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
 
                     <div class="col-sm-10">
 
-                        <input type="date" class="form-control" id="edit2" value="<?php echo $showdate ?>" name="date">
+                        <input type="date" class="form-control" id="edit2" value="<?php echo $showdate; ?>" name="date">
 
                     </div>
 

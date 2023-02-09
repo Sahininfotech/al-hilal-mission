@@ -1,5 +1,4 @@
 <?php
-
 require_once '../../_config/dbconnect.php';
 require_once '../../classes/exam.class.php';
 require_once '../../classes/classes.class.php';
@@ -35,11 +34,11 @@ $eaxm = $Examination->examById($_GET['data']);
 <body>
     <?php
                 foreach ($eaxm as $showExamshow) {
-                $showclass_name = $showExamshow['class_name'];
-                $showexam_name = $showExamshow['exam_name'];
-                $showmax_marks = $showExamshow['max_marks'];
+                $showclass_name       = $showExamshow['class_name'];
+                $showexam_name        = $showExamshow['exam_name'];
+                $showmax_marks        = $showExamshow['max_marks'];
                 $showexam_description = $showExamshow['description'];
-                $showid = $showExamshow['id'];
+                $showid               = $showExamshow['id'];
                 }
                 
     ?>
@@ -47,7 +46,7 @@ $eaxm = $Examination->examById($_GET['data']);
     <form method="POST" action="exam-update.action.php">
         <div class="card mb-0" style="box-shadow: none">
             <div class="card-body p-3">
-                <h5 class="card-title d-flex justify-content-center p-0 mt-0 mb-3"> Add Examination </h5>
+                <h5 class="card-title d-flex justify-content-center p-0 mt-0 mb-3"> Edit Examination </h5>
                 <input type="hidden" name="id" value="<?php echo $showid;?>">
                 <div class="row p-0 mb-3">
                     <label for="inputText" class="col-sm-3 col-form-label">Examinaton :</label>
@@ -60,18 +59,17 @@ $eaxm = $Examination->examById($_GET['data']);
                     <label for="inputText" class="col-sm-3 col-form-label">Class Name :</label>
                     <div class="col-sm-9">
                         <select class="form-select" id="form-select" aria-label="Default select example"
-                            name="class_name" required>
+                            name="class_name">
                             <?php           
-                       echo '<option>'.$showclass_name.'</option>';
-                         ?>
-
+                                echo '<option>'.$showclass_name.'</option>';
+                            ?>
                             <?php
-                                         $classList = $Classes->classesList();
-                                         foreach ($classList as $class) {
-                                            echo '<option value="'.$class['id'].'">'.$class['classname'].'</option>';
+                                $classList = $Classes->classesList();
+                                foreach ($classList as $class) {
+                                echo '<option value="'.$class['id'].'">'.$class['classname'].'</option>';
 
-                                         }
-                                        ?>
+                                }
+                            ?>
                         </select>
                     </div>
                 </div>

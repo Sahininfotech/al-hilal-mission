@@ -1,12 +1,13 @@
 <?php 
 session_start();
-$page ="Add New Student";
+$page = "Admission Query";
 
 require_once '../_config/dbconnect.php';
 require_once '../classes/admin.class.php';
 require_once '../classes/studdetails.class.php';
 require_once '../classes/contact.class.php';
 require_once '../classes/utility.class.php';
+require_once '../includes/constant.php';
 
 $dataupdate = new  StudentDetails();
 $Contact    = new Contact();
@@ -40,7 +41,7 @@ $viwe=$Contact->viweadmission($_GET['message']);
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Add new Student - NiceAdmin Bootstrap Template</title>
+    <title>Contacts/ Admission Query Message || <?php echo SITE_NAME; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -67,7 +68,7 @@ $viwe=$Contact->viweadmission($_GET['message']);
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                     <li class="breadcrumb-item">Pages</li>
                     <li class="breadcrumb-item">Contacts</li>
-                    <li class="breadcrumb-item">Contacts Details</li>
+                    <li class="breadcrumb-item">Admission Query Details</li>
                     <li class="breadcrumb-item active">Message</li>
                 </ol>
             </nav>
@@ -219,7 +220,8 @@ $viwe=$Contact->viweadmission($_GET['message']);
 
     </main><!-- End #main -->
 
-
+ <!-- ======= Footer ======= -->
+ <?php require_once 'require/addfooter.php'; ?>
 
 </body>
 

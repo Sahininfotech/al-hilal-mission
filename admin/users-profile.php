@@ -100,9 +100,10 @@ $Admin = new  Admin();
                           ?>
 
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <img src="<?php echo $img; ?>" width=120 height=115 alt=""
-                                onerror="this.src='assets/img/user.jpg';" width=120 height=120 class="rounded-circle">
-                                                         
+                            <img id="theImage" src="<?php echo $img; ?>" width=120 height=115 alt=""
+                                onerror="this.src='assets/img/user.jpg';" width=120 height=120 class="rounded-circle"
+                                onClick="makeFullScreen()">
+
                             <h2><?php echo $showname; ?></h2>
                             <h3><?php echo $showprofession; ?></h3>
 
@@ -198,17 +199,17 @@ $Admin = new  Admin();
                                             <label for="image" class="col-md-4 col-lg-3 col-form-label">Profile
                                                 Image</label>
                                             <div class="col-md-8 col-lg-9">
-                                           
-                                                <img src="" width=110 height=105 alt=""
+
+                                                <img src="<?php echo $img; ?>" width=110 height=105 alt=""
                                                     onerror="this.src='assets/img/user.jpg';" width=100 height=100
-                                                    class="rounded-circle" style="margin-left: -2rem;" id="output">
-                                                  
+                                                    class="rounded-circle" style="margin-left: -2rem;" id="output" >
+
                                                 <div class="image-upload pt-2">
                                                     <label for="file-input">
                                                         <i class="bi bi-upload btn btn-primary btn-sm"></i>
                                                     </label>
                                                     <input type="file" id="file-input" name="Profile_image"
-                                                        accept="image/*"  onchange="loadFile(event)"/>
+                                                        accept="image/*" onchange="loadFile(event)" />
                                                     <input type="hidden" value="<?php echo $Profile_image; ?>"
                                                         name="updateimg">
                                                     <a href="#" class="btn btn-danger btn-sm"
@@ -370,15 +371,51 @@ $Admin = new  Admin();
 
     <!-- preview-image -->
     <script>
-  var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // free memory
+    var loadFile = function(event) {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function() {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+    </script>
+    <!-- preview-image-end -->
+
+    <script>
+    // <!-- image fullscreen -->
+
+    function makeFullScreen() {
+
+        var divObj = document.getElementById("theImage");
+
+        //Use the specification method before using prefixed versions
+
+        if (divObj.requestFullscreen) {
+
+            divObj.requestFullscreen();
+
+        } else if (divObj.msRequestFullscreen) {
+
+            divObj.msRequestFullscreen();
+
+        } else if (divObj.mozRequestFullScreen) {
+
+            divObj.mozRequestFullScreen();
+
+        } else if (divObj.webkitRequestFullscreen) {
+
+            divObj.webkitRequestFullscreen();
+
+        } else {
+
+            console.log("Fullscreen API is not supported");
+
+        }
+
     }
-  };
-</script>
- <!-- preview-image-end -->
+
+    // <!-- image fullscreen end -->
+    </script>
 
 </body>
 

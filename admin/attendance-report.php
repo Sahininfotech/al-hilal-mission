@@ -5,21 +5,24 @@ require_once '../classes/student.class.php';
 require_once '../includes/constant.php';
 $Students = new  Student();
 if(isset ($_GET['dayreport']) ){
-    $studentbox=$Students->attendancechartday($_GET['dayreport'], $_GET['class']);
+    $gatdata = $_GET['dayreport'];
+    $studentboxs=$Students->attendancechartday($gatdata, $_GET['class']);
     }
     if(isset ($_GET['monthreport']) ){
-    $studentbox=$Students->attendancechartmonth($_GET['monthreport'], $_GET['class']);
+    $gatdata = $_GET['monthreport'];
+    $studentboxs=$Students->attendancechartmonth($gatdata, $_GET['class']);
     }
     if(isset ($_GET['yearreport']) ){
-    $studentbox=$Students->attendancechartyear($_GET['yearreport'], $_GET['class']);
+        $gatdata = $_GET['yearreport'];
+    $studentboxs=$Students->attendancechartyear($gatdata, $_GET['class']);
     }
 
     if(isset ($_GET['totalreport']) ){
-        $studentbox=$Students->attendancetotalreport($_GET['class']);
+        $studentboxs=$Students->attendancetotalreport($_GET['class']);
         }
         
     if(isset ($_GET['studentid']) ){
-        $studentbox=$Students->attendancestudent($_GET['studentid']);
+        $studentboxs=$Students->attendancestudent($_GET['studentid']);
         }
   
     require_once '../classes/institutedetails.class.php';
@@ -95,7 +98,7 @@ if(isset ($_GET['dayreport']) ){
                         </div>
                         <div class="col-sm-3 border-start border-dark " style="line-height: 0.5rem;">
                             <h4 class="ps-4">Attendance Report Of Student</h4>
-                            <h6 class="ps-4">Student Attendance /
+                            <h6 class="ps-4">Attendance /
                                 <?php if(isset($_GET['dayreport'])){echo $_GET['dayreport'];}; 
 
                                                          if(isset($_GET['monthreport'])){echo $_GET['monthreport'];};
@@ -117,12 +120,33 @@ if(isset ($_GET['dayreport']) ){
                 </div>
 
                 <?php 
-                    if ($studentbox == 0) {
+                 if ($studentboxs == 0) {
                     echo "<h2>No Data Avilable.</h2>";
 
                     }
                     else
                     {
+        foreach ($studentboxs as $date) {
+        $showdatewise   = $date['dates']; 
+
+        if(isset ($_GET['dayreport']) ){
+            $studentbox=$Students->attendancechartdays($showdatewise, $_GET['class']);
+            }
+
+        if(isset ($_GET['monthreport']) ){
+            $studentbox=$Students->attendancechartmonths($showdatewise, $_GET['class']);
+            }
+
+            if(isset ($_GET['yearreport']) ){
+                $studentbox=$Students->attendancechartyears($showdatewise, $_GET['class']);
+                }
+                if(isset ($_GET['totalreport']) ){
+                    $studentbox=$Students->attendancetotalsreport($showdatewise, $_GET['class']);
+                    }
+                    if(isset ($_GET['studentid']) ){
+                        $studentbox=$Students->attendancestudents($showdatewise, $_GET['studentid']);
+                        }
+             
 
                         $totalstudent = 00;
                         if ($studentbox != null || $studentbox != '') {
@@ -134,13 +158,12 @@ if(isset ($_GET['dayreport']) ){
                     
                echo' <table class="table table-sm table-bordered mt-3">
                     <thead>
-                    <h6>Class ['.$_GET['class'].']</h6>
+                    <h6>Date ['.$showdatewise.'], Class ['.$_GET['class'].']</h6>
                         <tr>
                             <th>Name</th>
                             <th>Roll No</th>
                             <th>Student id</th>
                             <th>Status</th>
-                            <th>Date</th>
 
                         </tr>
 
@@ -149,14 +172,13 @@ if(isset ($_GET['dayreport']) ){
                     if ($_GET['class'] == 11 || $_GET['class'] == 12) {
                   echo'  <table class="table table-sm table-bordered mt-3">
                     <thead>
-                    <h6>Class ['.$_GET['class'].']</h6>
+                    <h6>Date ['.$showdatewise.'], Class ['.$_GET['class'].']</h6>
                         <tr>
                             <th>Name</th>
                             <th>Roll No</th>
                             <th>Student id</th>
                             <th>Subject</th>
                             <th>Status</th>
-                            <th>Date</th>
 
                         </tr>
 
@@ -186,7 +208,6 @@ if(isset ($_GET['dayreport']) ){
                       <td>'.$showroll_no.'     </td>
                       <td>'.$showstudent_id.'  </td>
                       <td>'.$showstatus.'      </td>
-                      <td>'.$showdate.'        </td>
 
                       </tr>';}
 
@@ -198,7 +219,6 @@ if(isset ($_GET['dayreport']) ){
                       <td>'.$showstudent_id.'  </td>
                       <td>'.$showsubject.'     </td>
                       <td>'.$showstatus.'      </td>
-                      <td>'.$showdate.'        </td>
 
                       </tr>';}
 
@@ -222,8 +242,6 @@ if(isset ($_GET['dayreport']) ){
 
                     <th></th>
 
-                    <th></th>
-
                     <th> Total Student</th>
 
                     <th>'.$totalstudent.'</th>
@@ -237,13 +255,11 @@ if(isset ($_GET['dayreport']) ){
                         <th></th>
     
                         <th></th>
-    
-                        <th></th>
 
                         <th> Total Student</th>
     
                         <th>'.$totalstudent.'</th>
-                        </tr>';}
+                        </tr>';}}}
                     }?>
 
                 </thead>
@@ -253,7 +269,7 @@ if(isset ($_GET['dayreport']) ){
         </div>
 
         <?php
-                                }}
+                                }
                             ?>
 
 

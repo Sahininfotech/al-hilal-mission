@@ -37,7 +37,7 @@ require_once '../includes/constant.php';
     $profession   = $_POST["address"];
 
     $profession   = $_POST["country"];
-   $size = "2 x 2 inch, 35 x 45 mm or 35 x 35 mm";
+
 
     //image uplod 
     $image            = $_FILES[ 'upload_img' ][ 'name' ];
@@ -47,11 +47,6 @@ require_once '../includes/constant.php';
   //   echo $image_tmp_name; exit;
 
       move_uploaded_file( $image_tmp_name, $image_folter );
-
-      if (($image_size > $size)){      
-        $message = 'File too large. File must be less than 2 megabytes.'; 
-        echo '<script type="text/javascript">alert("'.$message.'");</script>'; 
-    }
 
 
 

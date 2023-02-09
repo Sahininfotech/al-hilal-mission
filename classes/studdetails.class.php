@@ -36,7 +36,23 @@ class StudentDetails extends DatabaseConnection{
 
   // INDEX display start w
         
-        function Studenttotalamount(){
+        // function Studenttotalamount(){
+
+        //     $data = array();    
+        //     $sql = "SELECT SUM(total_amount) AS 'Total' FROM `student`";
+        //     $insertEmpQuery = $this->conn->query($sql);
+        //     while($row      = $insertEmpQuery->fetch_array()){
+        //         $data[]	= $row;
+        //     }
+        //     return $data;
+    
+        // }
+        // end display
+
+
+         // INDEX display start w
+        
+         function Studenttotalamount(){
 
             $data = array();    
             $sql = "SELECT SUM(payable_fee) AS 'Total' FROM `student_fees_dtls` WHERE `session` = '2022-2023'";
@@ -436,7 +452,7 @@ class StudentDetails extends DatabaseConnection{
         function searchStudent($search_value){
 
             $data = array();
-            $sql ="SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`name` LIKE '%$search_value%' or `student_fees_dtls`.`roll_no` LIKE '%$search_value%' or `student_fees_dtls`.`class` LIKE '%$search_value%'";
+            $sql ="SELECT * FROM `student` WHERE `student`.`name` LIKE '%$search_value%' or `student`.`roll_no` LIKE '%$search_value%' or `student`.`class` LIKE '%$search_value%'";
             
             $result = $this->conn->query($sql);
             $rows = $result->num_rows;
@@ -481,9 +497,7 @@ class StudentDetails extends DatabaseConnection{
 
 
 
-
-
-          
+               
     //departnemt action update start w
 
     function studentaction($name, $status, $email, $class, $roll_no, $address, $id, $c_image){
@@ -592,11 +606,33 @@ return $data;
         }
     }
 
- 
+
+
 
 
 
     // SELECT COUNT(class_name) FROM `class_subject` WHERE `class_name` = '1' 
+
+
+
+    function totalsubject($showstream, $showclass1){
+
+        $data = array();
+        $sql = "SELECT * FROM `class_subject` WHERE `stream` = '$showstream' and `class_id` = '$showclass1'";
+        $studentTypeQuery = $this->conn->query($sql);
+        $rows = $studentTypeQuery->num_rows;
+        if ($rows > 0) {
+            while ($result = $studentTypeQuery->fetch_array()) {
+                $data[] = $result;
+        }
+        return $data;
+        }
+
+    }
+
+
+
+
 
 }
 

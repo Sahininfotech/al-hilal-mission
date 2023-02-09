@@ -22,26 +22,36 @@ $insertEmpQuery=false;
 
 if(isset ($_POST["submit"])){
 
-$name   = $_POST["name"];
-$notices = $_POST["notice"];
-$subject = $_POST["subject"];
+$name     = $_POST["name"];
+$notices  = $_POST["notice"];
+$subject  = $_POST["subject"];
 $staff_id = $_POST["staff_id"];
-$oldsignature = $_POST["oldsignature"];
+$added_by = $_POST["added_by"];
 
 $image            = $_FILES[ 'signature' ][ 'name' ];
 $image_size       = $_FILES[ 'signature' ][ 'size' ];
 $image_tmp_name   = $_FILES[ 'signature' ][ 'tmp_name' ];
+$file_type        = $_FILES['signature']['type']; //returns the mimetype
 $image_folter     = 'image/'.$image;
 
 
 if($image != ''){
     $c_image = $image;
+    $allowed          = array("image/png");
+if(!in_array($file_type, $allowed)) {
+
+  echo "<script> alert('Only png files are allowed.');window.history.back(); </script>";
+
+  exit();
+
+}
  }else{
+    $oldsignature = $_POST["oldsignature"];
     $c_image = $oldsignature;
  }
 
 
-$result = $emp->staff_noticeInsert($name, $notices, $subject, $c_image, $staff_id);
+$result = $emp->staff_noticeInsert($name, $notices, $subject, $c_image, $staff_id, $added_by);
 
 if($insertEmpQuery){
 
@@ -138,15 +148,20 @@ if($insertEmpQuery){
 
                                 <?php
                         if(!$insertEmpQuery){
+                            $adminDt = $Admin->getAdmin($_SESSION['user_name']);
+                            foreach ($adminDt as $showStaffdentDetailsshow) {
+                            $showname       = $showStaffdentDetailsshow['name'];
                         ?>
 
                                 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" class="needs-validation" novalidate>
                                     <input type="hidden" class="form-control" name="staff_id" id="staff_id" required>
+                                    <input type="hidden" class="form-control" name="added_by" id="added_by"
+                                        value="<?php    echo $showname;  ?>">
                                     <div class="row mb-3">
                                         <input class=" form-control  minecsssearch" list="datalistOptions" id='user_id'
-                                            placeholder="Type to search..." autocomplete="off" name="name"
-                                            onkeyup="getDetail(this.value)">
+                                            placeholder="Type to search staff..." autocomplete="off" name="name"
+                                            onkeyup="getDetail(this.value)" required>
 
                                     </div>
                                     <div class="arrow-up" id="tabledata"></div>
@@ -166,12 +181,13 @@ if($insertEmpQuery){
 
                                     <div class="row mb-3">
                                         <input class=" form-control  minecsssearch" list="datalistOptions" id='subject'
-                                            placeholder="Subject..." name="subject">
+                                            placeholder="Subject..." name="subject" required>
                                     </div>
 
                                     <div class="form-floating mb-3">
                                         <textarea class="form-control" placeholder="Leave a comment here"
-                                            id="floatingTextarea2" style="height: 200px " name="notice"></textarea>
+                                            id="floatingTextarea2" style="height: 200px " name="notice"
+                                            required></textarea>
                                         <label for="floatingTextarea2">Comments</label>
                                     </div>
 
@@ -182,7 +198,7 @@ if($insertEmpQuery){
 
                                         <select class="form-select" id="form-select" aria-label="Default select example"
                                             name="oldsignature">
-                                            <option selected disabled>Select Image</option>
+                                            <option selected disabled>Select previous Image</option>
                                             <?php
                                             $updatePage=$emp->showimage();
                                             foreach ($updatePage as $showstaffnoticeshow) {
@@ -202,7 +218,7 @@ if($insertEmpQuery){
                                             In-Charge:
                                         </label>
                                         <input class="form-control" id="formFile" type="file" name="signature"
-                                            accept="image/png">
+                                            accept="image/*">
                                     </div>
 
                                     <div class="d-flex justify-content-end">
@@ -216,7 +232,7 @@ if($insertEmpQuery){
                         </div>
                         </form>
                         <?php
-                    }
+                    }}
                     ?>
 
                     </div>
@@ -319,7 +335,7 @@ if($insertEmpQuery){
 
     function deleteNOTICE() {
 
-        return confirm("Aru you sure want to delete this record ?")
+        return confirm("Are you sure that you want to delete the Staff Notice Contents ?")
 
     };
     </script>
@@ -403,6 +419,29 @@ if($insertEmpQuery){
         return confirm("Aru you sure want to delete this record ?");
 
     };
+    </script>
+
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
     </script>
 
 

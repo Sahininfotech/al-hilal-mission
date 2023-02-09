@@ -30,7 +30,7 @@ require_once '../../classes/employee.class.php';
       
         }
       if($update){
-        echo "<h1>message data send<br><h1>";
+        echo "<h1>message data send <br><h1>";
         }
         else{
         echo header("Location: staffnotice.php");

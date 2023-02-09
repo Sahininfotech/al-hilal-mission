@@ -1,16 +1,6 @@
 <?php
-
 session_start();
-
-
-
 $page = "dashboard"; 
-
-
-
-
-
-
 
 require_once '../_config/dbconnect.php';
 
@@ -27,6 +17,8 @@ require_once '../classes/studdetails.class.php';
 require_once '../classes/institutedetails.class.php';
 
 require_once '../classes/utility.class.php';
+
+require_once '../includes/constant.php';
 
 
 
@@ -150,7 +142,7 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-    <title>Dashboard - NiceAdmin Bootstrap Template</title>
+    <title>Dashboard - <?php echo SITE_NAME; ?></title>
 
 
 
@@ -161,9 +153,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
     <meta content="" name="keywords">
 
     <?php require_once 'require/headerLinks.php';?>
-
-
-
 
 </head>
 
@@ -473,7 +462,8 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                                     class="text-muted small pt-2 ps-1">Pending Fees</span>
 
-                                                <h6 style="color: red;" >₹ <?php echo $tolatamount ; if ($tolatamount== 0) echo 0;?></h6>
+                                                <h6 style="color: red;" >₹ <?php  $tolatamount  = number_format($tolatamount, 2);
+                                                echo $tolatamount ; if ($tolatamount== 0) echo 0;?></h6>
 
                                             </div>
 
@@ -557,7 +547,8 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                                 <h6>₹
 
-                                                    <?php echo $row->Total ; if ($row->Total== 0) echo 0;?></h6>
+                                                    <?php  $row->Total  = number_format($row->Total, 2);
+                                                     echo $row->Total ; if ($row->Total== 0) echo 0;?></h6>
 
                                             </div>
 
@@ -653,7 +644,8 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                                     class="text-muted small pt-2 ps-1">Expenses</span>
 
-                                                <h6>₹ <?php echo $row->Total ;?><?php  if ($row->Total== 0) echo 0;?>
+                                                <h6>₹ <?php  $row->Total  = number_format($row->Total, 2);
+                                                echo $row->Total ;?><?php  if ($row->Total== 0) echo 0;?>
 
                                                 </h6>
 
@@ -1025,7 +1017,7 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                <canvas id="myChart"></canvas>
+                                <canvas id="myChart" style="max-height: 400px;"></canvas>
 
 
 
@@ -1157,7 +1149,7 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                type: 'line',
+                                type: 'pie',
 
 
 
@@ -1225,7 +1217,7 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                         <div class="card-body">
 
-                            <h5 class="card-title">Datatables</h5>
+                            <h5 class="card-title">Recent Student Datatables</h5>
 
                             <table class="table table-borderless datatable">
 
@@ -1399,6 +1391,10 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
+
+
+
+
     <script>
 
 
@@ -1413,14 +1409,46 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
         config
 
+
+
     );
 
+
+
+
+
+
+
     var lineChart = new Chart(
+
+
+
         document.getElementById('lineChart'),
+
+
+
         revenueconfig
+
+
+
     );
+
+
 
     </script>
 
+
+
+
+
+
+
 </body>
+
+
+
+
+
+
+
 </html>

@@ -449,7 +449,11 @@ if(isset ($_GET['dayreport']) ){
 
                                 <th>Total Fees</th>
 
+                                <th>Tolat Paid</th>
+
                                 <th>Tolat Due</th>
+
+                                <th>Roll No</th>
 
                                 <th>Class</th>
 
@@ -502,16 +506,23 @@ if(isset ($_GET['dayreport']) ){
                         
                         foreach ($pendingfees as $showStudentfees) {
                             // $showstudentids   = $showStudentfees['student_id'];
-                            $showtotal_amount   = $showStudentfees['total_amount'];
+                            $showtotal_amounts   = $showStudentfees['total_amount'];
+                            $showroll_no         = $showStudentfees['roll_no'];
+                            $totalpaids          = $showtotal_amounts - $showtotal;
+                            $totalpaid           = number_format($totalpaids, 2);
+                            $showtotal_amount    = number_format($showtotal_amounts, 2);
+
                                echo '<tr>
-
-
 
                       <td>'.$showname.'</td>
 
-                      <td>'.$showtotal_amount.'</td>                   
+                      <td>'.$showtotal_amount.'</td>  
+                      
+                      <td>'.$totalpaid.'</td>
 
                       <td>'.$showtotals.'</td>
+
+                      <td>'.$showroll_no.'</td>
 
                       <td>'.$showclass.'</td>
 
@@ -539,11 +550,11 @@ if(isset ($_GET['dayreport']) ){
 
                             <th></th>
 
-                            <th> Total Pending </th>
+                            <th></th>
 
+                            <th> Total Pending </th>                        
 
-
-                            <th style="color: red;">₹ <?php echo $pen_amount; ?></th>
+                            <th style="color: red;">₹ <?php echo $pen_amount; ?></th>                         
 
                             <th></th>
 

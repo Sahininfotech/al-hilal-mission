@@ -5,8 +5,9 @@ $page = "Contact";
 
 
 require_once '../_config/dbconnect.php';
-require_once '../classes/admin.class.php';
 require_once '../classes/utility.class.php';
+require_once '../classes/admin.class.php';
+require_once '../includes/constant.php';
 
 
 $Utility            = new Utility();
@@ -16,9 +17,13 @@ $Admin              = new Admin();
 $_SESSION['current-url'] = $Utility->currentUrl();
 
 if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
-  header("Location: login.php");
-  exit;
-}
+
+    header("Location: login.php");
+  
+    exit;
+  
+  }
+  
 
 ?>
 <!DOCTYPE html>
@@ -28,31 +33,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pages / Contact - NiceAdmin Bootstrap Template</title>
+    <title>Pages / Contact - <?php echo SITE_NAME; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
     <?php require_once 'require/headerLinks.php'; ?>
-    <style>
-    .dot {
-        position: absolute;
-        inset: 2.2rem 2.4rem auto auto;
-        height: 10px;
-        width: 10px;
-        background-color: #198754;
-        border-radius: 50%;
-        display: inline-block;
-    }
-    .dots {
-        position: absolute;
-        inset: 2.2rem 3.3rem auto auto;
-        height: 10px;
-        width: 10px;
-        background-color: #198754;
-        border-radius: 50%;
-        display: inline-block;
-    }
-    </style>
 
 </head>
 
@@ -78,8 +63,10 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 </ol>
             </nav>
         </div>
-  
+
         <!-- End Page Title -->
+
+
 
         <section class="section contact">
 
@@ -162,52 +149,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
             </div>
 
         </section>
-
-
-        <div class="row">
-            <!-- sales -->
-            <div class="col-xxl-3 col-md-3">
-                <div class="card">
-                    <a
-                        href='admissionMess.php'>
-                        <div class="card-body" style="padding: 20px 20px 20px 20px;">
-                            <h5 class="card-title" style="text-align: center;">Admission Query
-
-                                <i class="bi bi-chat-left-text" style="height: 28px; padding-left:1rem;"></i>
-
-                                <!-- <span class="badge bg-success badge-number">3</span> -->
-                                <span class="dot"></span>
-                                <!-- <div class="test rounded-circle"></div> -->
-
-                                <!-- End Messages Icon -->
-                            </h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- sales  end -->
-
-            <!-- sales -->
-            <div class="col-xxl-3 col-md-3">
-                <div class="card">
-                    <a
-                        href='message_show.php'>
-                        <div class="card-body" style="padding: 20px 20px 20px 20px;">
-                            <h5 class="card-title" style="text-align: center;">Contact Send
-                            
-                                <i class="bi bi-chat-left-text" style="padding-left:1rem;"></i>
-                                <span class="dots"></span>
-
-                                <!-- End Messages Icon -->
-                            </h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- sales  end -->
-        </div>
-
-
 
     </main><!-- End #main -->
 

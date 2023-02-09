@@ -7,19 +7,19 @@ require_once '../classes/studdetails.class.php';
 require_once '../classes/student.class.php';
 require_once '../classes/admin.class.php';
 require_once '../classes/exam.class.php';
-require_once '../classes/studdetails.class.php';
 require_once '../classes/fees-accounts.class.php';
 require_once '../classes/utility.class.php';
+require_once '../classes/studdetails.class.php';
 
+require_once '../includes/constant.php';
 
-
-$Utility   = new Utility(); 
+$Utility        = new Utility(); 
 
 $Admin          = new Admin();
 $Student        = new Student();
 $Examination    = new Examination();
-$StudentDetails = new StudentDetails();
-$FeesAccount                  = new FeesAccount();
+$FeesAccount    = new FeesAccount();
+$StudentDet = new StudentDetails();
 
 $showStudentDetails   = $Student->studentByClass($_GET['studenttype']);
 $showStudentfinalexam = $Examination->examByClassName($_GET['studenttype'], $_GET['session']);
@@ -42,7 +42,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Components / List Group - NiceAdmin Bootstrap Template</title>
+    <title>Studentclass - <?php echo SITE_NAME; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <?php require_once 'require/headerLinks.php'; ?>
@@ -115,7 +115,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 </div>
             </div>
             <!-- sales  end -->
-
             <!-- sales -->
             <div class="col-xxl-3 col-md-3">
                 <div class="card">
@@ -130,6 +129,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 </div>
             </div>
             <!-- sales  end -->
+
         </div>
         <section class="section dashboard">
             <div class="row">
@@ -142,262 +142,287 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                         <div class="col-12">
                             <div class="card recent-sales overflow-auto p-4">
 
-                            <form method="POST" action="ajax/stuSummary.action.php?class=<?php   echo $_GET['studenttype']  ?>">
+                                <form method="POST"
+                                    action="ajax/stuSummary.action.php?class=<?php   echo $_GET['studenttype']  ?>">
 
-                                <table class="table table-borderless datatable">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">S.No</th>
-                                            <th scope="col">Roll Number</th>
-                                            <th scope="col">Student Name</th>
-                                            <th scope="col">Guardian's Name</th>
-                                            <th scope="col">Student Id</th>
-                                            <th scope="col">exam status</th>
-                                            <th scope="col">class name</th>
-                                            <th scope="col">Fees Status</th>
-                                            <th scope="col">Action</th>
-                                            <th scope="col">Marksheet</th>
+                                    <table class="table table-borderless datatable">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">S.No</th>
+                                                <th scope="col">Roll Number</th>
+                                                <th scope="col">Student Name</th>
+                                                <th scope="col">Guardian's Name</th>
+                                                <th scope="col">Student Id</th>
+                                                <th scope="col">Exam Status</th>
+                                                <th scope="col">Attendance</th>
+                                                <th scope="col">Fees Status</th>
+                                                <th scope="col">Action</th>
+                                                <th scope="col">Marksheet</th>
+                                                <th scope="col">Fees Add</th>
 
-                                            <th scope="col">New class-Fees</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-
-
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <?php
+                                            <?php
                                         $i=1;
-                 if ($showStudentDetails == 0) {
-                  echo "No data Type Avilable.";
-                 }else{
-               foreach ($showStudentDetails as $showStudentDetailsshow) {
+                                        if ($showStudentDetails == 0) {
+                                        echo "No data Type Avilable.";
+                                        }else{
+                                        foreach ($showStudentDetails as $showStudentDetailsshow) {
 
-               $showclass1           = $showStudentDetailsshow['class'];
-               $showname             = $showStudentDetailsshow['name'];
-               $showstuid            = $showStudentDetailsshow['student_id'];
-               $showid               = $showStudentDetailsshow['id'];
-               $showroll_no          = $showStudentDetailsshow['roll_no'];
-               $showgurdian_name     = $showStudentDetailsshow['gurdian_name'];
-               $showstream           = $showStudentDetailsshow['stream'];
+                                        $showclass1           = $showStudentDetailsshow['class'];
+                                        $showname             = $showStudentDetailsshow['name'];
+                                        $showstuid            = $showStudentDetailsshow['student_id'];
+                                        $showid               = $showStudentDetailsshow['id'];
+                                        $showroll_no          = $showStudentDetailsshow['roll_no'];
+                                        $showgurdian_name     = $showStudentDetailsshow['gurdian_name'];
+                                        $showstream           = $showStudentDetailsshow['stream'];
 
-               $showaddress          = $showStudentDetailsshow['address'];
-               $showcontact_no       = $showStudentDetailsshow['contact_no'];
-               
-               $showpost_office      = $showStudentDetailsshow['post_office'];
-               $showpolice_station   = $showStudentDetailsshow['police_station'];
-               $showpin_code         = $showStudentDetailsshow['pin_code'];
+                                        $showaddress          = $showStudentDetailsshow['address'];
+                                        $showcontact_no       = $showStudentDetailsshow['contact_no'];
 
-               $showsdo_or_bdo       = $showStudentDetailsshow['sdo_or_bdo'];
-               $showdistrict         = $showStudentDetailsshow['district'];
-               $showstate	          = $showStudentDetailsshow['state'];
-               $showdate_of_birth    = $showStudentDetailsshow['date_of_birth'];
-               $showadded_by         = $showStudentDetailsshow['added_by'];
-               $showadded_on         = $showStudentDetailsshow['added_on'];
-             
+                                        $showpost_office      = $showStudentDetailsshow['post_office'];
+                                        $showpolice_station   = $showStudentDetailsshow['police_station'];
+                                        $showpin_code         = $showStudentDetailsshow['pin_code'];
 
-               $showacademic_year    = $showStudentDetailsshow['academic_year'];
-               $showdate             = $showStudentDetailsshow['date'];
-
-               $StudentDetails   = $FeesAccount->schowAmount($showstuid, $showacademic_year);
-               foreach ($StudentDetails as $showStudentDetails) {
-
-                   $showtotal_amount     = $showStudentDetails['payable_fee'];
-                   $showtotal_due        = $showStudentDetails['total_due'];
+                                        $showsdo_or_bdo       = $showStudentDetailsshow['sdo_or_bdo'];
+                                        $showdistrict         = $showStudentDetailsshow['district'];
+                                        $showstate	          = $showStudentDetailsshow['state'];
+                                        $showdate_of_birth    = $showStudentDetailsshow['date_of_birth'];
+                                        $showadded_by         = $showStudentDetailsshow['added_by'];
+                                        $showadded_on         = $showStudentDetailsshow['added_on'];
 
 
+                                        $showacademic_year    = $showStudentDetailsshow['academic_year'];
+                                        $showdate             = $showStudentDetailsshow['date'];
+
+                                        $StudentDetails   = $FeesAccount->schowAmount($showstuid, $showacademic_year);
+                                        foreach ($StudentDetails as $showStudentDetails) {
+
+                                        $showtotal_amount     = $showStudentDetails['payable_fee'];
+                                        $showtotal_due        = $showStudentDetails['total_due'];
+
+
+                                        $showSubject = $StudentDet->totalsubject($showstream, $showclass1); 
+
+$total = 00;
+
+if ($showSubject != null || $showSubject != '') {
+
+    $total = count($showSubject);
+
+}
 
 
 
 
-              
-               $showStudentmarks = $Student->maxmarks($showclass1, $showacademic_year);
-               foreach($showStudentmarks as $row){
-                $totalnumber = $row['sum_marks'];
-               }
-               $showStudent = $Student->Totalmarks($showstuid, $showclass1, $showacademic_year);
-               foreach($showStudent as $rowsdata){
-                   $showtotal = $rowsdata['sum'];
-                   $Percentage      = ($showtotal*100) / $totalnumber;
-                   $Percentage = round($Percentage,2);
+                                        $showStudentmarks = $Student->maxmarks($showclass1, $showacademic_year);
+                                        foreach($showStudentmarks as $row){
+                                            $totalnum = $row['sum_marks'];
+                                            $totalnumber = $totalnum * $total;
+                                        }
+                                        $showStudent = $Student->Totalmarks($showstuid, $showclass1, $showacademic_year);
+                                        foreach($showStudent as $rowsdata){
+                                        $showtotal = $rowsdata['sum'];
+                                        $Percentage      = ($showtotal*100) / $totalnumber;
+                                        $Percentage = round($Percentage,2);
+
+                                        if($Percentage == intval($Percentage))
+                                        {
+                                        $Percentage = intval($Percentage);
+                                        }
+
+                                        }
+
+
+                                      
+
+                                        ?>
+
+                                            <tr
+                                                <?php if ($showStudentDetailsshow['status']== 'active') echo 'style="color: black"' ; if ($showStudentDetailsshow['status']== 'inactive') echo 'style="color: red"' ;?>>
+                                                <td>
+                                                    <?php  echo $i                ?>
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showstuid;  ?>" name="student_id[]"
+                                                        id="id">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showclass1;  ?>" name="class" id="class">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showroll_no;  ?>" name="roll_no[]"
+                                                        id="roll_no">
+
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showaddress;  ?>" name="address[]"
+                                                        id="address">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showcontact_no;  ?>" name="contact[]"
+                                                        id="roll_no">
+
+
+
+                                                </td>
+                                                <td><?php  echo $showroll_no      ?>
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showname;  ?>" name="name[]" id="name">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showpost_office;  ?>" name="post_office[]"
+                                                        id="post_office">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $_GET['session'];  ?>" name="session"
+                                                        id="session">
+
+                                                </td>
+
+                                                <td><?php  echo $showname ?>
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showgurdian_name;  ?>" name="gurdian[]"
+                                                        id="gurdian">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showtotal_amount;  ?>"
+                                                        name="total_amount[]" id="roll">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showstream;  ?>" name="stream[]"
+                                                        id="stream">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showtotal_due;  ?>" name="total_due[]"
+                                                        id="total_due">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showpolice_station;  ?>"
+                                                        name="police_station[]" id="police_station">
+
+                                                </td>
+                                                <td><?php  echo $showgurdian_name ?>
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showpin_code;  ?>" name="pin_code[]"
+                                                        id="total_due">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showsdo_or_bdo;  ?>" name="sdo_or_bdo[]"
+                                                        id="sdo_or_bdo">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showstate;  ?>" name="state[]"
+                                                        id="district">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showdistrict;  ?>" name="district[]"
+                                                        id="district">
+
+
+                                                </td>
+                                                <td><?php  echo $showstuid ?>
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showdate_of_birth;  ?>"
+                                                        name="date_of_birth[]" id="date_of_birth">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showadded_by;  ?>" name="dded_by[]"
+                                                        id="dded_by">
+
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showadded_on;  ?>" name="added_on[]"
+                                                        id="added_on">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showdate;  ?>" name="date[]" id="date">
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showacademic_year;  ?>"
+                                                        name="academic_year[]" id="academic_year">
+
+                                                </td>
+                                                <td>
+
+                                                <?php  
+
+         
+                                                $Showsubrank = $Examination->passmarks("Subject Wise");
+                                                $Showoverall = $Examination->passmarks("Overall Wise");
+                                                foreach ($Showsubrank as $subrank) {
+
+                                                    $subpass       = $subrank['marks'];
+
+                                                foreach ($Showoverall as $overallrank) {
+
+                                                    $overalpass = $overallrank['marks'];
+                                                }
+                                            }  
+                                                    foreach($showSubject as $Subjectrow){
+                                                        $subjectshow = $Subjectrow['subject'];
+                                                    
+                                                
+                                                        $Studentsubject = $Student->subjectmarks($showstuid, $showclass1, $showacademic_year, $subjectshow);
+                                                        foreach($Studentsubject as $Studentsubjectrow){
+                                                            $sub_marks = $Studentsubjectrow['summark'];
                                                             
-                   if($Percentage == intval($Percentage))
-                   {
-                       $Percentage = intval($Percentage);
-                   }
-                  
-               }
-              
-            //    }
-               
-            //    }
-                         ?>
+                                                         
+                                                        }}
+                                                                                                                 
+                                                ?>
 
-                                        <tr
-                                            <?php if ($showStudentDetailsshow['status']== 'active') echo 'style="color: black"' ; if ($showStudentDetailsshow['status']== 'inactive') echo 'style="color: red"' ;?>>
-                                            <td>
-
-                                            <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showstuid;  ?>" name="student_id[]" id="id">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showclass1;  ?>" name="class" id="class">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showroll_no;  ?>" name="roll_no[]"
-                                                    id="roll_no">
-
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showaddress;  ?>" name="address[]"
-                                                    id="address">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showcontact_no;  ?>" name="contact[]"
-                                                    id="roll_no">
-
-                                                                                          
-                                            <?php  echo $i                ?>
-                                           </td>
-                                            <td>
-                                                
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showname;  ?>" name="name[]" id="name">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showpost_office;  ?>" name="post_office[]"
-                                                    id="post_office">
-
-                                                    <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $_GET['session'];  ?>" name="session"
-                                                    id="session">
-                                            
-                                            
-                                            <?php  echo $showroll_no      ?>
-                                           </td>
-
-                                            <td>
-                                                
-                                            <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showgurdian_name;  ?>" name="gurdian[]"
-                                                    id="gurdian">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showtotal_amount;  ?>" name="total_amount[]"
-                                                    id="roll">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showstream;  ?>" name="stream[]" id="stream">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showtotal_due;  ?>" name="total_due[]"
-                                                    id="total_due">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showpolice_station;  ?>"
-                                                    name="police_station[]" id="police_station">
-                                            
-                                            <?php  echo $showname ?>
-                                            </td>
-                                            <td>
-                                                
-                                            <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showpin_code;  ?>" name="pin_code[]"
-                                                    id="total_due">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showsdo_or_bdo;  ?>" name="sdo_or_bdo[]"
-                                                    id="sdo_or_bdo">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showstate;  ?>" name="state[]"
-                                                    id="district">
-
-                                                <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showdistrict;  ?>" name="district[]"
-                                                    id="district">
-                                            
-                                            <?php  echo $showgurdian_name ?>
-                                           </td>
-                                            <td>
-                                                
-                                            <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showdate_of_birth;  ?>" name="date_of_birth[]"
-                                                    id="date_of_birth">
-
-                                                    <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showadded_by;  ?>" name="dded_by[]"
-                                                    id="dded_by">
-
-
-                                                    <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showadded_on;  ?>" name="added_on[]"
-                                                    id="added_on">
-
-                                                    <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showdate;  ?>" name="date[]"
-                                                    id="date">
-
-                                                    <input type="hidden" class="form-control form_data"
-                                                    value="<?php  echo  $showacademic_year;  ?>" name="academic_year[]"
-                                                    id="academic_year">
-                                            
-                                            <?php  echo $showstuid ?>
-                                            </td>
-                                            <td>
-                                                
-                                            <input type="hidden" class="form-control form_data"
-                                                    value="<?php   if($Percentage > 40){
-                                                echo "pass";
+                                                    <input type="hidden" class="form-control form_data" value="<?php   if($showtotal>= $overalpass && $sub_marks >= $subpass){
+                                                 echo "pass";
                                                 }else{
                                                  echo "Faill";
-                                                }  ?>" name="exam_status[]"
-                                                    id="exam_status">
+                                                }  ?>" name="exam_status[]" id="exam_status">
 
-                                                    <input type="hidden" class="form-control form_data"
-                                                    value="<?php   if($Percentage > 40){
+                                                    <input type="hidden" class="form-control form_data" value="<?php   if($showtotal >= $overalpass && $sub_marks >= $subpass){
                                                 echo $showclass1 + "1";
                                                 }else{
                                                  echo $showclass1;
-                                                }  ?>" name="newclass[]"
-                                                    id="newclass">
-                                                
-                                                <?php 
-                                             if($Percentage > 40){
+                                                }  ?>" name="newclass[]" id="newclass">
+
+                                                    <?php 
+                                             if($showtotal >= $overalpass && $sub_marks >= $subpass){
                                                 echo "pass";
                                                 }else{
-                                                 echo "Faill";
-                                                }
-                                                echo $Percentage;
-                                           ?></td>
+                                                    echo "Faill";
+                                                }   
+                                                // echo $Percentage; 
+                                            
+                                        
+                                             ?>
+                                                </td>
+                                                <td> <a
+                                                        href='attendance-report.php?studentid=<?php    echo $showstuid  ?>&class=<?php    echo $showclass1  ?>'>
+                                                        <i class="bi bi-eye-fill pe-4"></i>
+                                                    </a></td>
 
-                                            <td><?php 
-                                             if($Percentage > 40){
-                                                echo $showclass1 + "1";
-                                                }else{
-                                                 echo $showclass1;
-                                                }
-                                                // echo $Percentage;
-                                           ?></td>
-
-                                            <td><?php 
+                                                <td><?php 
                                              $showstu = "pendingfees.ajax.php?feespending=". $showstuid;
 
                                              $result=$Student-> studentsByFees($showstuid);
 
                                              foreach ($result as $showrow) {
-                                              $showamount       = $showrow['Total'];
-                                              $showtotal_amount = $showrow['total_amount'];
-                                              $showdate         = $showrow['date'];
+                                              $showamount          = $showrow['Total'];
+                                              $showtotal_amount    = $showrow['total_amount'];
+                                              $showdate            = $showrow['date'];
 
                                               
-                                              $pendingamount      = $showtotal_amount - $showamount;
+                                              $pendingamount       = $showtotal_amount - $showamount;
 
-                                              $monthly            = $showtotal_amount / 12;
+                                              $monthly             = $showtotal_amount / 12;
                                   
                                               
-                                              $month              = date("m");
+                                              $month               = date("m");
                                   
                                               $monthPending        = $month*$monthly - $showamount;
                                              
@@ -421,125 +446,116 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                ?>
 
 
-                                                <i class="bi bi-hourglass-split ps-4" data-bs-toggle="modal"
-                                                    data-bs-target="#pendingfeesModal" id="<?php    echo $showstuid  ?>"
-                                                    onclick="pendingfees(this.id);"></i>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="pendingfeesModal" tabindex="-1"
-                                                    aria-labelledby="pendingfeesModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-md">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="pendingfeesModalLabel">
+                                                    <i class="bi bi-hourglass-split ps-4" data-bs-toggle="modal"
+                                                        data-bs-target="#pendingfeesModal"
+                                                        id="<?php    echo $showstuid  ?>"
+                                                        onclick="pendingfees(this.id);"></i>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="pendingfeesModal" tabindex="-1"
+                                                        aria-labelledby="pendingfeesModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-md">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="pendingfeesModalLabel">
 
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body pendingfees-modal-body">
+
+                                                                </div>
                                                             </div>
-                                                            <div class="modal-body pendingfees-modal-body">
+                                                        </div>
+                                                    </div>
+                                                    <!-- modal end -->
+                                                    <?php } }?>
+
+                                                    <!-- <span class="badge bg-success">No Data</span> -->
+
+                                                </td>
+
+
+                                                <td>
+
+                                                    <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
+                                                        data-bs-target="#editstudentclassModal"
+                                                        id="<?php    echo $showid  ?>"
+                                                        onclick="editstudentclass(this.id);"></i>
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="editstudentclassModal" tabindex="-1"
+                                                        aria-labelledby="editstudentclassModalLabel" aria-hidden="true">
+                                                        <div class="modal-dialog modal-xl">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body editstudentclass-modal-body">
+
+                                                                </div>
 
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- modal end -->
-                                                <?php }
-                                                } 
-                                                // }
-                 
-                                                ?>
+                                                    <!-- modal end -->
+                                                    <a
+                                                        href='../admin/ajax/sp.action.php?id=<?php    echo $showStudentDetailsshow['id']  ?>'>
+                                                        <i class="bi bi-x-lg" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteformModal" onclick="return cancel();"
+                                                            <?php  if ($showStudentDetailsshow['status']== 'inactive') echo 'style="display: none;"' ;?>>
+                                                        </i>
+                                                    </a>
 
-                                                <!-- <span class="badge bg-success">No Data</span> -->
+                                                    <a style="color: #35dc59"
+                                                        href='../admin/ajax/stuactive.action.php?id=<?php    echo $showStudentDetailsshow['id']  ?>'>
+                                                        <i class="bi bi-check-lg " data-bs-toggle="modal"
+                                                            data-bs-target="#deleteformModal"
+                                                            onclick="return activedonation();"
+                                                            <?php if ($showStudentDetailsshow['status']== 'active') echo ' style="display: none;"' ;?>>
+                                                        </i>
+                                                    </a>
 
-                                            </td>
+                                                </td>
 
+                                                <td><a
+                                                        href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>&status=<?php if($showtotal >= $overalpass && $sub_marks >= $subpass){
+                                                echo "pass";
+                                                }else{
+                                                    echo "Faill";
+                                                }?>"><i
+                                                            class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
+                                                    </a></td>
 
-                                            <td>
-
-                                                <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
-                                                    data-bs-target="#editstudentclassModal"
-                                                    id="<?php    echo $showid  ?>"
-                                                    onclick="editstudentclass(this.id);"></i>
-                                                <!-- Modal -->
-                                                <div class="modal fade" id="editstudentclassModal" tabindex="-1"
-                                                    aria-labelledby="editstudentclassModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-xl">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="editstudentclassModalLabel">
-                                                                    Forms
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body editstudentclass-modal-body">
-
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">
-                                                                    Close
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- modal end -->
-                                                <a
-                                                    href='../admin/ajax/sp.action.php?id=<?php    echo $showStudentDetailsshow['id']  ?>'>
-                                                    <i class="bi bi-x-lg" data-bs-toggle="modal"
-                                                        data-bs-target="#deleteformModal" onclick="return cancel();"
-                                                        <?php  if ($showStudentDetailsshow['status']== 'inactive') echo 'style="display: none;"' ;?>>
-                                                    </i>
-                                                </a>
-
-                                                <a style="color: #35dc59"
-                                                    href='../admin/ajax/stuactive.action.php?id=<?php    echo $showStudentDetailsshow['id']  ?>'>
-                                                    <i class="bi bi-check-lg " data-bs-toggle="modal"
-                                                        data-bs-target="#deleteformModal"
-                                                        onclick="return activedonation();"
-                                                        <?php if ($showStudentDetailsshow['status']== 'active') echo ' style="display: none;"' ;?>>
-                                                    </i>
-                                                </a>
-
-                                            </td>
-
-                                            <td><a
-                                                    href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>"><i
-                                                        class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
-                                                </a></td>
-
-                                            <td><a
-                                                    href="classupdate.php?class=<?php    echo $_GET['studenttype']  ?>&session=<?php    echo $_GET['session']  ?>&studentid=<?php    echo $showstuid  ?>"><i
-                                                        class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
-                                                </a>
+                                                <td><a
+                                                        href="classupdate.php?class=<?php    echo $_GET['studenttype']  ?>&session=<?php    echo $_GET['session']  ?>&studentid=<?php    echo $showstuid  ?>"><i
+                                                            class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
+                                                    </a>
 
 
-                                            </td>
+                                                </td>
 
-                                        </tr>
+                                            </tr>
 
-                                        <?php  
+                                            <?php  
                                         $i++;
                                       }   }
                                       ?>
 
-                                    </tbody>
+                                        </tbody>
 
-                                </table>
+                                    </table>
 
+                                    <div class=" d-flex justify-content-center align-items-center">
+                                        <button name="Submitdata" type="submit" style="margin-top: -2rem;"
+                                            class="btn btn-primary d-flex justify-content-end ms-auto">
+                                            All Submit
+                                        </button>
 
-
-                                <div class=" d-flex justify-content-center align-items-center">
-                                <button name="Submitdata" type="submit" style="margin-top: -2rem;"
-                                    class="btn btn-primary d-flex justify-content-end ms-auto">
-                                    All Submit
-                                </button>
-                           
-                            </div>
-                            </form>
-
-
+                                    </div>
+                                </form>
 
                             </div>
                         </div>
@@ -548,22 +564,17 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
             </div>
         </section>
 
-
-
-
-
-
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
     <?php require_once 'require/addfooter.php'; ?>
     <script>
     function cancel() {
-        return confirm("Aru you sure want to Absent this record ?")
+        return confirm("Are you sure that you want to cancel the student details contents ?")
     };
 
     function activedonation() {
-        return confirm("Aru you sure want to Active this record ?")
+        return confirm("Are you sure that you want to active the student details contents ?")
     };
     </script>
 
@@ -574,7 +585,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     const editstudentclass = (id) => {
         let url = 'ajax/editstudentclass.ajax.php?studentdata=' + id;
         $(".editstudentclass-modal-body").html(
-            '<iframe width="99%" height="354px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="99%" height="529px" frameborder="0" allowtransparency="true" src="' + url +
             '"></iframe>')
 
     }

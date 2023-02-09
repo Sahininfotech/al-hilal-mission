@@ -7,20 +7,6 @@
   $FeesAccount            = new FeesAccount();
   if(isset ( $_POST["submitdata"])){          
 
-    // echo $name, $student_id,  $roll_no, $class_id, $total_amount, $session;
-    // exit;
-
-    // if($class == "12"){
-    //   $results=$Student->studentdelect($class);
-    // }
-    // else
-    // {
-    //   $results=$Student->changedata($class_id, $class, $session);
-    // $results=$Student->feeschangedata($name, $student_id, $roll_no, $gurdian_name, $class_id, $total_amount, $session);
-    
-    // } 
-
-
     $name           = $_POST["name"];
     $student_id     = $_POST["student_id"];
       

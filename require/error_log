@@ -1,0 +1,12 @@
+[21-Dec-2022 15:51:32 Asia/Kolkata] PHP Warning:  Undefined global variable $_SESSION in /home3/activaga/public_html/alhilalmission/require/query.ajax.php on line 28
+[21-Dec-2022 15:51:32 Asia/Kolkata] PHP Warning:  Trying to access array offset on value of type null in /home3/activaga/public_html/alhilalmission/require/query.ajax.php on line 28
+[21-Dec-2022 15:55:41 Asia/Kolkata] PHP Warning:  Undefined global variable $_SESSION in /home3/activaga/public_html/alhilalmission/require/query.ajax.php on line 28
+[21-Dec-2022 15:55:41 Asia/Kolkata] PHP Warning:  Trying to access array offset on value of type null in /home3/activaga/public_html/alhilalmission/require/query.ajax.php on line 28
+[20-Jan-2023 10:45:30 Asia/Kolkata] PHP Warning:  Undefined global variable $_SESSION in /home3/activaga/public_html/alhilalmission/require/query.ajax.php on line 29
+[20-Jan-2023 10:45:30 Asia/Kolkata] PHP Warning:  Trying to access array offset on value of type null in /home3/activaga/public_html/alhilalmission/require/query.ajax.php on line 29
+[20-Jan-2023 10:56:30 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Column count doesn't match value count at row 1 in /home3/activaga/public_html/alhilalmission/classes/query-form.class.php:10
+Stack trace:
+#0 /home3/activaga/public_html/alhilalmission/classes/query-form.class.php(10): mysqli->query('INSERT INTO `ad...')
+#1 /home3/activaga/public_html/alhilalmission/require/query.ajax.php(31): admissionQuery->addFormQuery('Smita Roy', 'Dep Roy', 'r@123gmail.com', '3423454565', 'Male', 'kolkata school', '11', '12', 'kolkata ', 'kolkata', 'kolkata', '222222', 'west bengal', 'book', '2023-01-20', '0')
+#2 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/classes/query-form.class.php on line 10

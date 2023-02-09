@@ -6,6 +6,7 @@ session_start();
   require_once '../_config/dbconnect.php';
   require_once '../classes/studdetails.class.php';
   require_once '../classes/admin.class.php';
+  require_once '../includes/constant.php';
 
   $Admin          = new admin();
   $StudentDetails = new StudentDetails();
@@ -27,7 +28,7 @@ session_start();
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Components / List Group - NiceAdmin Bootstrap Template</title>
+    <title>Student Details / Subject - <?php echo SITE_NAME; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <?php require_once "require/headerLinks.php"; ?>

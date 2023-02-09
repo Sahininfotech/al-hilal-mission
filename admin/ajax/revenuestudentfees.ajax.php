@@ -255,9 +255,7 @@
 
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
 
@@ -304,23 +302,17 @@
 
     <title>Document</title>
 
-<style>
+    <style>
     .searchdata{
-        width: 60%;
-
-max-height: 150px;
-
-text-align: center;    
-overflow: auto;
-margin-left: 12rem;
-
-box-shadow: 0 0.4rem 1rem rgb(0 1 1 / 31%);      
-
-cursor: pointer; margin-top: 3rem; 
-
-position: absolute;
-
-background-color: white;
+    width: 60%;
+    max-height: 10rem;
+    text-align: center;    
+    overflow: auto;
+    margin-left: 12rem;
+    box-shadow: 0 0.4rem 1rem rgb(0 1 1 / 31%);      
+    cursor: pointer; margin-top: 3rem; 
+    position: absolute;
+    background-color: white;
     }
     .searchdata::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
@@ -332,14 +324,6 @@ background-color: white;
             margin-top: 5rem;           
         }
     }
-    .arrow-up {
-        width: 0; 
-        height: 0; 
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        display: none;
-        border-bottom: 5px solid #7d8389;
-      }
 </style>
 
 </head>
@@ -348,7 +332,7 @@ background-color: white;
 
 <body style="background:white;">
 
- 
+
 
 
 
@@ -387,17 +371,15 @@ background-color: white;
                     <div class="col-sm-10">
 
                         <input type="text" id="search" class="form-control" name="name" onkeyup="searchItem(this.value)"
-
                             autocomplete="off" required>
 
                     </div>
-                    <div class="arrow-ups position-absolute top-100 start-25" id="tablesdatas"></div>
+
                     <div class="searchdata" id="table-data">
 
                     </div>
 
                 </div>
-
                 <div class="row mb-3 m-0 p-0">
 
                 <label for="inputaddress" class="col-sm-2 col-form-label">Student Id : </label>
@@ -419,7 +401,7 @@ background-color: white;
 
                     </div>
 
-                </div>              
+                </div>
 
                 <div class="row mb-3 m-0 p-0">
 
@@ -484,7 +466,6 @@ background-color: white;
                     <div class="col-sm-4">
 
                         <select class="form-control" id="form-selectdata" name="payment_type" onclick="selectpament()"
-
                             required>
 
                             <option selected disabled value>Select Payment Type</option>
@@ -526,7 +507,6 @@ background-color: white;
                     <div class="col-sm-4">
 
                         <select class="form-select" id="form-select" aria-label="Default select example"
-
                             onclick="selectothers()" name="paid-by-select" required>
 
                             <option selected disabled value>Select Name</option>
@@ -543,7 +523,7 @@ background-color: white;
 
                             $empName = $emp['name'];
 
-                            echo '<option value="'.$empId.'">'.$empName.'</option>';
+                            echo '<option value="'.$empName.'">'.$empName.'</option>';
 
                         }
 
@@ -576,7 +556,6 @@ background-color: white;
                     <div class="col-sm-10">
 
                         <select class="form-select" id="form-select" aria-label="Default select example"
-
                             onclick="selectothers()" name="Fees_account" required>
 
                             <option selected disabled value>Select Name</option>
@@ -599,7 +578,8 @@ background-color: white;
 
                         </select>
 
-                    </div></div>
+                    </div>
+                </div>
 
 
 
@@ -626,7 +606,6 @@ background-color: white;
                     <div class="col-sm-12 d-flex justify-content-center m-auto">
 
                         <button type="submit" class="btn btn-primary" style="width: 10rem;"
-
                             name="feessubmit">Submit</button>
 
                     </div>
@@ -670,7 +649,6 @@ background-color: white;
 
 
     <script type="text/javascript">
-
     function searchItem(searchFor) {
 
 
@@ -736,19 +714,10 @@ background-color: white;
 
 
         }
-        if (searchword.length == 0) {
 
-document.getElementById("tablesdatas").style.display = "none";
-
-} else {
-
-document.getElementById("tablesdatas").style.display = "block";
-
-}
 
 
     };
-
     </script>
 
 
@@ -758,7 +727,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
     <script>
-
     const selectdata = (t) => {
 
 
@@ -780,9 +748,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
         let student_id = document.getElementById(t.id).childNodes[9];
-
-
-
 
         let total_amount = document.getElementById(t.id).childNodes[11];
 
@@ -832,7 +797,7 @@ document.getElementById("tablesdatas").style.display = "block";
 
         // }
 
-         var xx = document.getElementById("total_due");
+        var xx = document.getElementById("total_due");
 
 
 
@@ -864,7 +829,7 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
 
-         document.getElementById("total_dues").value = total_due.innerText;
+        document.getElementById("total_dues").value = total_due.innerText;
 
 
 
@@ -874,7 +839,7 @@ document.getElementById("tablesdatas").style.display = "block";
 
         document.getElementById("table-data").style.display = "none";
 
-        document.getElementById("tablesdatas").style.display = "none";
+
 
         // var xmlhttp = new XMLHttpRequest();
 
@@ -888,32 +853,32 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
 
-//     const selectdata = (t) => {
+    //     const selectdata = (t) => {
 
 
 
-//  var xx = document.getElementById("total_due");
-
-
-
-
+    //  var xx = document.getElementById("total_due");
 
 
 
 
 
-//  document.getElementById("total_dues").value = Number(xx.value);
 
-// }
 
-//     </script>
+
+
+    //  document.getElementById("total_dues").value = Number(xx.value);
+
+    // }
+
+    //     
+    </script>
 
 
 
 
 
     <script>
-
     // console.log("hi");
 
 
@@ -979,7 +944,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
     }
-
     </script>
 
 
@@ -987,7 +951,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
     <script>
-
     function selectpament() {
 
 
@@ -1053,7 +1016,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
     }
-
     </script>
 
 
@@ -1063,7 +1025,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
     <script>
-
     (function() {
 
         'use strict'
@@ -1115,7 +1076,6 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
     })()
-
     </script>
 
 
@@ -1133,6 +1093,3 @@ document.getElementById("tablesdatas").style.display = "block";
 
 
 </html>
-
-
-

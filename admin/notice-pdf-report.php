@@ -1,7 +1,5 @@
 <?php
 session_start();
-
-
     $page = "notice-pdf-report";
     require_once '../_config/dbconnect.php';
     require_once '../classes/admin.class.php';
@@ -13,18 +11,14 @@ session_start();
     $Admin      = new Admin();
     $Pending    = new InstituteDetails();
     $notic      = new Employee();
- 
+  
     if(isset ($_GET['id']) ){
     $updatePage=$notic->noticeupdatePage($_GET['id']);
     }
 
     if(isset ($_GET['staffid']) ){
         $updatePage=$notic->staffMessageupdatePage($_GET['staffid']);
-    }
-
-
-    $contan = '';
-    $contan .= "'"
+        }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,18 +103,16 @@ session_start();
     padding-left: 3rem!important;
     padding-right: 3rem!important;
     padding-bottom: 3rem!important;
-">
+    ">
                     <?php
                 foreach ($updatePage as $shownoticeshow) {
                 $showid         = $shownoticeshow['id'];
                 $shownotice     = $shownoticeshow['notice'];
                 $showsubject    = $shownoticeshow['subject'];
                 $showsignature  = $shownoticeshow['signature'];
+                $showadded_by   = $shownoticeshow['added_by'];
                 $img            = "image/".$showsignature;
 
-                $adminDt = $Admin->getAdmin($_SESSION['user_name']);
-                foreach ($adminDt as $showStaffdentDetailsshow) {
-                $showname       = $showStaffdentDetailsshow['name'];
                  ?>
                     <div class="col-lg-12">
                         <div class="notice-title-div" style="border-bottom: 2px solid black;">
@@ -133,44 +125,16 @@ session_start();
                         <p class="notice-title-div-p"> <?php    echo $shownotice  ?></p>
 
                         <p class="notice-title-div-p text-end">Respectfully ,</p>
-                        <p class="notice-title-div-p text-end"><?php    echo $showname;  ?></p>
+                        <p class="notice-title-div-p text-end"><?php    echo $showadded_by;  ?></p>
                         <p class="notice-signature mb-2"> Signature : <img id="theImage" src="<?php    echo $img  ?>"
-                                alt="bill-invoice" width="100" height="50" style="border-radius: 7%"
-                                onClick="makeFullScreen()"></p>
+                                alt="bill-invoice" width="200" height="70" onClick="makeFullScreen()"></p>
                         <p class="notice-title-div-p" style="width: min-content;"> Place : <?php    echo  $row['address'];
                         ?></p>
-                        <?php } }} ?>
+                        <?php } } ?>
                     </div>
                 </section>
 
-<?php   "'" ;
-// $pdf = writeHTML($contan);
 
-
-// $datetime = date('d M, Y');
-
-// $filemane = "Inv_".$datetime.".pdf";
-
-// ob_end_clean();
-
-// if($_GET['file'] == 'pdffilename')
-// {
-//     $pdf = Output($filemane, 'D');
-// }
-
-
-
-// $dompdf = new Dompdf();
-
-// $dompdf ->loadHtml($contan);
-
-// $dompdf ->setpaper('A4', 'landscape');
-
-// $dompdf ->render();
-
-// exit(0);
-
-?>
 
 
                 <div class="justify-content-center print-sec d-flex my-5">

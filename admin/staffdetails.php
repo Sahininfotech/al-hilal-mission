@@ -3,9 +3,10 @@ session_start();
 $page ="Staff Details";
 
 require_once '../_config/dbconnect.php';
-require_once '../inc/constraints.php';
+
 require_once '../classes/admin.class.php';
 require_once '../classes/employee.class.php';
+require_once '../includes/constant.php';
 
 
 $Admin      = new Admin();
@@ -168,13 +169,13 @@ $result    = $employees->showEmployees();
     <!-- ======= Footer ======= -->
     <?php // require_once 'require/addfooter.php'; ?>
 
-
+  
     <script>
     function cencelformdata() {
-        return confirm("Aru you sure want to Absent this record ?")
+        return confirm("Are you sure that you want to cancel the staff details contents ?")
     };
     function activestaff() {
-        return confirm("Aru you sure want to Active this record ?")
+        return confirm("Are you sure that you want to active the staff details contents ?")
     };
     </script>
 

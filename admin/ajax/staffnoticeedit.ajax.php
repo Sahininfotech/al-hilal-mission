@@ -82,7 +82,7 @@ require_once '../../classes/employee.class.php';
 
     <label for="inputNumber" class="col-sm-2 col-form-label">Update Signature :</label>
     <div class="col-sm-4">
-        <input class="form-control w-100" type="file" id="formFile" name="signature" accept="image/*" />
+        <input class="form-control w-100" type="file" id="formFile" name="signature" accept="image/png" />
         <input type="hidden" value="'.$img.'" name="updateimg">
     </div>
 </div>
@@ -97,7 +97,7 @@ require_once '../../classes/employee.class.php';
         <div class="row mb-3">
         <label for="inputAddress" class="col-sm-2 col-form-label">Message :</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" value="'.$shownotice.'" name="notice">
+                <textarea type="text" class="form-control" name="notice">'.$shownotice.'</textarea>
             </div>
         </div>            
               

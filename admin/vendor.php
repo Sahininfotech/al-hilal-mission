@@ -12,7 +12,7 @@ require_once '../classes/admin.class.php';
 
 require_once '../classes/utility.class.php';
 
-
+require_once '../includes/constant.php';
 
 
 
@@ -60,7 +60,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-    <title>Accountant/ Expenses - NiceAdmin Bootstrap Template</title>
+    <title>Vendor - <?php echo SITE_NAME; ?></title>
 
     <meta content="" name="description" />
 
@@ -132,7 +132,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
         <div class="pagetitle">
 
-            <h1>Accountant</h1>
+            <h1>Vendor</h1>
 
             <nav>
 
@@ -140,9 +140,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
 
-                    <li class="breadcrumb-item">Accountant</li>
-
-                    <li class="breadcrumb-item active">Expenses</li>
+                    <li class="breadcrumb-item active">Vendor</li>
 
                 </ol>
 
@@ -216,17 +214,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                         <div class="modal-body donation-modal-body">
 
-                                        </div>
-
-                                        <div class="modal-footer">
-
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-
-                                                Close
-
-                                            </button>
-
-                                        </div>
+                                        </div>                            
 
                                     </div>
 
@@ -354,7 +342,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     <!-- End #main -->
 
-
+    
 
     <!-- ======= Footer ======= -->
 
@@ -364,11 +352,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     function cancel() {
 
-        return confirm("Are you sure! want to cancel this record ?")
+        return confirm("Are you sure that you want to cancel the vendor contents ?")
 
     };
     function activevendor() {
-        return confirm("Are you sure! want to Active this record ?")
+        return confirm("Are you sure that you want to active the vendor contents ?")
     };
     </script>
 

@@ -12,15 +12,15 @@ require_once '../../classes/exam.class.php';
   if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     
-    $id   = $_POST["id"];
-    $marks   = $_POST["marks"];
+    $id        = $_POST["id"];
+    $marks     = $_POST["marks"];
 
-    $type = $_POST["type"];
+    $type      = $_POST["type"];
 
-    $session  = $_POST["session"];
+    $session   = $_POST["session"];
 
 
-    $result      = $classes->updatepassMarks($type, $marks, $session, $id);
+    $result    = $classes->updatepassMarks($type, $marks, $session, $id);
 
     
 

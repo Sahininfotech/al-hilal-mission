@@ -1,10 +1,11 @@
 <?php
 session_start();
-$page = "Vendor Details";
+$page = "Admission Query";
 require_once '../_config/dbconnect.php';
 require_once '../classes/contact.class.php';
 require_once '../classes/admin.class.php';
 require_once '../classes/utility.class.php';
+require_once '../includes/constant.php';
 
 
 $Utility   = new Utility(); 
@@ -22,7 +23,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
   
   }
 
-  $message   = $Contact->admissionhow();
+  $message   = $Contact->admissionshow();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,7 +32,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Accountant/ Expenses - NiceAdmin Bootstrap Template</title>
+    <title>Contacts/ Admission Query Details || <?php echo SITE_NAME; ?></title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -74,13 +75,13 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Contacts Details</h1>
+            <h1>Admission Query Details</h1>
             <nav>
                 <ol class="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
                     <li class="breadcrumb-item">Pages</li>
-                    <li class="breadcrumb-item active">Contact Details</li>
+                    <li class="breadcrumb-item active">Admission Query Details</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -109,7 +110,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                     email
                                                 </th>
                                                 <th>
-                                                    subject
+                                                gurdian  Name
                                                 </th>
                                                 <th>
                                                     Added On
@@ -127,12 +128,13 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                 }else{
                                                 foreach ($message as $messageshow) {
                                                 $showname          = $messageshow['name'];
-                                                $showemail         = $messageshow['email'];
-                                                $showsubject       = $messageshow['subject'];
-                                                $showmessage       = $messageshow['message'];
+                                                $showgurdian_name         = $messageshow['gurdian_name'];
+                                                $showemail       = $messageshow['email_id'];
+                                                $showcontact_no       = $messageshow['contact_no'];
                                                 $showstatus        = $messageshow['status'];
-                                                $showdate          = $messageshow['date'];
+                                                $showdate          = $messageshow['added_on'];
                                                 $showid            = $messageshow['id'];
+                                                $datetring = date("Y-m-d", strtotime($showdate));
                                                 ?>
 
                                             <tr>
@@ -146,16 +148,16 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                     <?php  echo $showemail;       ?>
                                                 </td>
                                                 <td>
-                                                    <?php  echo $showsubject;      ?>
+                                                    <?php  echo $showgurdian_name;      ?>
                                                 </td>
                                                 <td>
                                                    
-                                                <?php  echo $showdate;      ?>
+                                                <?php  echo $datetring;      ?>
                                             
                                                 </td>
                                                 <td>
                                                   
-                                                    <a href='viwemessage.php?message=<?php    echo $showid;  ?>&approved=1'>
+                                                    <a href='viewadmissionquery.php?message=<?php    echo $showid;  ?>&approved=1'>
                                                         <i class="bi bi-chat-left-text" onclick="return viwemessage();">
 
 
@@ -191,6 +193,9 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
             <!-- container-scroller -->
 
+            <div class="justify-content-center print-sec d-flex my-5" style="margin-top: -1rem!important;">
+            <button class="btn btn-primary shadow mx-2" onclick="history.back()">Go Back</button>
+        </div>
 
 
     </main><!-- End #main -->

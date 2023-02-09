@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php require_once '../includes/constant.php'; ?>
+<?php  
+require_once '../includes/constant.php';
+require_once '../classes/contact.class.php';
+$Contact              = new Contact();
+$contactmessage       = $Contact->searchdata();
+$qurymessage          = $Contact->searchquerydata();
+?>
 
 <header id="header" class="header fixed-top d-flex align-items-center">
-
     <style>
     .searchbars {
         width: 23%;
@@ -16,35 +21,40 @@
         box-shadow: 0 0.4rem 1rem rgb(0 1 1 / 31%);
         cursor: pointer;
         position: absolute;
-        background-color: #cad5eb !important;
-        /* background-color: #c2dbf1 !important; */
+        background-color: #f3f3f3 !important;
         /* border-radius: 2%; */
         /* margin-top: 27rem; */
-        
+        /* box-shadow: 0 0.4rem 1rem rgb(29 53 53 / 31%); */
+        /* box-shadow: 0px 0rem 1rem rgb(8 27 35 / 31%); */
+
     }
+
     .searchbars::-webkit-scrollbar {
-  display: none; /* for Chrome, Safari, and Opera */
-}
-@media (max-width: 1175px) {
-  .header .search-form button {
-   
-    margin-left: 16px;
-    width: 54%;
-}
-}
-.arrow-up {
-        width: 0; 
-        height: 0; 
+        display: none;
+        /* for Chrome, Safari, and Opera */
+    }
+
+    @media (max-width: 1175px) {
+        .header .search-form button {
+
+            margin-left: 16px;
+            width: 54%;
+        }
+    }
+
+    .arrow-up {
+        width: 0;
+        height: 0;
         border-left: 5px solid transparent;
         border-right: 5px solid transparent;
         display: none;
         border-bottom: 5px solid white;
-      }
-/* @media (max-width: 1175){
+    }
+
+    /* @media (max-width: 1175){
 .header .ss {
     margin-right: 57rem;
 }} */
-
     </style>
 
 
@@ -90,7 +100,6 @@
             </li><!-- End Search Icon-->
 
 
-
             <li class="nav-item dropdown">
 
 
@@ -99,7 +108,9 @@
 
                     <i class="bi bi-bell"></i>
 
-                    <span class="badge bg-primary badge-number">4</span>
+                    <span class="badge bg-primary badge-number"><?php if (count($qurymessage) == 0 ) { echo "0";}
+                    
+                    if (count($qurymessage)>=1 ) { echo count($qurymessage);} ?></span>
 
                 </a><!-- End Notification Icon -->
 
@@ -109,36 +120,14 @@
 
                     <li class="dropdown-header">
 
-                        You have 4 new notifications
+                        You have <?php if (count($qurymessage) == 0 ) { echo "0";}
+                    
+                    if (count($qurymessage)>=1 ) { echo count($qurymessage);} ?> new notifications
 
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-
-                    </li>
-
-                    <li>
-
-                        <hr class="dropdown-divider">
+                        <a href="admissionMess.php"><span class="badge rounded-pill bg-primary p-2 ms-2">View
+                                all</span></a>
 
                     </li>
-
-
-
-                    <li class="notification-item">
-
-                        <i class="bi bi-chat-dots text-warning"></i>
-
-                        <div>
-
-                            <h4>Lorem Ipsum</h4>
-
-                            <p>Quae dolorem earum veritatis oditseno</p>
-
-                            <p>30 min. ago</p>
-
-                        </div>
-
-                    </li>
-
 
 
                     <li>
@@ -147,50 +136,39 @@
 
                     </li>
 
-
-
-                    <li class="notification-item">
-
-                        <i class="bi bi-x-circle text-danger"></i>
-
-                        <div>
-
-                            <h4>Atque rerum nesciunt</h4>
-
-                            <p>Quae dolorem earum veritatis oditseno</p>
-
-                            <p>1 hr. ago</p>
-
-                        </div>
-
-                    </li>
-
-
-
-                    <li>
-
-                        <hr class="dropdown-divider">
-
-                    </li>
+                    <?php         
+                    if ($qurymessage == 0) {
+                    echo "No data Type Avilable.";
+                    }else{
+                    foreach ($qurymessage as $datahow) {
+                    $showname                 = $datahow['name'];
+                    $showdescription          = $datahow['description'];
+                    $showgurdian_name         = $datahow['gurdian_name'];
+                    $showemail                = $datahow['email_id'];
+                    $showdate                 = $datahow['added_on'];
+                    $showid                   = $datahow['id'];
+                    $datetring = date("d M, Y h:i A", strtotime($showdate));
+                
+                    ?>
+                    <a href="viewadmissionquery.php?message=<?php    echo $showid;  ?>&approved=1" style="color: #444444;">
+                        <li class="notification-item">
 
 
 
-                    <li class="notification-item">
+                            <i class="bi bi-chat-dots text-warning"></i>
 
-                        <i class="bi bi-check-circle text-success"></i>
+                            <div>
 
-                        <div>
+                                <h4><?php  echo $showname;              ?></h4>
 
-                            <h4>Sit rerum fuga</h4>
+                                <p><?php  echo $datetring;        ?></p>
 
-                            <p>Quae dolorem earum veritatis oditseno</p>
+                            </div>
 
-                            <p>2 hrs. ago</p>
 
-                        </div>
 
-                    </li>
-
+                        </li>
+                    </a>
 
 
                     <li>
@@ -199,35 +177,10 @@
 
                     </li>
 
-
-
-                    <li class="notification-item">
-
-                        <i class="bi bi-info-circle text-primary"></i>
-
-                        <div>
-
-                            <h4>Dicta reprehenderit</h4>
-
-                            <p>Quae dolorem earum veritatis oditseno</p>
-
-                            <p>4 hrs. ago</p>
-
-                        </div>
-
-                    </li>
-
-
-
-                    <li>
-
-                        <hr class="dropdown-divider">
-
-                    </li>
-
+                    <?php } }?>
                     <li class="dropdown-footer">
 
-                        <a href="#">Show all notifications</a>
+                        <a href="admissionMess.php">Show all notifications</a>
 
                     </li>
 
@@ -249,7 +202,9 @@
 
                     <i class="bi bi-chat-left-text"></i>
 
-                    <span class="badge bg-success badge-number">3</span>
+                    <span class="badge bg-success badge-number"><?php if (count($contactmessage) == 0 ) { echo "0";}
+                    
+                    if (count($contactmessage)>=1 ) { echo count($contactmessage);}?></span>
 
                 </a><!-- End Messages Icon -->
 
@@ -259,9 +214,12 @@
 
                     <li class="dropdown-header">
 
-                        You have 3 new messages
+                        You have <?php if (count($contactmessage) == 0 ) { echo "0";}
+                    
+                    if (count($contactmessage)>=1 ) { echo count($contactmessage);} ?> new messages
 
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                        <a href="message_show.php"><span class="badge rounded-pill bg-primary p-2 ms-2">View
+                                all</span></a>
 
                     </li>
 
@@ -271,21 +229,34 @@
 
                     </li>
 
-
+                    <?php         
+                    if ($contactmessage == 0) {
+                    echo "No data Type Avilable.";
+                    }else{
+                    foreach ($contactmessage as $datashow) {
+                        $showname          = $datashow['name'];
+                        $showemail         = $datashow['email'];
+                        $showsubject       = $datashow['subject'];
+                        $showmessage       = $datashow['message'];
+                        $showstatus        = $datashow['status'];
+                        $showadded_on      = $datashow['date'];
+                        $showid            = $datashow['id'];
+                        $datetring = date("d M, Y h:i A", strtotime($showadded_on));
+                    ?>
 
                     <li class="message-item">
 
-                        <a href="#">
+                        <a href="viewmessage.php?message=<?php    echo $showid;  ?>&approved=1">
 
-                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                            <img src="#" alt="" onerror="this.src='assets/img/user.jpg';" class="rounded-circle">
 
                             <div>
 
-                                <h4>Maria Hudson</h4>
+                                <h4><?php  echo $showname;        ?></h4>
 
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                                <p><?php  echo $showsubject;      ?></p>
 
-                                <p>4 hrs. ago</p>
+                                <p><?php  echo $datetring;        ?></p>
 
                             </div>
 
@@ -299,67 +270,11 @@
 
                     </li>
 
-
-
-                    <li class="message-item">
-
-                        <a href="#">
-
-                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
-
-                            <div>
-
-                                <h4>Anna Nelson</h4>
-
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-
-                                <p>6 hrs. ago</p>
-
-                            </div>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <hr class="dropdown-divider">
-
-                    </li>
-
-
-
-                    <li class="message-item">
-
-                        <a href="#">
-
-                            <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
-
-                            <div>
-
-                                <h4>David Muldon</h4>
-
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-
-                                <p>8 hrs. ago</p>
-
-                            </div>
-
-                        </a>
-
-                    </li>
-
-                    <li>
-
-                        <hr class="dropdown-divider">
-
-                    </li>
-
-
+                    <?php }} ?>
 
                     <li class="dropdown-footer">
 
-                        <a href="#">Show all messages</a>
+                        <a href="message_show.php">Show all messages</a>
 
                     </li>
 
@@ -392,8 +307,8 @@
              
 
                 echo' <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-               
-                    <img src="'.$img.'"width=40 height=40  alt="" onerror="this.src='.$imgs.';"width=40 height=40  class="rounded-circle">
+
+                <img src="'.$img.'"  alt="" onerror="this.src='.$imgs.';"  class="rounded-circle">
 
                     <span class="d-none d-md-block dropdown-toggle ps-2">'. $adminName.'</span>
 
@@ -572,13 +487,13 @@
 
         if (searchword.length == 0) {
 
-document.getElementById("tabledatas").style.display = "none";
+            document.getElementById("tabledatas").style.display = "none";
 
-} else {
+        } else {
 
-document.getElementById("tabledatas").style.display = "block";
+            document.getElementById("tabledatas").style.display = "block";
 
-}
+        }
 
     };
     </script>

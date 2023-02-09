@@ -164,8 +164,7 @@ $updatePage = $Subjects->subjectById($id);
 
     <form method="POST" class="w-100 m-0" action="<?php echo $_SERVER['REQUEST_URI'] ?>">
 
-        <input type="hidden" maxlength="55" class="form-control" value="<?php echo $showid; ?>" name="id"
-            required>
+        <input type="hidden" maxlength="55" class="form-control" value="<?php echo $showid; ?>" name="id" required>
 
         <div class="card p-0  mb-0" style="box-shadow: none">
 
@@ -215,8 +214,8 @@ $updatePage = $Subjects->subjectById($id);
 
                     <div class="col-sm-9">
 
-                        <input class="form-control" maxlength="355" style="height: 100px"
-                            value="<?php echo $showdescription; ?>" name="description" required>
+                        <textarea class="form-control" maxlength="355" style="height: 100px" name="description"
+                            required><?php echo $showdescription; ?></textarea>
 
                     </div>
 

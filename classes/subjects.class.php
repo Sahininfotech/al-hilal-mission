@@ -37,7 +37,7 @@ class Subjects extends DatabaseConnection{
 
 
 
-    
+      
     //subjectupdate start 
     function subjectupdate($id, $class_name, $subject, $description){
 
@@ -46,6 +46,7 @@ class Subjects extends DatabaseConnection{
         return $result;
 
     }//enf
+
 
 
     

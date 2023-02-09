@@ -12,13 +12,7 @@ if(isset ($_GET['dayreport']) ){
     if(isset ($_GET['yearreport']) ){
     $studentbox=$Students->studentchartyear($_GET['yearreport']);
     }
-     
-    // if ($studentbox = null || $studentbox = '') 
-
-    // {
-    //     $totalstudent = "<h2>No Data Avilable.</h2>";
-    // }
-
+  
     require_once '../classes/institutedetails.class.php';
     $revenue = new  InstituteDetails();
     $result=$revenue->instituteShow();
@@ -108,7 +102,6 @@ if(isset ($_GET['dayreport']) ){
 
                             </h6>
 
-                            <p class="ps-4">date: <?php echo date("d/m/y");?></p>
 
                         </div>
 
@@ -116,21 +109,19 @@ if(isset ($_GET['dayreport']) ){
                 </div>
 
                 <?php 
-
                     if ($studentbox == 0) {
                     echo "<h2>No Data Avilable.</h2>";
 
                     }
                     else
                     {
-                    
-                        
-                $totalstudent = 00;
-                if ($studentbox != null || $studentbox != '') {
-            
-                    $totalstudent = count($studentbox);
-            
-                }
+
+                        $totalstudent = 00;
+                        if ($studentbox != null || $studentbox != '') {
+
+                        $totalstudent = count($studentbox);
+
+                        }
 
                     ?>
                 <table class="table table-sm table-bordered mt-3">
@@ -152,22 +143,23 @@ if(isset ($_GET['dayreport']) ){
 
                         <?php 
                        foreach ($studentbox as $showStudentDetailsshow) {
-                       $showname     = $showStudentDetailsshow['name'];
-                        $showstudent_id   = $showStudentDetailsshow['student_id'];
-                        $showgurdian_name = $showStudentDetailsshow['gurdian_name'];
-                        $showroll_no  = $showStudentDetailsshow['roll_no'];
-                        $showclass    = $showStudentDetailsshow['class'];
+                       $showname            = $showStudentDetailsshow['name'];
+                        $showstudent_id     = $showStudentDetailsshow['student_id'];
+                        $showgurdian_name   = $showStudentDetailsshow['gurdian_name'];
+                        $showroll_no        = $showStudentDetailsshow['roll_no'];
+                        $showclass          = $showStudentDetailsshow['class'];
                         $showcontact_no     = $showStudentDetailsshow['contact_no'];
-                        $showaddress     = $showStudentDetailsshow['address'];
+                        $showaddress        = $showStudentDetailsshow['address'];
                        
-                               echo '<tr>
-                      <td>'.$showname.'</td>
-                      <td>'.$showroll_no.'</td>
-                      <td>'.$showstudent_id.'</td>
-                      <td>'.$showclass.'</td>
+                      echo '<tr>
+
+                      <td>'.$showname.'        </td>
+                      <td>'.$showroll_no.'     </td>
+                      <td>'.$showstudent_id.'  </td>
+                      <td>'.$showclass.'       </td>
                       <td>'.$showgurdian_name.'</td>
-                      <td>'.$showcontact_no.'</td>
-                      <td>'.$showaddress.'</td>
+                      <td>'.$showcontact_no.'  </td>
+                      <td>'.$showaddress.'     </td>
 
                       </tr>';
 
@@ -189,13 +181,14 @@ if(isset ($_GET['dayreport']) ){
 
                         <th></th>
                         <th></th>
-                        <th> Total </th>
+                        <th> Total Student</th>
 
                         <th><?php  echo $totalstudent;  ?></th>
 
                     </tr>
                     </thead>
                 </table>
+                <p class="ps-4">date: <?php echo date("d.m.y");?></p>
             </div>
         </div>
 

@@ -1,0 +1,5 @@
+1. exams.php page
+    Update Exam and Add exams
+
+
+2. Staff Management

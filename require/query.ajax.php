@@ -1,5 +1,47 @@
 <?php
     $page = "query";
+
+    require_once '../_config/dbconnect.php';
+    require_once '../classes/query-form.class.php';
+
+    $Query       = new  admissionQuery();
+
+    $insertquery = false;
+
+    if(isset ($_POST["submit"])){
+
+        $name                  = $_POST["name"];
+        $gurdian_name          = $_POST["gurdian_name"];
+        $email_id              = $_POST["email_id"];
+        $contact_no            = $_POST["contact_no"];
+        $gender                = $_POST["gender"];
+        $previous_school       = $_POST["previous_school"];
+        $previous_class        = $_POST["previous_class"];
+        $admission_class       = $_POST["admission_class"];
+        $address               = $_POST["address"];
+        $district              = $_POST["district"];
+        $police_station        = $_POST["police_station"];
+        $pin_code              = $_POST["pin_code"];
+        $state                 = $_POST["state"];
+        $description           = $_POST["description"];
+        $date                  = $_POST["date"];
+        $status                = $_POST["status"];
+
+
+        $querydata = $Query->addFormQuery( $name, $gurdian_name, $email_id, $contact_no, $gender, $previous_school, $previous_class, $admission_class, $address, $district, $police_station, $pin_code, $state, $description, $date, $status);
+
+
+
+        if(!$insertquery){
+        echo "<script> alert('admission query form has been submitted!');document.location='query.ajax.php'</script>";
+        }
+        else{
+        echo "<script> alert('admission query form has been Failed!');document.location='query.ajax.php'</script>";
+
+        }
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,11 +74,13 @@
 
 
 
-    <form method="post" action="query.action.php" class="row needs-validation w-100" novalidate>
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" class="row needs-validation w-100" novalidate>
         <div class="card  mb-0" style="border: none">
             <h5 class="card-title pt-0 pb-2 d-flex justify-content-center">
                 Admission Query
             </h5>
+            <input type="hidden" class="form-control" id="floatingInput" name="status"
+                    value="0">
             <div class="form-floating mb-3">
                 <input type="text" maxlength="80" class="form-control" id="floatingInput" placeholder=" " name="name"
                     value="" required>

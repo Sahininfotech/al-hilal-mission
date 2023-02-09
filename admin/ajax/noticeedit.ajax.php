@@ -89,7 +89,7 @@ require_once '../../classes/employee.class.php';
         <div class="row mb-3">
         <label for="inputAddress" class="col-sm-2 col-form-label">Message :</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control"  value="'.$shownotice.'" name="notice">
+                <textarea type="text" class="form-control" name="notice">'.$shownotice.'</textarea>
             </div>
         </div>            
               

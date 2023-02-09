@@ -26,38 +26,40 @@ $result = $Notice->noticByDate($_GET['search'], $_GET['search1']);
 
   if(isset ($_POST["submit"])){
  
-  $notices      = $_POST["notice"];
-  $subject      = $_POST["subject"];
-  $oldsignature = $_POST["oldsignature"];
+  $notices         = $_POST["notice"];
+  $subject         = $_POST["subject"];
+  $added_by        = $_POST["added_by"];
 
  $image            = $_FILES[ 'signature' ][ 'name' ];
  $image_size       = $_FILES[ 'signature' ][ 'size' ];
  $image_tmp_name   = $_FILES[ 'signature' ][ 'tmp_name' ];
+ $image_folter     = 'image/'.$image;
  $file_type        = $_FILES['signature']['type']; //returns the mimetype
 
- $allowed = array("image/png");
+
+
+
+ if($image != ''){
+    $c_image = $image;
+    
+ $allowed          = array("image/png");
  if(!in_array($file_type, $allowed)) {
  
-   echo "<script> alert('Only gif, and png files are allowed.');document.location='notice.php' </script>";
+   echo "<script> alert('Only png files are allowed.');window.history.back(); </script>";
  
    exit();
  
  }
- $image_folter     = 'image/'.$image;
-
- if($image != ''){
-    $c_image = $image;
  }else{
+    $oldsignature    = $_POST["oldsignature"];
     $c_image = $oldsignature;
  }
 
 
    move_uploaded_file( $image_tmp_name, $image_folter );
-
-
   
 
-    $resultdata=$emp->noticeInsert($notices, $c_image, $subject);
+    $resultdata=$emp->noticeInsert($notices, $c_image, $subject, $added_by);
 
 if($resultdata){
 
@@ -128,18 +130,25 @@ if($resultdata){
                     <!-- Sales Card -->
                     <div class="col-xxl-12 col-md-12">
                         <div class="card info-card sales-card p-4">
-
+                        <?php
+                $adminDt = $Admin->getAdmin($_SESSION['user_name']);
+                foreach ($adminDt as $showStaffdentDetailsshow) {
+                $showname       = $showStaffdentDetailsshow['name'];
+                 ?>
                             <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
-                                enctype="multipart/form-data">
+                                enctype="multipart/form-data" class="needs-validation" novalidate>
+
+                                <input class=" form-control  minecsssearch" type="hidden" id='added_by' name="added_by"
+                                    value="<?php    echo $showname;  ?>">
 
                                 <div class="row mb-3">
                                     <input class=" form-control  minecsssearch" list="datalistOptions" id='subject'
-                                        placeholder="Subject..." name="subject">
+                                        placeholder="Subject..." name="subject" required>
                                 </div>
 
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" placeholder="Leave a comment here"
-                                        id="floatingTextarea2" style="height: 200px " name="notice"></textarea>
+                                        id="floatingTextarea2" style="height: 200px " name="notice" required></textarea>
                                     <label for="floatingTextarea2">Comments</label>
                                 </div>
 
@@ -150,7 +159,7 @@ if($resultdata){
 
                                     <select class="form-select" id="form-select" aria-label="Default select example"
                                         name="oldsignature">
-                                        <option selected disabled>Select Image</option>
+                                        <option selected disabled>Select previous Image</option>
                                         <?php
                                             $updatePage=$emp->shownoticeimage();
                                             foreach ($updatePage as $showstaffnoticeshow) {
@@ -158,7 +167,7 @@ if($resultdata){
                                                 $img            = "../image/".$showsignature;
                                             echo '<option value="'.$img.'">'.$img.'</option>';
 
-                                            }
+                                            }}
                                             ?>
                                     </select>
 
@@ -238,7 +247,8 @@ if($resultdata){
             <div class="row">
 
                 <?php
-                $result = $emp->noticedisplaydata();
+                $limit = "2";
+                $result = $Notice->noticedisplay($limit);
                  if (count($result) > 0) {
                     foreach($result as $row){
                         $showid = $row['id'];
@@ -321,10 +331,35 @@ if($resultdata){
 
     function deleteNOTICE() {
 
-        return confirm("Aru you sure want to delete this record ?")
+        return confirm("Are you sure that you want to delete the Notice Contents ?")
 
     };
     </script>
+
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    </script>
+
+
 </body>
 
 </html>

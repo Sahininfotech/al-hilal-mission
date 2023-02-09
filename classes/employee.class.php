@@ -1,5 +1,5 @@
 <?php
-
+date_default_timezone_set("Asia/Kolkata");   //India time (GMT+5:30)
 
 class Employee extends DatabaseConnection{
 
@@ -22,36 +22,7 @@ class Employee extends DatabaseConnection{
 
 
 
-    // display start
-    function showimage(){
 
-        $empData = array();
-        $sql = "SELECT * FROM `forum_staff`";
-        $res = $this->conn->query($sql);
-        while($row  = $res->fetch_array()){
-            $empData[]	= $row;
-        }
-        return $empData;
-        
-    }
-    // end display
-
-
-
-    
-    // display start
-    function shownoticeimage(){
-
-        $empData = array();
-        $sql = "SELECT * FROM `forum`";
-        $res = $this->conn->query($sql);
-        while($row  = $res->fetch_array()){
-            $empData[]	= $row;
-        }
-        return $empData;
-        
-    }
-    // end display
 
 
 
@@ -69,6 +40,37 @@ class Employee extends DatabaseConnection{
 
 
 
+    
+    // display start
+    function showimage(){
+
+        $empData = array();
+        $sql = "SELECT * FROM `forum_staff`";
+        $res = $this->conn->query($sql);
+        while($row  = $res->fetch_array()){
+            $empData[]	= $row;
+        }
+        return $empData;
+        
+    }
+    // end display
+
+
+
+   
+    // display start
+    function shownoticeimage(){
+
+        $empData = array();
+        $sql = "SELECT * FROM `forum`";
+        $res = $this->conn->query($sql);
+        while($row  = $res->fetch_array()){
+            $empData[]	= $row;
+        }
+        return $empData;
+        
+    }
+    // end display
 
 
 
@@ -148,50 +150,30 @@ class Employee extends DatabaseConnection{
 
     // notice inshat data start w
 
-    function noticeInsert( $notices, $image, $subject){
+    function noticeInsert( $notices, $image, $subject, $added_by){
 
         $notice = str_replace("<", "&lt", str_replace(">", "&gt;", str_replace("'", "\\", $notices)));
 
-        $sql = "INSERT INTO `forum` ( `notice`, `signature`, `subject`) VALUES ( '$notice', '$image', '$subject')" ;
+        $sql = "INSERT INTO `forum` ( `notice`, `signature`, `subject`, `added_by`) VALUES ( '$notice', '$image', '$subject', '$added_by')" ;
         
         $insertEmpQuery = $this->conn->query($sql);
 
     }
 
-    // notice inshat data end 
+
+    // notice inshat data end
 
 
 
 
-    // display start W
-    function noticedisplaydata(){
-
-        $data = array();
-        $sql = "SELECT * FROM `forum` ORDER BY id DESC LIMIT 2";
-        // staff_notice FROM `forum` ORDER BY staff_notice DESC LIMIT 1;
-        $empQuery   = $this->conn->query($sql);
-
-        while($row  = $empQuery->fetch_array()){    
-
-        $data[]	= $row;
-        }
-
-        return $data;
-
-    }
-    // end display
-
-
-
-    // $notice = str_replace("<", "&lt", str_replace(">", "&gt;", str_replace("'", "\\", $notices)));
 
     // notice inshat data start w
 
-    function staff_noticeInsert($name, $notices, $subject, $image, $staff_id){
+    function staff_noticeInsert($name, $notices, $subject, $image, $staff_id, $added_by){
 
         $notice = str_replace("<", "&lt", str_replace(">", "&gt;", str_replace("'", "\\", $notices)));
 
-        $sql = "INSERT INTO `forum_staff` ( `name`,`notice`, `subject`, `signature`, `staff_id`) VALUES ( '$name','$notice','$subject','$image','$staff_id')";
+        $sql = "INSERT INTO `forum_staff` ( `name`,`notice`, `subject`, `signature`, `staff_id`, `added_by`) VALUES ( '$name','$notice','$subject','$image','$staff_id', '$added_by')";
         
         $insertEmpQuery = $this->conn->query($sql);
 

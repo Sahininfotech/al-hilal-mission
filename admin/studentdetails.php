@@ -6,6 +6,7 @@ require_once '../classes/classes.class.php';
 require_once '../classes/student.class.php';
 require_once '../classes/admin.class.php';
 require_once '../classes/institutedetails.class.php';
+require_once '../includes/constant.php';
 
 $Admin    = new Admin();
 $Classes  = new Classes();
@@ -23,7 +24,7 @@ $resultdata=$InstituteDetails->instituteShow();
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>studentmanagement / Studentdetails - NiceAdmin Bootstrap Template</title>
+  <title>Student Details || <?php echo SITE_NAME ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
