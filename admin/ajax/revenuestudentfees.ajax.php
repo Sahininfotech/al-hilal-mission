@@ -178,7 +178,7 @@
 
 
 
-        $res = $Account->feesSummarydata($student_id, $total_due, $total_duess);
+        $res = $Account->feesSummarydata($student_id, $total_due, $total_duess, $class);
 
 
 

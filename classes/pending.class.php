@@ -431,6 +431,62 @@ function pen_studentByClass($class_Id){
 
 
 
+
+function pen_studentByprevious($class_Id){
+
+
+
+    $data = array();
+
+    $sql = "SELECT * FROM `student_summary` WHERE total_due != 0 and `class` = '$class_Id'";
+
+    $studentTypeQuery = $this->conn->query($sql);
+
+    $rows = $studentTypeQuery->num_rows;
+
+    if ($rows == 0) {
+
+        return 0;
+
+    }else{
+
+        while ($result = $studentTypeQuery->fetch_array()) {
+
+        $data[] = $result;
+
+    }
+
+    return $data;
+
+    }
+
+}
+
+// end studentDetails function 
+
+
+
+
+// display start
+function previousFeesId($studentId ,$class){
+
+    $data = array();
+    $sql = "SELECT * FROM `student_summary` WHERE `student_id` = '$studentId' and `class` = '$class'";
+    $empQuery = $this->conn->query($sql);
+    if ($empQuery->num_rows > 0) {
+        while($row = $empQuery->fetch_array()){
+            $data[]	= $row;
+        }
+    }
+    return $data;
+
+}
+// end display
+
+
+
+
+
 function pen_student($student_Id){
 
 

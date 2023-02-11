@@ -6,7 +6,7 @@
 
   require_once '../../_config/dbconnect.php';
 
-  require_once '../../classes/student.class.php';
+  require_once '../../classes/pending.class.php';
 
   require_once '../../classes/admin.class.php';
 
@@ -16,11 +16,11 @@
 
 $Admin          = new Admin();
 
-$Student        = new Student();
+$Pending        = new Pending();
 
 
 
-$showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
+$showStudentDetails   = $Pending->previousFeesId($_GET['preFeespending'], $_GET['Feespendingclass']);
 
 
 
@@ -232,17 +232,7 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
 
 
 
-            $showgurdian_name  = $showStudentDetailsshow['gurdian_name'];
-
-
-
-            $result=$Student-> studentsByFees($_GET['feespending'], $showclass);
-
-            foreach ($result as $row) {
-
-                // while ($row = $result ->fetch_object()):
-
-                    // $showamount = $row->Total;
+            $showgurdian_name  = $showStudentDetailsshow['guardian_name'];
 
 
 
@@ -250,19 +240,19 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
 
 
 
-            $showamount         = $row['Total'];
+            $pendingamount         = $showStudentDetailsshow['total_due'];
 
 
 
-            $showtotal_amount   = $row['total_amount'];
+            $showtotal_amount   = $showStudentDetailsshow['total_amount'];
 
 
 
-            $showdate           = $row['date'];
+            $showdate           = $showStudentDetailsshow['date'];
 
 
 
-            $pendingamount      = ($showtotal_amount - $showamount);
+            $showamount      = ($showtotal_amount - $pendingamount);
 
 
 
@@ -425,15 +415,7 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
 
                         <h6 class="h6css">
 
-                        <?php if($showtotal_amount == $showamount) {
-                        echo '<span class="badge bg-success">Paid</span>';
-                        }elseif($showtotal_amount > $showamount) {
-                        $pendingamount  = number_format($pendingamount, 2);
-                        echo $pendingamount; }else{
-                        echo "0";
-                        }
-
-                        ?>
+                        <?php echo $pendingamount ?>
 
                         </h6>
 
@@ -545,7 +527,7 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
 
             // endwhile;
 
-         }} 
+         }
 
          ?>
 

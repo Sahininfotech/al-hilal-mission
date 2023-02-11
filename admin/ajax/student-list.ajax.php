@@ -66,7 +66,7 @@ $student = $StudentDetails->searchStudent($search_value);
 
             <td class='p-3'>".$row['student_id']."</td>
 
-            <td style='visibility: hidden;'>".$row['total_amount']."</td>
+            <td style='visibility: hidden;'>".$row['payable_fee']."</td>
  
             <td style='visibility: hidden;'>".$row['total_due']."</td>
             </tr>

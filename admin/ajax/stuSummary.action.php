@@ -129,8 +129,13 @@ $insertEmpQuery=false;
          $pin_codes, $academic_years, $states, $districts, $date_of_births,    
          $dded_bys, $added_ons, $dates, $class, $Status); 
 
+         if($class == "12"){
+      $results=$Student->studentdelect($class);
+    }
+    else
+    {
          $results=$Student->changedata($newclass, $class, $session, $student_ids); 
-         
+    }
         }}}}}}
 
     }}}}}}

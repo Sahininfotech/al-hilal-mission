@@ -9,6 +9,7 @@ require_once '../classes/institutedetails.class.php';
 require_once '../classes/studdetails.class.php';
 require_once '../classes/fees-accounts.class.php';
 require_once '../classes/student.class.php';
+require_once '../includes/constant.php';
 
 
 
@@ -29,7 +30,7 @@ $showStudentDetails   = $Student->studentFeesId($_GET['studentid']);
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Student Management / Student Details / NiceAdmin Bootstrap Template</title>
+    <title>Student Fees || <?php echo SITE_NAME; ?></title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <?php require_once 'require/headerLinks.php';?>
@@ -58,7 +59,7 @@ $showStudentDetails   = $Student->studentFeesId($_GET['studentid']);
     <main id="main" class="main w-100 ms-0">
 
         <div class="pagetitle">
-            <h1>Submit Marks</h1>
+            <h1>Add Fees</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
@@ -66,7 +67,7 @@ $showStudentDetails   = $Student->studentFeesId($_GET['studentid']);
                             Management</a></li>
                     <li class="breadcrumb-item "><a href="studentdetails.php">Student
                             Details </a></li>
-                    <li class="breadcrumb-item active">Submit Marks </li>
+                    <li class="breadcrumb-item active">Add Fees</li>
                 </ol>
             </nav>
         </div>

@@ -389,19 +389,48 @@ class FeesAccount extends DatabaseConnection{
     
 
     
+    // function addFeesAccounts($student_id, $discount, $name, $conc_remark, $payable_fee, $gurdian_name, $academic_year, $roll_no, $class){
+
+    //     $sql = "INSERT INTO `student_fees_dtls` (`student_id`, `concession`, `name`, `conc_remark`, `payable_fee`, `gurdian_name`, `session`, `roll_no`, `class`, `total_due`)
+    //                                         VALUES
+    //                                         ('$student_id', '$discount', '$name', '$conc_remark', '$payable_fee', '$gurdian_name', '$academic_year', '$roll_no', '$class', '$payable_fee')";
+
+    //     $res = $this->conn->query($sql);
+    //     return $res;
+
+    // }
+
+
     function addFeesAccounts($student_id, $discount, $name, $conc_remark, $payable_fee, $gurdian_name, $academic_year, $roll_no, $class){
 
-        $sql = "INSERT INTO `student_fees_dtls` (`student_id`, `concession`, `name`, `conc_remark`, `payable_fee`, `gurdian_name`, `session`, `roll_no`, `class`, `total_due`)
-                                            VALUES
-                                            ('$student_id', '$discount', '$name', '$conc_remark', '$payable_fee', '$gurdian_name', '$academic_year', '$roll_no', '$class', '$payable_fee')";
+        $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$student_id'";
 
-        $res = $this->conn->query($sql);
-        return $res;
+         $selectdata   = $this->conn->query($sql);
+ 
+         $rows = $selectdata->num_rows;
 
-    }
+         if ($rows == 0) {
 
+                $sql = "INSERT INTO `student_fees_dtls` (`student_id`, `concession`, `name`, `conc_remark`, `payable_fee`, `gurdian_name`, `session`, `roll_no`, `class`, `total_due`)
+                VALUES
+                ('$student_id', '$discount', '$name', '$conc_remark', '$payable_fee', '$gurdian_name', '$academic_year', '$roll_no', '$class', '$payable_fee')";
 
+                $res = $this->conn->query($sql);
+                return $res;
 
+           }
+
+             else
+
+             {   
+                 $sqledit = "UPDATE  `student_fees_dtls` SET `class` = '$class', `concession` = '$discount', `conc_remark` = '$conc_remark', `payable_fee` = '$payable_fee', `total_due` = '$payable_fee',  `session` = '$academic_year' WHERE  `student_fees_dtls`.`student_id` = '$student_id'";
+
+                 $result1 = $this->conn->query($sqledit);
+                 return $result1;
+
+             }
+
+     }
 
 
 
@@ -610,7 +639,7 @@ class FeesAccount extends DatabaseConnection{
 
  
 
-     function feesSummarydata($student_id, $total_due, $total_duess){
+     function feesSummarydata($student_id, $total_due, $total_duess, $class){
 
 
 
@@ -618,7 +647,7 @@ class FeesAccount extends DatabaseConnection{
 
 
 
-        $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$student_id'";
+        $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$student_id' ";
 
         
 
@@ -634,7 +663,7 @@ class FeesAccount extends DatabaseConnection{
 
 
 
-           $sqlup = "UPDATE `student_fees_dtls` SET `total_due` = '$total_due' WHERE  `student_fees_dtls`.`student_id` = '$student_id'";
+           $sqlup = "UPDATE `student_fees_dtls` SET `total_due` = '$total_due' WHERE  `student_fees_dtls`.`student_id` = '$student_id' and `student_fees_dtls`.`class` = '$class'";
 
 
 
@@ -656,7 +685,7 @@ class FeesAccount extends DatabaseConnection{
 
 
 
-            $sqleditup = "UPDATE `student_fees_dtls` SET `total_due` = '$total_duess' WHERE  `student_fees_dtls`.`student_id` = '$student_id'";
+            $sqleditup = "UPDATE `student_fees_dtls` SET `total_due` = '$total_duess' WHERE  `student_fees_dtls`.`student_id` = '$student_id' and `student_fees_dtls`.`class` = '$class'";
 
 
 
@@ -680,6 +709,21 @@ class FeesAccount extends DatabaseConnection{
 
         $data = array();
         $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$showstuid' and `student_fees_dtls`.`session` = '$showacademic_year'";
+        $res = $this->conn->query($sql);
+        if ($res->num_rows > 0) {
+            while ($result = $res->fetch_array()) {
+                $data[] = $result;
+            }
+        }
+        return $data;
+
+    }
+
+    
+    function showFeesdata($showstuid){
+
+        $data = array();
+        $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$showstuid'";
         $res = $this->conn->query($sql);
         if ($res->num_rows > 0) {
             while ($result = $res->fetch_array()) {

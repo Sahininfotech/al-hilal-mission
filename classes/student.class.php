@@ -151,12 +151,12 @@ function studentByClass($classId){
 
 
 // display start
-function studentsByFees($student_Id){
+function studentsByFees($student_Id, $showclass){
 
     $data = array();
     // $sql = "SELECT * FROM `student_payment_dtls` WHERE `student_id` = '$student_Id'";
 
-    $sql = "SELECT * , SUM(amount) AS 'Total' FROM `student_payment_dtls` WHERE `student_id` = '$student_Id'";
+    $sql = "SELECT * , SUM(amount) AS 'Total' FROM `student_payment_dtls` WHERE `student_id` = '$student_Id' and `class` = '$showclass'";
 
     $empQuery = $this->conn->query($sql);
     if ($empQuery->num_rows > 0) {

@@ -79,6 +79,9 @@ $revenuetotal         = $revenues->studentfeesTotal();
 $amounttotal          = $StudentDetails->Studenttotalamount();
 
 
+$previousfees         = $StudentDetails->previoustotalamount();
+
+
 
 $revenueamounts       = $revenues->totalDue();
 
@@ -256,51 +259,52 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
         <section class="section dashboard ">
 
-                <div class="col-lg-12">
+            <div class="col-lg-12">
 
-                    <div class="row">
+                <div class="row">
 
 
 
-                        <!-- Card -->
+                    <!-- Card -->
 
-                        <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
+                    <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
 
-                            <div class="card indexedcrd info-card sales-card">
+                        <div class="card indexedcrd info-card sales-card">
 
-                                <div class="filter">
+                            <div class="filter">
 
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
 
-                                            class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
 
-                                        <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
 
-                                            <h6>Filter</h6>
+                                    </li>
 
-                                        </li>
+                                    <li><a class="dropdown-item"
+                                            href="student-report.php?dayreport=Today <?php echo date("l") ?>">Today</a>
 
-                                        <li><a class="dropdown-item" href="student-report.php?dayreport=Today <?php echo date("l") ?>">Today</a>
+                                    </li>
 
-                                        </li>
+                                    <li><a class="dropdown-item"
+                                            href="student-report.php?monthreport=Month <?php echo date('M') ?>">This
 
-                                        <li><a class="dropdown-item" href="student-report.php?monthreport=Month <?php echo date('M') ?>">This
+                                            Month</a></li>
 
-                                                Month</a></li>
+                                    <li><a class="dropdown-item"
+                                            href="student-report.php?yearreport=Year <?php echo date('Y') ?>">This
 
-                                        <li><a class="dropdown-item" href="student-report.php?yearreport=Year <?php echo date('Y') ?>">This
+                                            Year</a></li>
 
-                                                Year</a></li>
+                                </ul>
 
-                                    </ul>
+                            </div>
 
-                                </div>
+                            <a href="./studentdetails.php">
 
-                                <a href="./studentdetails.php">
-
-                                    <?php
+                                <?php
 
 
 
@@ -330,79 +334,86 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                             ?>
 
-                                    <div class="card-body">
+                                <div class="card-body">
 
-                                        <h5 class="card-title">Total Students </h5>
+                                    <h5 class="card-title">Total Students </h5>
 
-                                        <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
 
-                                            <div
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-people"></i>
 
-                                                <i class="bi bi-people"></i>
+                                        </div>
 
-                                            </div>
+                                        <div class="ps-3">
 
-                                            <div class="ps-3">
+                                            <span class="text-success small pt-1 fw-bold">Total</span> <span
+                                                class="text-muted small pt-2 ps-1">Students</span>
 
-                                                <span class="text-success small pt-1 fw-bold">Total</span> <span
+                                            <h6>
 
-                                                    class="text-muted small pt-2 ps-1">Students</span>
+                                                <?php  echo $totalstudent;  }?>
 
-                                                <h6>
-
-                                                    <?php  echo $totalstudent;  }?>
-
-                                                </h6>
-
-                                            </div>
+                                            </h6>
 
                                         </div>
 
                                     </div>
 
-                                </a>
+                                </div>
 
-                            </div>
+                            </a>
 
                         </div>
 
-                        <!-- End Card -->
+                    </div>
 
-                        <!-- Card -->
+                    <!-- End Card -->
 
-
-
-                        <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
-
-                            <div class="card indexedcrd info-card sales-card">
-
-                                <div class="filter">
-
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-
-                                            class="bi bi-three-dots"></i></a>
-
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
-                                        <li class="dropdown-header text-start"> <h6>Filter</h6> </li>
-
-                                        <li><a class="dropdown-item" href="pending-report.php?dayreport=Today <?php echo date("l") ?>">Today</a></li>
-
-                                        <li><a class="dropdown-item" href="pending-report.php?monthreport=Month <?php echo date('M') ?>">This Month</a></li>
-
-                                        <li><a class="dropdown-item" href="pending-report.php?yearreport=Year <?php echo date('Y') ?>">This Year</a></li>
-
-                                    </ul>
-
-                                </div>
-
-                                
-
-                                <?php
+                    <!-- Card -->
 
 
+
+                    <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
+
+                        <div class="card indexedcrd info-card sales-card">
+
+                            <div class="filter">
+
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                                    <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
+                                    </li>
+
+                                    <li><a class="dropdown-item"
+                                            href="pending-report.php?dayreport=Today <?php echo date("l") ?>">Today</a>
+                                    </li>
+
+                                    <li><a class="dropdown-item"
+                                            href="pending-report.php?monthreport=Month <?php echo date('M') ?>">This
+                                            Month</a></li>
+
+                                    <li><a class="dropdown-item"
+                                            href="pending-report.php?yearreport=Year <?php echo date('Y') ?>">This
+                                            Year</a></li>
+
+                                </ul>
+
+                            </div>
+
+
+
+                            <?php
+
+
+                                    foreach($previousfees as $amountfees){
+
+                                    $pre_tolatamounts      = $amountfees['pre_Total'];
 
                                     foreach($amounttotal as $amountrow){
 
@@ -420,19 +431,10 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                    $tolatamount = $rows->Total;                                 
+                                    $now_tolatamount = $rows->Total;                                 
+                             
 
-
-
-                                    $pen_amount = $row->Total;
-
-
-
-                                    $penDingamount = $tolatamounts - $pen_amount;
-
-                                 
-
-                                    
+                                    $tolatamount   =  $pre_tolatamounts + $now_tolatamount;
 
                                 ?>
 
@@ -440,177 +442,175 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                <a href="./pending_studentdetails.php">
+                            <a href="./pending_studentdetails.php">
 
-                                    <div class="card-body">
+                                <div class="card-body">
 
-                                        <h5 class="card-title">Pending Fees</h5>
+                                    <h5 class="card-title">Pending Fees</h5>
 
-                                        <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
 
-                                            <div
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-bank2" style="color: red;"></i>
 
-                                                <i class="bi bi-bank2" style="color: red;"></i>
+                                        </div>
 
-                                            </div>
+                                        <div class="ps-3">
 
-                                            <div class="ps-3">
+                                            <span class="text-success small pt-1 fw-bold">Total</span> <span
+                                                class="text-muted small pt-2 ps-1">Pending Fees</span>
 
-                                                <span class="text-success small pt-1 fw-bold">Total</span> <span
-
-                                                    class="text-muted small pt-2 ps-1">Pending Fees</span>
-
-                                                <h6 style="color: red;" >₹ <?php  $tolatamount  = number_format($tolatamount, 2);
-                                                echo $tolatamount ; if ($tolatamount== 0) echo 0;?></h6>
-
-                                            </div>
+                                            <h6 style="color: red;">₹
+                                                <?php 
+                                                $tolatamount  = number_format($tolatamount, 2);
+                                                echo $tolatamount ; if ($tolatamount== 0) echo 0;
+                                                ?>
+                                            </h6>
 
                                         </div>
 
                                     </div>
-
-                                </a>
-
-                            </div>
-
-                        </div>
-
-                        <!-- End Card -->
-
-
-
-                        <!-- Card -->
-
-
-
-                        <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
-
-                            <div class="card indexedcrd info-card sales-card">
-
-                                <div class="filter">
-
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-
-                                            class="bi bi-three-dots"></i></a>
-
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
-                                        <li class="dropdown-header text-start">
-
-                                            <h6>Filter</h6>
-
-                                        </li>
-
-                                        <li><a class="dropdown-item"
-
-                                                href="revenuestudent-report.php?dayreport=Today <?php echo date("l") ?>">Today</a></li>
-
-                                        <li><a class="dropdown-item"
-
-                                                href="revenuestudent-report.php?monthreport=Month <?php echo date('M') ?>">This Month</a></li>
-
-                                        <li><a class="dropdown-item"
-
-                                                href="revenuestudent-report.php?yearreport=Year <?php echo date('Y') ?>">This Year</a></li>
-
-                                    </ul>
 
                                 </div>
 
-                              
+                            </a>
 
-                                <a href="./revenue.php">
+                        </div>
 
-                                    <div class="card-body">
+                    </div>
 
-                                        <h5 class="card-title">Revenue </h5>
-
-                                        <div class="d-flex align-items-center">
-
-                                            <div
-
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-
-                                                <i class="bi bi-currency-dollar"></i>
-
-                                            </div>
-
-                                            <div class="ps-3">
-
-                                                <span class="text-success small pt-1 fw-bold">Total</span> <span
-
-                                                    class="text-muted small pt-2 ps-1">Revenue</span>
+                    <!-- End Card -->
 
 
 
-                                                <h6>₹
+                    <!-- Card -->
 
-                                                    <?php  $row->Total  = number_format($row->Total, 2);
+
+
+                    <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
+
+                        <div class="card indexedcrd info-card sales-card">
+
+                            <div class="filter">
+
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                                    <li class="dropdown-header text-start">
+
+                                        <h6>Filter</h6>
+
+                                    </li>
+
+                                    <li><a class="dropdown-item"
+                                            href="revenuestudent-report.php?dayreport=Today <?php echo date("l") ?>">Today</a>
+                                    </li>
+
+                                    <li><a class="dropdown-item"
+                                            href="revenuestudent-report.php?monthreport=Month <?php echo date('M') ?>">This
+                                            Month</a></li>
+
+                                    <li><a class="dropdown-item"
+                                            href="revenuestudent-report.php?yearreport=Year <?php echo date('Y') ?>">This
+                                            Year</a></li>
+
+                                </ul>
+
+                            </div>
+
+
+
+                            <a href="./revenue.php">
+
+                                <div class="card-body">
+
+                                    <h5 class="card-title">Revenue </h5>
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+
+                                            <i class="bi bi-currency-dollar"></i>
+
+                                        </div>
+
+                                        <div class="ps-3">
+
+                                            <span class="text-success small pt-1 fw-bold">Total</span> <span
+                                                class="text-muted small pt-2 ps-1">Revenue</span>
+
+
+
+                                            <h6>₹
+
+                                                <?php  $row->Total  = number_format($row->Total, 2);
                                                      echo $row->Total ; if ($row->Total== 0) echo 0;?></h6>
-
-                                            </div>
 
                                         </div>
 
                                     </div>
 
-                                </a>
+                                </div>
 
-                            </div>
+                            </a>
 
                         </div>
 
-                        <!-- End Card -->
+                    </div>
 
-                        <?php
+                    <!-- End Card -->
+
+                    <?php
 
                              endwhile;
 
                               endwhile;
 
-                            }
+                            }}
 
                         ?>
 
-                        <!--card -->
+                    <!--card -->
 
-                        <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
+                    <div class="col-xxl-3 col-md-6 col-sm-6 col-lg-3">
 
-                            <div class="card indexedcrd info-card sales-card">
+                        <div class="card indexedcrd info-card sales-card">
 
-                                <div class="filter">
+                            <div class="filter">
 
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
 
-                                            class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
 
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
 
-                                        <li class="dropdown-header text-start">
+                                        <h6>Filter</h6>
 
-                                            <h6>Filter</h6>
+                                    </li>
 
-                                        </li>
+                                    <li><a class="dropdown-item"
+                                            href="expenses-report.php?dayreport=Today <?php echo date("l") ?>">Today</a>
+                                    </li>
 
-                                        <li><a class="dropdown-item"
+                                    <li><a class="dropdown-item"
+                                            href="expenses-report.php?monthreport=Month <?php echo date('M') ?>">This
 
-                                                href="expenses-report.php?dayreport=Today <?php echo date("l") ?>">Today</a></li>
+                                            Month</a></li>
 
-                                        <li><a class="dropdown-item" href="expenses-report.php?monthreport=Month <?php echo date('M') ?>">This
+                                    <li><a class="dropdown-item"
+                                            href="expenses-report.php?yearreport=Year <?php echo date('Y') ?>">This
 
-                                                Month</a></li>
+                                            Year</a></li>
 
-                                        <li><a class="dropdown-item" href="expenses-report.php?yearreport=Year <?php echo date('Y') ?>">This
+                                </ul>
 
-                                                Year</a></li>
+                            </div>
 
-                                    </ul>
-
-                                </div>
-
-                                <?php
+                            <?php
 
 
 
@@ -622,58 +622,56 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                <a href="./expenses.php">
+                            <a href="./expenses.php">
 
-                                    <div class="card-body">
+                                <div class="card-body">
 
-                                        <h5 class="card-title">Expenses</h5>
+                                    <h5 class="card-title">Expenses</h5>
 
-                                        <div class="d-flex align-items-center">
+                                    <div class="d-flex align-items-center">
 
-                                            <div
+                                        <div
+                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                            <i class="bi bi-cart4" style="color: green;"></i>
 
-                                                <i class="bi bi-cart4" style="color: green;"></i>
+                                        </div>
 
-                                            </div>
+                                        <div class="ps-3">
 
-                                            <div class="ps-3">
+                                            <span class="text-success small pt-1 fw-bold">Total</span> <span
+                                                class="text-muted small pt-2 ps-1">Expenses</span>
 
-                                                <span class="text-success small pt-1 fw-bold">Total</span> <span
-
-                                                    class="text-muted small pt-2 ps-1">Expenses</span>
-
-                                                <h6>₹ <?php  $row->Total  = number_format($row->Total, 2);
+                                            <h6>₹ <?php  $row->Total  = number_format($row->Total, 2);
                                                 echo $row->Total ;?><?php  if ($row->Total== 0) echo 0;?>
 
-                                                </h6>
-
-                                            </div>
+                                            </h6>
 
                                         </div>
 
                                     </div>
 
-                                </a>
+                                </div>
 
-                            </div>
+                            </a>
 
                         </div>
 
-                        <!-- End Card -->
+                    </div>
 
-                        <?php
+                    <!-- End Card -->
+
+                    <?php
 
                               endwhile;
 
                         ?>
 
-                    </div>
-
                 </div>
 
-    
+            </div>
+
+
 
 
 
@@ -758,9 +756,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
                             <script>
-
-
-
                             const revenuelabels = <?php echo json_encode($revenuemonth) ?>;
 
 
@@ -914,9 +909,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
                             };
-
-
-
                             </script>
 
 
@@ -949,7 +941,7 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                    <div class="card indexbarchart" >
+                    <div class="card indexbarchart">
 
 
 
@@ -1030,9 +1022,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
                             <script>
-
-
-
                             const labels = <?php echo json_encode($month) ?>;
 
 
@@ -1186,9 +1175,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
                             };
-
-
-
                             </script>
 
 
@@ -1211,45 +1197,43 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
         <section class="section dashboard">
 
-                <div class="col-lg-12">
+            <div class="col-lg-12">
 
-                    <div class="card recent-sales overflow-auto">
+                <div class="card recent-sales overflow-auto">
 
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <h5 class="card-title">Recent Student Datatables</h5>
+                        <h5 class="card-title">Recent Student Datatables</h5>
 
-                            <table class="table table-borderless datatable">
-
-
-
-                                <thead>
+                        <table class="table table-borderless datatable">
 
 
 
-                                    <tr>
+                            <thead>
 
 
 
-                                        <th scope="col">S.No</th>
+                                <tr>
 
 
 
-                                        <th scope="col">Roll Number</th>
+                                    <th scope="col">S.No</th>
 
 
 
-                                        <th scope="col">Student Name</th>
+                                    <th scope="col">Roll Number</th>
 
 
 
-                                        <th scope="col">Guardian's Name</th>
+                                    <th scope="col">Student Name</th>
 
 
 
-                                        <th scope="col">Student Id</th>
+                                    <th scope="col">Guardian's Name</th>
 
 
+
+                                    <th scope="col">Student Id</th>
 
 
 
@@ -1259,15 +1243,17 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                    </tr>
+
+
+                                </tr>
 
 
 
-                                </thead>
+                            </thead>
 
 
 
-                                <tbody>
+                            <tbody>
 
 
 
@@ -1275,7 +1261,7 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
 
-                                    <?php
+                                <?php
 
 
 
@@ -1325,31 +1311,31 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                     ?>
 
-                                    <tr>
+                                <tr>
 
-                                        <td><?php  echo $i                ?></td>
-
-
-
-                                        <td><?php  echo $showroll_no      ?></td>
+                                    <td><?php  echo $i                ?></td>
 
 
 
-                                        <td><?php  echo $showname         ?></td>
+                                    <td><?php  echo $showroll_no      ?></td>
 
 
 
-                                        <td><?php  echo $showgurdian_name ?></td>
+                                    <td><?php  echo $showname         ?></td>
 
 
 
-                                        <td><?php  echo $showstuid        ?></td>
+                                    <td><?php  echo $showgurdian_name ?></td>
 
 
 
-                                    </tr>
+                                    <td><?php  echo $showstuid        ?></td>
 
-                                    <?php  
+
+
+                                </tr>
+
+                                <?php  
 
 
 
@@ -1363,15 +1349,15 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                       ?>
 
-                                </tbody>
+                            </tbody>
 
-                            </table>
-
-                        </div>
+                        </table>
 
                     </div>
 
                 </div>
+
+            </div>
 
         </section>
 
@@ -1396,9 +1382,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
     <script>
-
-
-
     var myChart = new Chart(
 
 
@@ -1432,9 +1415,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
 
     );
-
-
-
     </script>
 
 

@@ -116,10 +116,10 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
             </div>
             <!-- sales  end -->
             <!-- sales -->
-            <div class="col-xxl-3 col-md-3">
+            <!-- <div class="col-xxl-3 col-md-3">
                 <div class="card">
                     <a
-                        href='student_summary.php?class=<?php    echo $_GET['studenttype']  ?>&session=<?php    echo $_GET['session']  ?>'>
+                        href='student_summary.php?class=&session='>
                         <div class="card-body" style="padding: 20px 20px 20px 20px;">
                             <h5 class="card-title" style="text-align: center;">Student Summary
                                 <img src="assets/img/doc.png  " style="height: 28px; padding-left:1rem;" alt="">
@@ -127,7 +127,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                         </div>
                     </a>
                 </div>
-            </div>
+            </div> -->
             <!-- sales  end -->
 
         </div>
@@ -153,13 +153,26 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                 <th scope="col">Student Name</th>
                                                 <th scope="col">Guardian's Name</th>
                                                 <th scope="col">Student Id</th>
-                                                <th scope="col">Exam Status</th>
                                                 <th scope="col">Attendance</th>
                                                 <th scope="col">Fees Status</th>
                                                 <th scope="col">Action</th>
                                                 <th scope="col">Marksheet</th>
-                                                <th scope="col">Fees Add</th>
+                                                <?php
 
+                                                                                
+                                                    foreach ($showStudentDetails as $showStudentDetailsshow) {
+                                                    $showstuid            = $showStudentDetailsshow['student_id'];
+                                                    $StudentData   = $FeesAccount->showFeesdata($showstuid);
+                                                    foreach ($StudentData as $showStudentData) {                                                                         
+                                                    $sessionfees          = $showStudentData['session'];
+                                                    }}
+                                                    if($sessionfees == $_GET['session']){      
+                                                    echo'';
+                                                    }else{
+                                                    echo'<th scope="col">Fees Add</th>';
+                                                    }
+
+                                                ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -197,22 +210,18 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         $showacademic_year    = $showStudentDetailsshow['academic_year'];
                                         $showdate             = $showStudentDetailsshow['date'];
 
-                                        $StudentDetails   = $FeesAccount->schowAmount($showstuid, $showacademic_year);
-                                        foreach ($StudentDetails as $showStudentDetails) {
+                                      
 
-                                        $showtotal_amount     = $showStudentDetails['payable_fee'];
-                                        $showtotal_due        = $showStudentDetails['total_due'];
-
-
+                                      
                                         $showSubject = $StudentDet->totalsubject($showstream, $showclass1); 
 
-$total = 00;
+                                        $total = 00;
 
-if ($showSubject != null || $showSubject != '') {
+                                        if ($showSubject != null || $showSubject != '') {
 
-    $total = count($showSubject);
+                                            $total = count($showSubject);
 
-}
+                                        }
 
 
 
@@ -235,7 +244,9 @@ if ($showSubject != null || $showSubject != '') {
 
                                         }
 
+                                        $myuid = uniqid('inp');
 
+                                        $shownameid    = $row['id'].$showid.$_GET['studenttype'];
                                       
 
                                         ?>
@@ -288,18 +299,28 @@ if ($showSubject != null || $showSubject != '') {
                                                     <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showgurdian_name;  ?>" name="gurdian[]"
                                                         id="gurdian">
+                                                        <?php 
+                                                            $StudentDetails   = $FeesAccount->schowAmount($showstuid, $showacademic_year);
+                                                            foreach ($StudentDetails as $showStudentDetails) {
+
+                                                            $showtotal_amount     = $showStudentDetails['payable_fee'];
+                                                            $showtotal_due        = $showStudentDetails['total_due'];
+                                                            // $student_idfees       = $showStudentDetails['student_id'];
+                                                            $sessionfees          = $showStudentDetails['session'];
+                                                        ?>
 
                                                     <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showtotal_amount;  ?>"
                                                         name="total_amount[]" id="roll">
 
                                                     <input type="hidden" class="form-control form_data"
-                                                        value="<?php  echo  $showstream;  ?>" name="stream[]"
-                                                        id="stream">
-
-                                                    <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showtotal_due;  ?>" name="total_due[]"
                                                         id="total_due">
+                                                    <?php   } ?>
+
+                                                    <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showstream;  ?>" name="stream[]"
+                                                        id="stream">
 
                                                     <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showpolice_station;  ?>"
@@ -348,35 +369,34 @@ if ($showSubject != null || $showSubject != '') {
                                                         value="<?php  echo  $showacademic_year;  ?>"
                                                         name="academic_year[]" id="academic_year">
 
-                                                </td>
-                                                <td>
 
-                                                <?php  
 
-         
-                                                $Showsubrank = $Examination->passmarks("Subject Wise");
-                                                $Showoverall = $Examination->passmarks("Overall Wise");
-                                                foreach ($Showsubrank as $subrank) {
+                                                        <?php  
 
-                                                    $subpass       = $subrank['marks'];
 
-                                                foreach ($Showoverall as $overallrank) {
+                                                            $Showsubrank = $Examination->passmarks("Subject Wise");
+                                                            $Showoverall = $Examination->passmarks("Overall Wise");
+                                                            foreach ($Showsubrank as $subrank) {
 
-                                                    $overalpass = $overallrank['marks'];
-                                                }
-                                            }  
-                                                    foreach($showSubject as $Subjectrow){
-                                                        $subjectshow = $Subjectrow['subject'];
-                                                    
-                                                
-                                                        $Studentsubject = $Student->subjectmarks($showstuid, $showclass1, $showacademic_year, $subjectshow);
-                                                        foreach($Studentsubject as $Studentsubjectrow){
+                                                            $subpass       = $subrank['marks'];
+
+                                                            foreach ($Showoverall as $overallrank) {
+
+                                                            $overalpass = $overallrank['marks'];
+                                                            }
+                                                            }  
+                                                            foreach($showSubject as $Subjectrow){
+                                                            $subjectshow = $Subjectrow['subject'];
+
+
+                                                            $Studentsubject = $Student->subjectmarks($showstuid, $showclass1, $showacademic_year, $subjectshow);
+                                                            foreach($Studentsubject as $Studentsubjectrow){
                                                             $sub_marks = $Studentsubjectrow['summark'];
-                                                            
-                                                         
-                                                        }}
-                                                                                                                 
-                                                ?>
+
+
+                                                            }}
+                                                                                
+                                                        ?>
 
                                                     <input type="hidden" class="form-control form_data" value="<?php   if($showtotal>= $overalpass && $sub_marks >= $subpass){
                                                  echo "pass";
@@ -390,60 +410,52 @@ if ($showSubject != null || $showSubject != '') {
                                                  echo $showclass1;
                                                 }  ?>" name="newclass[]" id="newclass">
 
-                                                    <?php 
-                                             if($showtotal >= $overalpass && $sub_marks >= $subpass){
-                                                echo "pass";
-                                                }else{
-                                                    echo "Faill";
-                                                }   
-                                                // echo $Percentage; 
-                                            
-                                        
-                                             ?>
+
                                                 </td>
                                                 <td> <a
                                                         href='attendance-report.php?studentid=<?php    echo $showstuid  ?>&class=<?php    echo $showclass1  ?>'>
                                                         <i class="bi bi-eye-fill pe-4"></i>
                                                     </a></td>
 
-                                                <td><?php 
-                                             $showstu = "pendingfees.ajax.php?feespending=". $showstuid;
+                                                <td>
+                                                <?php 
+                                                    $showstu = "pendingfees.ajax.php?feespending=". $showstuid;
 
-                                             $result=$Student-> studentsByFees($showstuid);
+                                                    $result=$Student-> studentsByFees($showstuid, $showclass1);
 
-                                             foreach ($result as $showrow) {
-                                              $showamount          = $showrow['Total'];
-                                              $showtotal_amount    = $showrow['total_amount'];
-                                              $showdate            = $showrow['date'];
+                                                    foreach ($result as $showrow) {
+                                                    $showamount          = $showrow['Total'];
+                                                    $showtotal_amounts    = $showrow['total_amount'];
+                                                    $showdate            = $showrow['date'];
 
-                                              
-                                              $pendingamount       = $showtotal_amount - $showamount;
 
-                                              $monthly             = $showtotal_amount / 12;
-                                  
-                                              
-                                              $month               = date("m");
-                                  
-                                              $monthPending        = $month*$monthly - $showamount;
-                                             
-                                              if($showamount == $month*$monthly ){
+                                                    $pendingamount       = $showtotal_amounts - $showamount;
 
-                                                echo '<span class="badge bg-success ps-3 pe-3">Paid</span>'; 
-                                
-                                                } if($showamount > $month*$monthly ) {
-                                
-                                                echo '<span class="badge bg-primary">Advanced</span>';
-                                
-                                                }
-                                                if($showamount < $month*$monthly ) {
-                                
-                                                    echo '<span class="badge bg-warning">Pending</span>';
-                                    
+                                                    $monthly             = $showtotal_amounts / 12;
+
+
+                                                    $month               = date("m");
+
+                                                    $monthPending        = $month*$monthly - $showamount;
+
+                                                    if($showamount == $month*$monthly ){
+
+                                                    echo '<span class="badge bg-success ps-3 pe-3">Paid</span>'; 
+
+                                                    } if($showamount > $month*$monthly ) {
+
+                                                    echo '<span class="badge bg-primary">Advanced</span>';
+
                                                     }
-                                
-                                                // if($showamount == 0 && $showamount != 0) echo '<span class="badge bg-danger">Reject</span>';
-                                            
-                                               ?>
+                                                    if($showamount < $month*$monthly ) {
+
+                                                    echo '<span class="badge bg-warning">Pending</span>';
+
+                                                    }
+
+                                                    // if($showamount == 0 && $showamount != 0) echo '<span class="badge bg-danger">Reject</span>';
+
+                                                ?>
 
 
                                                     <i class="bi bi-hourglass-split ps-4" data-bs-toggle="modal"
@@ -470,7 +482,7 @@ if ($showSubject != null || $showSubject != '') {
                                                         </div>
                                                     </div>
                                                     <!-- modal end -->
-                                                    <?php } }?>
+                                                    <?php } ?>
 
                                                     <!-- <span class="badge bg-success">No Data</span> -->
 
@@ -520,20 +532,36 @@ if ($showSubject != null || $showSubject != '') {
 
                                                 </td>
 
-                                                <td><a
-                                                        href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>&status=<?php if($showtotal >= $overalpass && $sub_marks >= $subpass){
+                                                <td>
+
+                                                    <a href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>&status=<?php if($showtotal >= $overalpass && $sub_marks >= $subpass){
                                                 echo "pass";
                                                 }else{
                                                     echo "Faill";
-                                                }?>"><i
-                                                            class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
-                                                    </a></td>
-
-                                                <td><a
-                                                        href="classupdate.php?class=<?php    echo $_GET['studenttype']  ?>&session=<?php    echo $_GET['session']  ?>&studentid=<?php    echo $showstuid  ?>"><i
-                                                            class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
+                                                }?>"><i class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
                                                     </a>
+                                                </td>
 
+                                                <td>
+                                                    <?php
+                                                        $StudentData   = $FeesAccount->showFeesdata($showstuid);
+                                                        foreach ($StudentData as $showStudentData) {
+
+                                                        // $student_idfees       = $showStudentDetails['student_id'];
+                                                        $sessionfees          = $showStudentData['session'];
+                                                        $classes          = $showStudentData['class'];
+
+                                                        if($sessionfees == $_GET['session']){      
+                                                        echo'';
+                                                        }else{
+                                                        echo'<a
+                                                        href="classupdate.php?class='.$_GET['studenttype'].'&session='.$_GET['session'].'&studentid='.$showstuid .'"><i
+                                                        class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
+                                                        </a>';
+                                                        }
+
+                                                        }
+                                                    ?>
 
                                                 </td>
 
@@ -543,19 +571,40 @@ if ($showSubject != null || $showSubject != '') {
                                         $i++;
                                       }   }
                                       ?>
+                                            <!-- <tr><td>
+                                      
+                                      </td></tr> -->
 
                                         </tbody>
 
                                     </table>
+                                    <?php 
+                                    if($showacademic_year == $_GET['session']){      
+                                    echo'';
+                                    }else{
+                                    echo'<div class=" d-flex justify-content-center align-items-center">
+                                    <button name="Submitdata" type="submit" style="margin-top: -2rem;"
+                                    class="btn btn-primary d-flex justify-content-end ms-auto">
+                                    All Submit
+                                    </button>
 
-                                    <div class=" d-flex justify-content-center align-items-center">
+                                    </div>';
+                                    }
+                                    ?>
+                                    <!-- <div class=" d-flex justify-content-center align-items-center">
                                         <button name="Submitdata" type="submit" style="margin-top: -2rem;"
                                             class="btn btn-primary d-flex justify-content-end ms-auto">
                                             All Submit
                                         </button>
 
-                                    </div>
+                                    </div> -->
+
+
+
                                 </form>
+
+
+
 
                             </div>
                         </div>
@@ -599,6 +648,8 @@ if ($showSubject != null || $showSubject != '') {
 
     }
     </script>
+
+
 
 </body>
 
