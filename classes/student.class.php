@@ -680,6 +680,15 @@ function changedata($newclass, $class, $session, $student_ids){
 
 }//enf
 
+//  changedata start 
+function changedataroll($value, $rank){
+
+    $sql = "UPDATE  `student` SET `roll_no` = '$rank' WHERE  `student`.`student_id` = '$value'";
+    $result = $this->conn->query($sql);
+    return $result;
+
+}//enf
+
 
 
 function feeschangedata($name, $student_id,  $roll_no, $gurdian_name, $class_id, $total_amount, $session){
@@ -712,14 +721,14 @@ function studentdelect($class){
 
 // ---------- Student summary end -------------
 
-
+// SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year' order by sum desc
 
    // display Totalmarks start
    function Totalmarks($showstuid, $showclass1, $showacademic_year){
 
     $data = array();
 
-    $sql = "SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year'";
+    $sql = "SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year' order by marks asc";
 
     $empQuery = $this->conn->query($sql);
     if ($empQuery->num_rows > 0) {

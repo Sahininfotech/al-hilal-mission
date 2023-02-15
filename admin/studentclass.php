@@ -68,7 +68,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                             Management</a></li>
                     <li class="breadcrumb-item "><a href="http://localhost/institute1/admin/studentdetails.php">Student
                             Details</a></li>
-                    <li class="breadcrumb-item active">Class <?php  echo $_GET['studenttype']  ?></li>
+                    <li class="breadcrumb-item active">Class <?php  echo $_GET['studenttype'], $_GET['session']  ?></li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -85,7 +85,8 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
    foreach ($showStudentfinalexam as $showStudentDetailsshow) {
     $showclass = $showStudentDetailsshow['id'];
     $showexam_name = $showStudentDetailsshow['exam_name'];
-   
+//    echo $showexam_name;
+//    exit;
     // foreach ($showStudentDetails as $showStudentDetailsshow) {
     //     $showstream = $showStudentDetailsshow['stream'];}
            $studenttypeclass=$_GET['studenttype'];
@@ -157,9 +158,9 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                 <th scope="col">Fees Status</th>
                                                 <th scope="col">Action</th>
                                                 <th scope="col">Marksheet</th>
+                                               
                                                 <?php
 
-                                                                                
                                                     foreach ($showStudentDetails as $showStudentDetailsshow) {
                                                     $showstuid            = $showStudentDetailsshow['student_id'];
                                                     $StudentData   = $FeesAccount->showFeesdata($showstuid);
@@ -169,10 +170,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                     if($sessionfees == $_GET['session']){      
                                                     echo'';
                                                     }else{
-                                                    echo'<th scope="col">Fees Add</th>';
+                                                    echo '<th scope="col">Fees Add</th>';
                                                     }
 
                                                 ?>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -210,16 +212,20 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         $showacademic_year    = $showStudentDetailsshow['academic_year'];
                                         $showdate             = $showStudentDetailsshow['date'];
 
-                                      
+                                        $StudentDetails   = $FeesAccount->schowAmount($showstuid);
+                                        foreach ($StudentDetails as $showStudentDetails) {
 
-                                      
+                                        $showtotal_amount     = $showStudentDetails['payable_fee'];
+                                        $showtotal_due        = $showStudentDetails['total_due'];
+
+
                                         $showSubject = $StudentDet->totalsubject($showstream, $showclass1); 
 
                                         $total = 00;
 
                                         if ($showSubject != null || $showSubject != '') {
 
-                                            $total = count($showSubject);
+                                         $total = count($showSubject);
 
                                         }
 
@@ -241,15 +247,17 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         {
                                         $Percentage = intval($Percentage);
                                         }
+                                        
 
                                         }
 
-                                        $myuid = uniqid('inp');
 
-                                        $shownameid    = $row['id'].$showid.$_GET['studenttype'];
                                       
 
                                         ?>
+
+
+
 
                                             <tr
                                                 <?php if ($showStudentDetailsshow['status']== 'active') echo 'style="color: black"' ; if ($showStudentDetailsshow['status']== 'inactive') echo 'style="color: red"' ;?>>
@@ -299,23 +307,24 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                     <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showgurdian_name;  ?>" name="gurdian[]"
                                                         id="gurdian">
-                                                        <?php 
-                                                            $StudentDetails   = $FeesAccount->schowAmount($showstuid, $showacademic_year);
-                                                            foreach ($StudentDetails as $showStudentDetails) {
 
-                                                            $showtotal_amount     = $showStudentDetails['payable_fee'];
-                                                            $showtotal_due        = $showStudentDetails['total_due'];
-                                                            // $student_idfees       = $showStudentDetails['student_id'];
-                                                            $sessionfees          = $showStudentDetails['session'];
-                                                        ?>
+                                                    <?php  
+                                                        $StudentDetails   = $FeesAccount->schowAmount($showstuid, $showacademic_year);
+                                                        foreach ($StudentDetails as $showStudentDetails) {
+
+                                                        $showtotal_amounts     = $showStudentDetails['payable_fee'];
+                                                        $showtotal_due        = $showStudentDetails['total_due'];
+                                                        // $student_idfees       = $showStudentDetails['student_id'];
+                                                    ?>
 
                                                     <input type="hidden" class="form-control form_data"
-                                                        value="<?php  echo  $showtotal_amount;  ?>"
+                                                        value="<?php  echo  $showtotal_amounts;  ?>"
                                                         name="total_amount[]" id="roll">
 
                                                     <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showtotal_due;  ?>" name="total_due[]"
                                                         id="total_due">
+
                                                     <?php   } ?>
 
                                                     <input type="hidden" class="form-control form_data"
@@ -345,6 +354,10 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                         value="<?php  echo  $showdistrict;  ?>" name="district[]"
                                                         id="district">
 
+                                                        <input type="hidden" class="form-control form_data"
+                                                        value="<?php  echo  $showtotal;  ?>" name="totalmark[]"
+                                                        id="totalmark">
+
 
                                                 </td>
                                                 <td><?php  echo $showstuid ?>
@@ -371,7 +384,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-                                                        <?php  
+                                                    <?php  
 
 
                                                             $Showsubrank = $Examination->passmarks("Subject Wise");
@@ -395,7 +408,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
                                                             }}
-                                                                                
+
                                                         ?>
 
                                                     <input type="hidden" class="form-control form_data" value="<?php   if($showtotal>= $overalpass && $sub_marks >= $subpass){
@@ -410,7 +423,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                  echo $showclass1;
                                                 }  ?>" name="newclass[]" id="newclass">
 
-
                                                 </td>
                                                 <td> <a
                                                         href='attendance-report.php?studentid=<?php    echo $showstuid  ?>&class=<?php    echo $showclass1  ?>'>
@@ -418,44 +430,44 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                     </a></td>
 
                                                 <td>
-                                                <?php 
-                                                    $showstu = "pendingfees.ajax.php?feespending=". $showstuid;
+                                                    <?php 
+                                                        $showstu = "pendingfees.ajax.php?feespending=". $showstuid;
 
-                                                    $result=$Student-> studentsByFees($showstuid, $showclass1);
+                                                        $result=$Student-> studentsByFees($showstuid, $showclass1);
 
-                                                    foreach ($result as $showrow) {
-                                                    $showamount          = $showrow['Total'];
-                                                    $showtotal_amounts    = $showrow['total_amount'];
-                                                    $showdate            = $showrow['date'];
-
-
-                                                    $pendingamount       = $showtotal_amounts - $showamount;
-
-                                                    $monthly             = $showtotal_amounts / 12;
+                                                        foreach ($result as $showrow) {
+                                                        $showamount          = $showrow['Total'];
+                                                        $showtotal_amount    = $showrow['total_amount'];
+                                                        $showdate            = $showrow['date'];
 
 
-                                                    $month               = date("m");
+                                                        $pendingamount       = $showtotal_amount - $showamount;
 
-                                                    $monthPending        = $month*$monthly - $showamount;
+                                                        $monthly             = $showtotal_amount / 12;
 
-                                                    if($showamount == $month*$monthly ){
 
-                                                    echo '<span class="badge bg-success ps-3 pe-3">Paid</span>'; 
+                                                        $month               = date("m");
 
-                                                    } if($showamount > $month*$monthly ) {
+                                                        $monthPending        = $month*$monthly - $showamount;
 
-                                                    echo '<span class="badge bg-primary">Advanced</span>';
+                                                        if($showamount == $month*$monthly ){
 
-                                                    }
-                                                    if($showamount < $month*$monthly ) {
+                                                        echo '<span class="badge bg-success ps-3 pe-3">Paid</span>'; 
 
-                                                    echo '<span class="badge bg-warning">Pending</span>';
+                                                        } if($showamount > $month*$monthly ) {
 
-                                                    }
+                                                        echo '<span class="badge bg-primary">Advanced</span>';
 
-                                                    // if($showamount == 0 && $showamount != 0) echo '<span class="badge bg-danger">Reject</span>';
+                                                        }
+                                                        if($showamount < $month*$monthly ) {
 
-                                                ?>
+                                                        echo '<span class="badge bg-warning">Pending</span>';
+
+                                                        }
+
+                                                        // if($showamount == 0 && $showamount != 0) echo '<span class="badge bg-danger">Reject</span>';
+
+                                                    ?>
 
 
                                                     <i class="bi bi-hourglass-split ps-4" data-bs-toggle="modal"
@@ -482,7 +494,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                         </div>
                                                     </div>
                                                     <!-- modal end -->
-                                                    <?php } ?>
+                                                    <?php } }?>
 
                                                     <!-- <span class="badge bg-success">No Data</span> -->
 
@@ -532,18 +544,15 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                                 </td>
 
-                                                <td>
-
-                                                    <a href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>&status=<?php if($showtotal >= $overalpass && $sub_marks >= $subpass){
+                                                <td><a href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>&status=<?php if($showtotal >= $overalpass && $sub_marks >= $subpass){
                                                 echo "pass";
                                                 }else{
                                                     echo "Faill";
                                                 }?>"><i class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
-                                                    </a>
-                                                </td>
+                                                    </a></td>
 
                                                 <td>
-                                                    <?php
+                                                    <?php 
                                                         $StudentData   = $FeesAccount->showFeesdata($showstuid);
                                                         foreach ($StudentData as $showStudentData) {
 
@@ -559,11 +568,16 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                         class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
                                                         </a>';
                                                         }
-
                                                         }
                                                     ?>
 
                                                 </td>
+                                                <td>
+                                               
+                                                </td>
+
+
+
 
                                             </tr>
 
@@ -571,13 +585,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         $i++;
                                       }   }
                                       ?>
-                                            <!-- <tr><td>
-                                      
-                                      </td></tr> -->
 
                                         </tbody>
 
                                     </table>
+
                                     <?php 
                                     if($showacademic_year == $_GET['session']){      
                                     echo'';
@@ -587,24 +599,10 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                     class="btn btn-primary d-flex justify-content-end ms-auto">
                                     All Submit
                                     </button>
-
                                     </div>';
                                     }
                                     ?>
-                                    <!-- <div class=" d-flex justify-content-center align-items-center">
-                                        <button name="Submitdata" type="submit" style="margin-top: -2rem;"
-                                            class="btn btn-primary d-flex justify-content-end ms-auto">
-                                            All Submit
-                                        </button>
-
-                                    </div> -->
-
-
-
                                 </form>
-
-
-
 
                             </div>
                         </div>
@@ -648,8 +646,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     }
     </script>
-
-
 
 </body>
 

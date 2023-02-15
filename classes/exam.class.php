@@ -150,8 +150,6 @@ class Examination extends DatabaseConnection{
 
 
 
-
-
     function deleteExam($examId){
 
 

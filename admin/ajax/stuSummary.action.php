@@ -11,7 +11,7 @@ $Admin                  = new Admin();
 $Institute              = new InstituteDetails();                                
 $StudentDetails         = new StudentDetails();
 $FeesAccount            = new FeesAccount();
-$Student     = new  Student();   
+$Student                = new  Student();   
 
 $insertEmpQuery=false;
 
@@ -49,6 +49,104 @@ $insertEmpQuery=false;
     $exam_status      = $_POST["exam_status"];
 
     $new_class      = $_POST["newclass"];
+
+// natsort($student_id);
+//   rsort($student_id);
+print_r($student_id);
+
+
+    function arr($student_id, $total_marks){
+        return "$student_id = $total_marks";
+    }
+   
+    $total_mark      = $_POST["totalmark"];
+    $total_marks      = $_POST["totalmark"];
+     rsort($total_mark);
+    //  rsort($name);
+    // rsort($name);
+    
+   $data = array_map(null, $total_marks, $student_id);
+//    $datas = array_map('arr', $name, $total_marks);
+    rsort($data);
+//    print_r($data);
+   
+
+
+$i         = 1;
+$prevScore = 0;
+
+foreach ( $data as &$grade ) {
+  // Increment rank only if scores different
+  if( $total_marks != $prevScore ){
+    
+  }
+
+  $prevScore = $total_marks;
+ $grade[ 'rank' ] = $i;
+  $i++;
+}
+
+
+
+$dataone = array_map(null, $total_marks, $student_id);
+//    $datas = array_map('arr', $name, $total_marks);
+rsort($dataone);
+//    print_r($data);
+
+
+
+
+
+
+    // $rank=1;
+
+        // print_r($total_mark);
+        // rsort($total_mark);
+        //   $arrlength = count($total_mark);
+        //     $rank = 1;
+        //     $rt=0;
+    // print_r($total_mark[0]);
+
+//     for($x = 0; $x < $total_mark; $x++){
+//         for($y = 0; $y < $total_mark - $x - 1 ; $y++){
+//  if ($total_mark)
+//         }
+//     }
+
+     
+    // $numbers = array($total_mark);
+    
+
+    
+
+
+
+//     $arrlength = count($total_mark);
+//     $rank = 1;
+//     $rt=0;
+//     for($x = 0; $x < $arrlength; $x++) {
+//     if ($x==0) {
+        
+//    echo $a = $rank;
+//     }
+
+//     elseif ($total_mark[$x] != $total_mark[($x-1)]) {
+
+//         echo  $a = $rank;
+//     $rt=$rank;
+//     }
+//     else{
+//         echo  $a = $rt;
+//     }
+//     $rank++;
+//     echo "<br>";
+//     }
+
+
+    // rsort($numbers);
+
+    // exit;
+    
 
     for ($i = 0; $i < count($name); $i++)  {
 
@@ -92,6 +190,9 @@ $insertEmpQuery=false;
                                                                                     for ($i = 0; $i < count($exam_status); $i++)  {
 
                                                                                         for ($i = 0; $i < count($new_class); $i++)  {
+                                                                                            for ($i = 0; $i < count($data); $i++)  {
+                                                                                                // for ($i = 0; $i < count($total_mark); $i++)  {
+                                                                                                    for ($i = 0; $i < count($dataone); $i++)  {
                                                                                 
         
          $names            = $name[$i];
@@ -120,6 +221,11 @@ $insertEmpQuery=false;
          
          $Status      = $exam_status[$i];
          $newclass      = $new_class[$i];
+         $ranks      = $data[$i];
+
+
+         $ranksdata      = $dataone[$i];
+        //  $marktotal      = $total_mark[$i];
       
          $class   = $_POST["class"];
          $session  = $_POST["session"];
@@ -134,14 +240,101 @@ $insertEmpQuery=false;
     }
     else
     {
-         $results=$Student->changedata($newclass, $class, $session, $student_ids); 
+
+
+
+
+
+
+
+
+// echo $newclass;
+
+
+
+// print_r($student_id);
+
+
+        // echo $rank;
+        // for ($i = 0; $i < count($ranks); $i++)  {
+        //     $rankss      = $ranks[$i];
+        // $prev=$rankss[0];
+        // foreach($ranks as $number){
+        //   if($prev!=$number){
+        //     $prev=$number;
+        //     $ranks1++;
+        //     // break;
+        //   }
+        //   echo  $ranks1."\n";
+          $results=$Student->changedata($newclass, $class, $session, $student_ids);
+
+          foreach ($ranksdata as $values) {
+            // echo $values, "\n";
+        }
+        // echo $values;
+        // print_r($values);
+        // for ($i = 0; $i < count($values); $i++)  {
+        //     $valuesff      = $values[$i];
+        //     // echo $valuesff;
+        // }   
+        
+                // print_r($data);
+                foreach ($ranks as $rank) {
+                    // echo $value, "\n";
+                }
+
+          $results=$Student->changedataroll($values, $rank);
+        // }}
+        // echo  $ranks1."\n";
+        // for($x = 0; $x < $arrlength; $x++) {
+        // if ($x==0) {
+        // echo $total_mark[$x]."- Rank".($rank);
+        // }
+    
+        // // elseif ($total_mark[$x] != $total_mark[($x-1)]) {
+    
+        // // echo $total_mark[$x]."- Rank".($rank);
+        // // $rt=$rank;
+        // // }
+        // // else{
+        // // echo $total_mark[$x]."- Rank".($rt);
+        // // }
+        // $rank++;
+        // echo "<br>";
+  
+       
+        // for($x = 0; $x < $arrlength; $x++) {
+        //     if ($x==0) {
+        //          echo $numbers[$x]."- Rank".($rank);
+                // $results=$Student->changedata($newclass, $class, $session, $student_ids, $rank);
+        //     }
+        
+        //    elseif ($numbers[$x] != $numbers[($x-1)]) {
+        
+        //             echo $numbers[$x]."- Rank".($rank);
+        //             // $results=$Student->changedata($newclass, $class, $session, $student_ids, $rank);
+        //             $rt=$rank;
+        //            }
+        //    else{
+        //         echo $numbers[$x]."- Rank".($rt);
+        //         // $results=$Student->changedata($newclass, $class, $session, $student_ids, $rt); 
+        //             }
+        //       $rank++;
+       
+         
+        // }
+
+        // exit;
+
+        //  $results=$Student->changedata($newclass, $class, $session, $student_ids); 
     }
         }}}}}}
 
     }}}}}}
 
-}}}}}}}}}}
-  }     
+}}}}}}}}}}}
+  }         }
+//   exit;  
 
   if($result & $results){
     header('Location: ' . $_SERVER['HTTP_REFERER']);

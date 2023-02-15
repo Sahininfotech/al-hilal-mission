@@ -423,7 +423,7 @@ class FeesAccount extends DatabaseConnection{
              else
 
              {   
-                 $sqledit = "UPDATE  `student_fees_dtls` SET `class` = '$class', `concession` = '$discount', `conc_remark` = '$conc_remark', `payable_fee` = '$payable_fee', `total_due` = '$payable_fee',  `session` = '$academic_year' WHERE  `student_fees_dtls`.`student_id` = '$student_id'";
+                 $sqledit = "UPDATE  `student_fees_dtls` SET `class` = '$class', `concession` = '$discount', `conc_remark` = '$conc_remark', `payable_fee` = '$payable_fee', `total_due` = '$payable_fee', `session` = '$academic_year', `roll_no` = '$roll_no', `gurdian_name` = '$gurdian_name' WHERE  `student_fees_dtls`.`student_id` = '$student_id'";
 
                  $result1 = $this->conn->query($sqledit);
                  return $result1;
@@ -705,10 +705,10 @@ class FeesAccount extends DatabaseConnection{
 
 
 
-    function schowAmount($showstuid, $showacademic_year){
+    function schowAmount($showstuid){
 
         $data = array();
-        $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$showstuid' and `student_fees_dtls`.`session` = '$showacademic_year'";
+        $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`student_id` = '$showstuid'";
         $res = $this->conn->query($sql);
         if ($res->num_rows > 0) {
             while ($result = $res->fetch_array()) {

@@ -319,6 +319,7 @@ class StudentDetails extends DatabaseConnection{
 
     //order by ta 1234 por por korta studentmanagement-studentdetails
     function finalExampage($showstu, $year){
+       
         $empData = array();
 
         $sql = "SELECT * FROM `exam` WHERE `class_name` = '$showstu' and `year` = '$year' ORDER BY class_name";
