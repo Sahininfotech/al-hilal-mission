@@ -535,39 +535,25 @@ $qurymessage          = $Contact->searchquerydata();
 
 
 
-        let total_amount = document.getElementById(t.id).childNodes[11];
+        // let total_amount = document.getElementById(t.id).childNodes[11];
 
 
 
-        // console.log(total_amount);
+        // // console.log(total_amount);
 
 
 
-        if (window.getComputedStyle(total_amount).visibility === "hidden") {
+        // if (window.getComputedStyle(total_amount).visibility === "hidden") {
 
 
 
-            total_amount.style.visibility = "visible";
+        //     total_amount.style.visibility = "visible";
 
 
 
-        }
+        // }
 
 
-
-        let total_due = document.getElementById(t.id).childNodes[13];
-
-
-
-        if (window.getComputedStyle(total_due).visibility === "hidden") {
-
-
-
-            total_due.style.visibility = "visible";
-
-
-
-        }
 
         // let total_due = document.getElementById(t.id).childNodes[13];
 
@@ -583,7 +569,21 @@ $qurymessage          = $Contact->searchquerydata();
 
         // }
 
-        var xx = document.getElementById("total_due");
+        // let total_due = document.getElementById(t.id).childNodes[13];
+
+
+
+        // if (window.getComputedStyle(total_due).visibility === "hidden") {
+
+
+
+        //     total_due.style.visibility = "visible";
+
+
+
+        // }
+
+        // var xx = document.getElementById("total_due");
 
 
 

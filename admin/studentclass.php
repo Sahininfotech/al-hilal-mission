@@ -19,7 +19,7 @@ $Admin          = new Admin();
 $Student        = new Student();
 $Examination    = new Examination();
 $FeesAccount    = new FeesAccount();
-$StudentDet = new StudentDetails();
+$StudentDet     = new StudentDetails();
 
 $showStudentDetails   = $Student->studentByClass($_GET['studenttype']);
 $showStudentfinalexam = $Examination->examByClassName($_GET['studenttype'], $_GET['session']);
