@@ -4,8 +4,6 @@ session_start();
 
 $page = "Student Details";
 
-
-
 require_once '../_config/dbconnect.php';
 
 require_once '../classes/admin.class.php';
@@ -20,10 +18,7 @@ require_once '../classes/fees-accounts.class.php';
 
 require_once '../classes/student.class.php';
 
-
-
-
-
+require_once '../includes/constant.php';
 
 
 $Admin                  = new Admin();
@@ -34,21 +29,13 @@ $StudentDetails         = new StudentDetails();
 
 $FeesAccount            = new FeesAccount();
 
-$Student     = new  Student();
-
-
-
-
+$Student                = new  Student();
 
 
 
 $insertEmpQuery=false;
 
-
-
   if(isset ( $_POST["submit"])){
-
-
 
     $name           = $_POST["name"];
 
@@ -97,91 +84,16 @@ $insertEmpQuery=false;
     $signature        = $_FILES[ 'image' ][ 'name' ];
     $image_size       = $_FILES[ 'image' ][ 'size' ];
     $image_tmp_name   = $_FILES[ 'image' ][ 'tmp_name' ];
-    $image_folter     = 'image/'.$image;
+    $image_folter     = 'image/'.$signature;
   //   echo $image_tmp_name; exit;
 
     //   move_uploaded_file( $image_tmp_name, $image_folter );
-    
-
 
     $code           = rand(1, 99999);
 
     $student_id     = "STUD".$code;
 
-
-
-
-
-
-
-
-
   }
-
-
-
-//   if(isset ( $_POST["submit"])){
-
-
-
-//     $class_id = $_POST["class"];
-
-
-
-//   }
-
-
-
-//   if(isset ( $_POST["submit"])){
-
-//     if($class == 11||$class == 12){
-
-//       $class_id =  $_POST["class"];
-
-//       $dept_id  =  $_POST["stream"];
-
-
-
-//     }
-
-//   }
-
-
-
- 
-
-//   if(isset ( $_POST["submitdata"])){
-
-    
-
-//     foreach($_POST as $purposes => $amounts) {
-
-//       echo  $purposes . "=>" . $amounts;
-
-
-
-//       $purposesw = $purposes;
-
-//       $amountsw = $amounts;
-
-
-
-//       $result   = $FeesAccount->addFeesAccounts($student_id, $purposesw, $amountsw);
-
-
-
-
-
-//     }
-
-   
-
-
-
-
-
-    // }      
-
 
 
 $result                 = $Institute->instituteShow();
@@ -189,36 +101,6 @@ $result                 = $Institute->instituteShow();
 $feesAccounts           = $FeesAccount->showAccount($class);
 
 $Tolatfees              = $FeesAccount->showTotalamount($class);
-
-
-
-
-
-// if(isset ( $_POST["submitdata"])){
-
-// $amounts   = $_POST["amount"];
-
-
-
-// $sum = 0;
-
-
-
-
-
-// for ($i = 0; $i < count($amounts); $i++)  {
-
-//    $sum += $amounts[$i];
-
-//    echo "<br>";
-
-//   echo  $sum;}exit;
-
-// }
-
-
-
-
 
 ?>
 
@@ -234,7 +116,7 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Student Management / Student Details / NiceAdmin Bootstrap Template</title>
+    <title>Student Fees || <?php echo SITE_NAME; ?></title>
 
     <meta content="" name="description">
 
@@ -243,7 +125,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
     <?php require_once 'require/headerLinks.php';?>
 
     <style>
-
     .genderingrows {
 
         margin: auto;
@@ -267,7 +148,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
 
     }
-
     </style>
 
 </head>
@@ -292,7 +172,7 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
         <div class="pagetitle">
 
-            <h1>Submit Marks</h1>
+            <h1>Add Fees</h1>
 
             <nav>
 
@@ -304,11 +184,11 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
                             Management</a></li>
 
-                    <li class="breadcrumb-item "><a href="studentdetails.php">Student
+                    <li class="breadcrumb-item "><a href="studentdetails.php">Add new student
 
-                            Details </a></li>
+                        </a></li>
 
-                    <li class="breadcrumb-item active">Submit Marks </li>
+                    <li class="breadcrumb-item active">Add fees</li>
 
                 </ol>
 
@@ -344,9 +224,8 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
 
 
-                            <form method="POST" action="ajax/addnewstudent.ajax.php" class="needs-validation m-0" enctype="multipart/form-data"
-
-                                novalidate>
+                            <form method="POST" action="ajax/addnewstudent.ajax.php" class="needs-validation m-0"
+                                enctype="multipart/form-data" novalidate>
 
                                 <?php
 
@@ -354,17 +233,13 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
                                 foreach($feesAccounts as $feeAcc){
 
-                                    $myuid = uniqid('inp');
-
-                                  
+                                  $myuid     = uniqid('inp');
 
                                   $autoid    = $feeAcc['purpose'].$myuid;
 
-                                  $feeAccs = $feeAcc['purpose'];
+                                  $feeAccs   = $feeAcc['purpose'];
 
                                   $feeAmount = $feeAcc['amount'];
-
-
 
                                   foreach($Tolatfees as $feesAcc){
 
@@ -372,123 +247,97 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
                                   }
 
-                                  
-
                                     ?>
 
-
-
-
-
-
-
                                 <input type="hidden" class="form-control" name="student_id"
-
                                     value="<?php echo $student_id; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="name" value="<?php echo $name ; ?>"
-
                                     required>
 
 
 
                                 <input type="hidden" class="form-control" name="gurdian_name"
-
                                     value="<?php echo $gurdian_name ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="email" value="<?php echo $email ; ?>"
-
                                     required>
 
 
 
                                 <input type="hidden" class="form-control" name="contact_no"
-
                                     value="<?php echo $contact_no ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="date_of_birth"
-
                                     value="<?php echo $date_of_birth ; ?>" required>
 
 
 
                                 <input class="form-control" type="hidden" name="gender" value="<?php echo $gender ; ?>"
-
                                     required>
 
 
 
                                 <input class="form-control" type="hidden" name="session"
-
                                     value="<?php echo $academic_year ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="roll_no"
-
                                     value="<?php echo $roll_no ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="class" value="<?php echo $class ; ?>"
-
                                     required>
 
 
-                                    <input class="form-control" type="hidden" name="image"
+                                <input class="form-control" type="hidden" name="image"
                                     value="<?php echo $signature ; ?>" required>
 
 
                                 <input type="hidden" class="form-control" name="stream" value="<?php echo $stream ; ?>"
-
                                     required>
 
 
 
                                 <input type="hidden" class="form-control" name="address"
-
                                     value="<?php echo $address ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="post_office"
-
                                     value="<?php echo $post_office ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="sdo_or_bdo" value="<?php echo $sdo ; ?>"
-
                                     required>
 
 
 
                                 <input type="hidden" class="form-control" name="police_station"
-
                                     value="<?php echo $police_station ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="district"
-
                                     value="<?php echo $district ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="pin_code"
-
                                     value="<?php echo $pin_code ; ?>" required>
 
 
 
                                 <input type="hidden" class="form-control" name="state" value="<?php echo $state ; ?>"
-
                                     required>
 
 
@@ -504,17 +353,13 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
 
                                         <input type="hidden" id="<?php  echo $autoid  ?>"
-
                                             value="<?php echo $feeAccs; ?>" class="form-control" name="purpose[]"
-
                                             readonly required>
 
 
 
                                         <input type="text" id="<?php  echo $autoid  ?>"
-
                                             value="<?php echo $feeAmount; ?>" class="form-control" name="amount[]"
-
                                             readonly required>
 
                                     </div>
@@ -544,8 +389,7 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                         <div class="form-check">
 
                                             <input class="form-check-input" type="radio" name="dis" id="gridRadios2"
-
-                                                onclick="Func_a()" value="Yes" >
+                                                onclick="Func_a()" value="Yes">
 
                                             <label class="form-check-label" for="gridRadios2">
 
@@ -566,14 +410,12 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                 <div class="row m-0 p-0 mb-3">
 
                                     <label for="inputText" class="col-6 form-label" id="demo2"
-
                                         style="display: none;">Discount Amount :</label>
 
                                     <div class="col-6 p-0" id="demo3" style="display: none;">
 
                                         <input type="text" id="totalid" class="form-control" name="discount" value=""
-
-                                            onkeyup='totalItem(this.value)' >
+                                            onkeyup='totalItem(this.value)'>
 
                                     </div>
 
@@ -628,14 +470,12 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                 <div class="row m-0 p-0 mb-3">
 
                                     <label for="inputText" class="col-6 form-label" id="issues"
-
                                         style="display: none;">Issue :</label>
 
                                     <div class="col-6 p-0" id="issue2" style="display: none;">
 
-                                        <input type="text" id="totalids" class="form-control" name="conc_remark" value=""
-
-                                            >
+                                        <input type="text" id="totalids" class="form-control" name="conc_remark"
+                                            value="">
 
                                     </div>
 
@@ -654,7 +494,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                     <div class="col-6 p-0">
 
                                         <input type="text" id="totalamo" class="form-control" name="total_amount"
-
                                             value="<?php echo $amount ?>" readonly required>
 
                                     </div>
@@ -666,14 +505,11 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                 <div class="row m-0 p-0 mb-3">
 
                                     <label for="inputText" class="col-6 form-label" id="after"
-
                                         style="display: none;">After Discount :</label>
 
                                     <div class="col-6 p-0" id="afterdis" style="display: none;">
 
-                                        <input type="text" id="afterdiscount" class="form-control"  value=""
-
-                                            >
+                                        <input type="text" id="afterdiscount" class="form-control" value="">
 
                                     </div>
 
@@ -726,23 +562,18 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
     <!-- End #main -->
 
     <script>
-
-
-
     function totalItem(data) {
 
-    var xx = document.getElementById("totalamo");
+        var xx = document.getElementById("totalamo");
 
-    document.getElementById("afterdiscount").value = Number(xx.value) - Number(data);
+        document.getElementById("afterdiscount").value = Number(xx.value) - Number(data);
 
-}
-
+    }
     </script>
 
 
 
     <script>
-
     function Func_a() {
 
         var demo_two = document.getElementById('demo2');
@@ -838,7 +669,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
         }
 
     }
-
     </script>
 
 

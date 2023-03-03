@@ -1,6 +1,12 @@
 .custom-container {
   padding-left: 15rem;
   padding-right: 15rem;
+} 
+@media(max-width:1024px) {
+  .custom-container {
+    padding-left: 0rem;
+    padding-right: 0rem;
+  } 
 }
 .custom-body {
   margin-top: 30px;
@@ -13,7 +19,7 @@
    
     margin: 25px 20px 5px 5px;
   }
-
+ 
   html,
   body {
    
@@ -27,6 +33,7 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
   .custom-body {
     margin-top: 0px;
     padding: 0;

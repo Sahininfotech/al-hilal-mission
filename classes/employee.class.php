@@ -152,7 +152,7 @@ class Employee extends DatabaseConnection{
 
     function noticeInsert( $notices, $image, $subject, $added_by){
 
-        $notice = str_replace("<", "&lt", str_replace(">", "&gt;", str_replace("'", "\\", $notices)));
+        $notice = addslashes($notices);
 
         $sql = "INSERT INTO `forum` ( `notice`, `signature`, `subject`, `added_by`) VALUES ( '$notice', '$image', '$subject', '$added_by')" ;
         
@@ -171,7 +171,7 @@ class Employee extends DatabaseConnection{
 
     function staff_noticeInsert($name, $notices, $subject, $image, $staff_id, $added_by){
 
-        $notice = str_replace("<", "&lt", str_replace(">", "&gt;", str_replace("'", "\\", $notices)));
+        $notice = addslashes($notices);
 
         $sql = "INSERT INTO `forum_staff` ( `name`,`notice`, `subject`, `signature`, `staff_id`, `added_by`) VALUES ( '$name','$notice','$subject','$image','$staff_id', '$added_by')";
         
@@ -316,7 +316,9 @@ class Employee extends DatabaseConnection{
 
     function noticeedit($id, $c_image, $notice, $subject){
 
-        $sqledit1 = "UPDATE  `forum` SET `id`= '$id', `signature`= '$c_image', `notice`= '$notice', `subject`= '$subject' WHERE `forum`.`id` = '$id'";
+        $notices = addslashes($notice);
+
+        $sqledit1 = "UPDATE  `forum` SET `id`= '$id', `signature`= '$c_image', `notice`= '$notices', `subject`= '$subject' WHERE `forum`.`id` = '$id'";
 
         $result1 = $this->conn->query($sqledit1);
 

@@ -21,9 +21,9 @@ return $insertEmpQuery;
 
 
 
-function studenclasstInsert($student_id, $class_id){
+function studenclasstInsert($student_id, $class_id, $academic_year){
 
-$sql = "INSERT INTO `student_class` (`student_id`, `class_id`) VALUES ('$student_id', '$class_id')";
+$sql = "INSERT INTO `student_class` (`student_id`, `class_id`, `session`) VALUES ('$student_id', '$class_id', '$academic_year')";
 
 $insertEmpQuery = $this->conn->query($sql);
 
@@ -149,14 +149,13 @@ function studentByClass($classId){
 
 
 
-
 // display start
 function studentsByFees($student_Id, $showclass){
 
     $data = array();
     // $sql = "SELECT * FROM `student_payment_dtls` WHERE `student_id` = '$student_Id'";
 
-    $sql = "SELECT * , SUM(amount) AS 'Total' FROM `student_payment_dtls` WHERE `student_id` = '$student_Id' and `class` = '$showclass'";
+    $sql = "SELECT * FROM `student_fees_dtls` WHERE `student_id` = '$student_Id' and `class` = '$showclass'";
 
     $empQuery = $this->conn->query($sql);
     if ($empQuery->num_rows > 0) {
@@ -168,6 +167,28 @@ function studentsByFees($student_Id, $showclass){
 
 }
 // end display 
+
+
+
+
+// // display start
+// function studentsByFees($student_Id, $showclass){
+
+//     $data = array();
+//     // $sql = "SELECT * FROM `student_payment_dtls` WHERE `student_id` = '$student_Id'";
+
+//     $sql = "SELECT * , SUM(amount) AS 'Total' FROM `student_payment_dtls` WHERE `student_id` = '$student_Id' and `class` = '$showclass'";
+
+//     $empQuery = $this->conn->query($sql);
+//     if ($empQuery->num_rows > 0) {
+//         while($row = $empQuery->fetch_array()){
+//             $data[]	= $row;
+//         }
+//     }
+//     return $data;
+
+// }
+// // end display 
 
 
 

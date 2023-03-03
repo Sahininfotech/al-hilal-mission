@@ -331,7 +331,7 @@ if(isset ($_POST["Updateyear"])){
                                                 data-bs-target="#classFormModal" id="<?php echo $row['id']; ?>"
                                                 onclick="classView(this.id);"></i>
 
-                                            <a href='ajax/classdelete.ajax.php?id=<?php    echo $row['id']  ?>'>
+                                            <a href='ajax/classdelete.ajax.php?id=<?php    echo $row['id']  ?>&img=<?php    echo $class_image  ?>'>
 
                                                 <i class="bi bi-trash" data-bs-toggle="modal"
                                                     data-bs-target="#deleteclassFormModal"
@@ -376,56 +376,76 @@ if(isset ($_POST["Updateyear"])){
 
                                         <div class="row mb-3">
 
-                                            <label for="inputText" class="col-sm-4 col-form-label">Class Name :</label>
+                                            <label for="inputText" class="col-sm-4 col-form-label">Class :</label>
 
                                             <div class="col-sm-8">
 
-                                                <input type="text" maxlength="55" class="form-control" name="classname"
+                                                <input type="number" maxlength="55" class="form-control" name="id"
                                                     required>
 
                                             </div>
 
                                         </div>
 
-                                        <div class="row mb-3">
-
-                                            <label for="inputText" class="col-sm-4 col-form-label">Class Image :</label>
-
-                                            <div class="col-sm-8">
-
-                                                <input type="file" class="form-control" name="upload_image"
-                                                    accept="image/*" required>
-
-                                            </div>
-
-                                        </div>
 
                                         <div class="row mb-3">
 
-                                            <label for="inputAddress" class="col-sm-4 col-form-label">Description
-
+                                            <label for="inputText" class="col-sm-4 col-form-label">Particular Name
                                                 :</label>
 
                                             <div class="col-sm-8">
 
-                                                <textarea class="form-control" style="height: 100px" name="description"
-                                                    required></textarea>
+                                                <input type="text" maxlength="55" class="form-control"
+                                                    name="classname" required>
 
                                             </div>
 
                                         </div>
+                                     
 
-                                        <div class="row mb-3">
 
-                                            <div class="col-sm-12  d-flex justify-content-center align-items-center">
+                                            <div class="row mb-3">
 
-                                                <button type="submit" name="submitdata" class="btn btn-primary">Submit
+                                                <label for="inputText" class="col-sm-4 col-form-label">Class Image
+                                                    :</label>
 
-                                                </button>
+                                                <div class="col-sm-8">
+
+                                                    <input type="file" class="form-control" name="upload_image"
+                                                        accept="image/*" required>
+
+                                                </div>
 
                                             </div>
 
-                                        </div>
+                                            <div class="row mb-3">
+
+                                                <label for="inputAddress" class="col-sm-4 col-form-label">Description
+
+                                                    :</label>
+
+                                                <div class="col-sm-8">
+
+                                                    <textarea class="form-control" style="height: 100px"
+                                                        name="description" required></textarea>
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="row mb-3">
+
+                                                <div
+                                                    class="col-sm-12  d-flex justify-content-center align-items-center">
+
+                                                    <button type="submit" name="submitdata"
+                                                        class="btn btn-primary">Submit
+
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
 
                                     </form>
 

@@ -75,75 +75,110 @@ session_start();
 
 <body>
     <section class="section dashboard">
-        <?php
+        <form method="POST" action="pdf.php">
+            <?php
         $result=$Pending->instituteShow();
         foreach($result as $row){
+            $institute_name         = $row['institute_name'];
+            $showinstitute_name     = str_replace('"','\\',$institute_name);
+            $abouts                 = $row['about'];
+            $showabout              = str_replace('"','\\',$abouts);
+            $about                  = str_replace("\r",'<br>',$abouts);
+            $addressdata            = $row['address'];
+            $showaddress            = str_replace('"','\\',$addressdata);
+            $address                = str_replace("\r",'<br>',$addressdata);
 
         ?>
-        <div class="custom-container">
-            <div class="custom-body ">
-                <div class="card-body ">
-                    <div class="row" style="align-items: center;">
-                        <div class="col-sm-2  ">
-                            <img src="assets/img/1mg121.jpg" alt="Profile" class="rounded-circle w-100">
-                            <!-- <h4 class="ps-4">Marksheet</h4>
+            <input type="hidden" class="form-control" value="<?php    echo $showinstitute_name  ?>"
+                name="institute_name" required>
+            <input type="hidden" class="form-control" value="<?php    echo $showabout  ?>" name="about" required>
+            <input type="hidden" class="form-control" value="<?php    echo $showaddress  ?>" name="address" required>
+            <div class="custom-container">
+                <div class="custom-body">
+                    <div class="card-body">
+                        <div class="row" style="align-items: center;">
+                            <div class="col-sm-2">
+                                <img src="assets/img/1mg121.jpg" alt="Profile" class="rounded-circle w-100">
+                                <!-- <h4 class="ps-4">Marksheet</h4>
                             <h6 class="ps-4">Class / 1</h6>
                             <p class="ps-4">date: 15/05/2022</p> -->
-                        </div>
-                        <div class="col-sm-10">
-                            <h2><?php    echo $row['institute_name']  ?></h2>
-                            <p style="font-size: 14px;"><?php    echo $row['about']  ?><br>
-                                <?php    echo $row['address']  ?>
-                            </p>
+                            </div>
+                            <div class="col-sm-10">
+                                <h2><?php    echo $institute_name  ?></h2>
+                                <p style="font-size: 14px;"><?php    echo $about  ?><br>
+                                    <?php    echo $address  ?>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <section class="section dashboard" style="
+                    <!-- <section class="section dashboard" style="
     padding-left: 3rem!important;
     padding-right: 3rem!important;
     padding-bottom: 3rem!important;
-    ">
+    " > -->
                     <?php
                 foreach ($updatePage as $shownoticeshow) {
                 $showid         = $shownoticeshow['id'];
-                $shownotice     = $shownoticeshow['notice'];
-                $showsubject    = $shownoticeshow['subject'];
+                $notices        = $shownoticeshow['notice'];
+                $shownotice     = str_replace('"','\\',str_replace("\n",'         ',$notices));
+                $notice         = str_replace("\r",'<br>',$notices);
+                $subjects       = $shownoticeshow['subject'];
+                $showsubject    = str_replace('"','\\',$subjects);
+                $subject        = str_replace("\r",'<br>',$subjects);
                 $showsignature  = $shownoticeshow['signature'];
-                $showadded_by   = $shownoticeshow['added_by'];
+                $added_by       = $shownoticeshow['added_by'];
+                $showadded_by   = str_replace('"','\\',$added_by);
                 $img            = "image/".$showsignature;
 
                  ?>
+                    <input type="hidden" class="form-control" value="<?php    echo $showid   ?>" name="id" required>
+                    <input type="hidden" class="form-control" value="<?php    echo $shownotice   ?>" name="notice"
+                        required>
+                    <input type="hidden" class="form-control" value="<?php    echo $showsubject  ?>" name="subject"
+                        required>
+                    <input type="hidden" class="form-control" value="<?php    echo $showadded_by  ?>" name="added_by"
+                        required>
+                    <input type="hidden" class="form-control" value="<?php    echo $showsignature  ?>" name="img"
+                        required>
                     <div class="col-lg-12">
                         <div class="notice-title-div" style="border-bottom: 2px solid black;">
                             <h2 class="notice-title">NOTICE</h2>
                         </div>
                         <P class="notice-title-div-p text-end"> Date : <?php    echo date('d M, Y'); ?></P>
-                        <p class="notice-title-div-subject text-center">Subject : <?php    echo $showsubject  ?></p>
+                        <p class="notice-title-div-subject" style="text-align: left!important;">Subject : <?php    echo $subject  ?></p>
                         <?php if(isset($_GET['staffid'])){ $showname  = $shownoticeshow['name'];?>
+                        <input type="hidden" class="form-control" value="<?php    echo $showname  ?>" name="staffname"
+                            required>
                         <p class="notice-title-div-p mb-3">To : <?php echo $showname; ?>,<?php } ?></p>
-                        <p class="notice-title-div-p"> <?php    echo $shownotice  ?></p>
+                        
+                          <p class="notice-title-div-p"> <?php    echo $notice  ?></p>
 
                         <p class="notice-title-div-p text-end">Respectfully ,</p>
-                        <p class="notice-title-div-p text-end"><?php    echo $showadded_by;  ?></p>
+                        <p class="notice-title-div-p text-end"><?php    echo $added_by;  ?></p>
                         <p class="notice-signature mb-2"> Signature : <img id="theImage" src="<?php    echo $img  ?>"
                                 alt="bill-invoice" width="200" height="70" onClick="makeFullScreen()"></p>
                         <p class="notice-title-div-p" style="width: min-content;"> Place : <?php    echo  $row['address'];
                         ?></p>
                         <?php } } ?>
                     </div>
-                </section>
+                    <!-- </section> -->
 
 
 
 
-                <div class="justify-content-center print-sec d-flex my-5">
-                    <button class="btn btn-primary shadow mx-2" onclick="history.back()">Go Back</button>
-                    <button class="btn btn-primary shadow mx-2" onclick="window.print()">Print </button>
+                    <div class="justify-content-center print-sec d-flex my-5">
+                   
+                        <button class="btn btn-primary shadow mx-2" id="pdf" type="submit" name="datapdf">Download
+                        </button>
+                        <a href="staffnotice.php">  <button class="btn btn-primary shadow mx-2" >Go Back</button></a>
+                    </div>
                 </div>
-
-                <script>
-                `//get DIV content as clone
+            </div>
+        </form>
+    </section>
+    <script>
+    `//get DIV content as clone
     var divContents = $("#DIVNAME").clone();
     //detatch DOM body
     var body = $("body").detach();
@@ -157,58 +192,58 @@ session_start();
     $("html body").remove();
     //attach original body
     body.appendTo($("html"));`
-                </script>
+    </script>
 
 
-                <!-- Vendor JS Files -->
-                <script src="../admin/assets/vendor/apexcharts/apexcharts.min.js"></script>
-                <script src="../admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-                <script src="../admin/assets/vendor/chart.js/chart.min.js"></script>
-                <script src="../admin/assets/vendor/echarts/echarts.min.js"></script>
-                <script src="../admin/assets/vendor/quill/quill.min.js"></script>
-                <script src="../admin/assets/vendor/simple-datatables/simple-datatables.js"></script>
-                <script src="../admin/assets/vendor/tinymce/tinymce.min.js"></script>
-                <script src="../admin/assets/vendor/php-email-form/validate.js"></script>
-                <script src="../admin/assets/js/main.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="../admin/assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../admin/assets/vendor/chart.js/chart.min.js"></script>
+    <script src="../admin/assets/vendor/echarts/echarts.min.js"></script>
+    <script src="../admin/assets/vendor/quill/quill.min.js"></script>
+    <script src="../admin/assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="../admin/assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="../admin/assets/vendor/php-email-form/validate.js"></script>
+    <script src="../admin/assets/js/main.js"></script>
 
 
 
-                <script>
-                // <!-- image fullscreen -->
 
-                function makeFullScreen() {
+    <script>
+    // <!-- image fullscreen -->
 
-                    var divObj = document.getElementById("theImage");
+    function makeFullScreen() {
 
-                    //Use the specification method before using prefixed versions
+        var divObj = document.getElementById("theImage");
 
-                    if (divObj.requestFullscreen) {
+        //Use the specification method before using prefixed versions
 
-                        divObj.requestFullscreen();
+        if (divObj.requestFullscreen) {
 
-                    } else if (divObj.msRequestFullscreen) {
+            divObj.requestFullscreen();
 
-                        divObj.msRequestFullscreen();
+        } else if (divObj.msRequestFullscreen) {
 
-                    } else if (divObj.mozRequestFullScreen) {
+            divObj.msRequestFullscreen();
 
-                        divObj.mozRequestFullScreen();
+        } else if (divObj.mozRequestFullScreen) {
 
-                    } else if (divObj.webkitRequestFullscreen) {
+            divObj.mozRequestFullScreen();
 
-                        divObj.webkitRequestFullscreen();
+        } else if (divObj.webkitRequestFullscreen) {
 
-                    } else {
+            divObj.webkitRequestFullscreen();
 
-                        console.log("Fullscreen API is not supported");
+        } else {
 
-                    }
+            console.log("Fullscreen API is not supported");
 
-                }
+        }
 
-                // <!-- image fullscreen end -->
-                </script>
+    }
 
+    // <!-- image fullscreen end -->
+    </script>
 
 </body>
 

@@ -250,19 +250,19 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
 
 
 
-            $showamount         = $row['Total'];
+            $pendingamount         = $row['total_due'];
 
 
 
-            $showtotal_amount   = $row['total_amount'];
+            $showtotal_amount   = $row['payable_fee'];
 
 
 
-            $showdate           = $row['date'];
+            // $showdate           = $row['date'];
 
 
 
-            $pendingamount      = ($showtotal_amount - $showamount);
+            $showamount        = $showtotal_amount - $pendingamount;
 
 
 
@@ -424,15 +424,23 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
                     <div class="col-6">
 
                         <h6 class="h6css">
-
-                        <?php if($showtotal_amount == $showamount) {
-                        echo '<span class="badge bg-success">Paid</span>';
-                        }elseif($showtotal_amount > $showamount) {
-                        $pendingamount  = number_format($pendingamount, 2);
-                        echo $pendingamount; }else{
-                        echo "0";
+                            
+                        <?php 
+                        // if($showtotal_amount == $showamount) {
+                        // echo '<span class="badge bg-success">Paid</span>';
+                        // }elseif($showtotal_amount > $showamount) {
+                        // $pendingamount  = number_format($pendingamount, 2);
+                        // echo $pendingamount; }else{
+                        
+                        // }
+                        if($pendingamount == "0"){
+                            echo '<span class="badge bg-success">Paid</span>';
+                        }elseif($pendingamount == $showtotal_amount) {
+                            echo '<span class="badge bg-warning">Pending</span>';
+                        }else{
+                            $pendingamount  = number_format($pendingamount, 2);
+                            echo $pendingamount;
                         }
-
                         ?>
 
                         </h6>

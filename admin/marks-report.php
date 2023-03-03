@@ -9,12 +9,15 @@ $StudentDetails = new StudentDetails();
 $institute      = new  InstituteDetails();
 $classes        = new  Examination();
 
-$showStudentfinalexam = $StudentDetails->finalExampage($_GET['studentclass'], $_GET['session']);
 
-$marktotal = $StudentDetails->Studentmarktotal($_GET['studentid'], $_GET['session'], $_GET['studentclass']);
-$classnumber = $StudentDetails->numberOfClass($_GET['studentclass'], $_GET['stream']);
+$showStudentclass = $StudentDetails->studentclass($_GET['studentid'], $_GET['session']);
+    foreach ($showStudentclass as $Studentsclass) {
+        $class_stu      = $Studentsclass['class_id'];
+    }
 
-$Studentdata = $StudentDetails->Studentmark($_GET['studentid']);
+$showStudentfinalexam = $StudentDetails->finalExampage($class_stu, $_GET['session']);
+$marktotal = $StudentDetails->Studentmarktotal($_GET['studentid'], $_GET['session'], $class_stu);
+$classnumber = $StudentDetails->numberOfClass($class_stu, $_GET['stream']);
 
 $result=$institute->instituteShow();
 ?>
@@ -104,10 +107,26 @@ $result=$institute->instituteShow();
 <body>
     <section class="section dashboard">
         <?php
-
-foreach($result as $row){
-    foreach($Studentdata as $rowdata){
-?>
+            foreach($result as $row){
+            $Studentdata = $StudentDetails->Studentmark($_GET['studentid']);
+            if ($Studentdata == 0) {
+            echo "";
+            }else{
+            foreach($Studentdata as $rowdata){
+            $studentname = $rowdata['name'];
+            $gurdian     = $rowdata['gurdian_name'];
+            $roll        = $rowdata['roll_no'];
+            }}
+            $Studentpassout = $StudentDetails->Studentdata($_GET['studentid'], $class_stu, $_GET['session']);
+            if ($Studentpassout == 0) {
+            echo "";
+            }else{
+            foreach($Studentpassout as $rowdatapassout){
+            $studentnamepassout = $rowdatapassout['name'];
+            $gurdianpassout     = $rowdatapassout['guardian_name'];
+            $rollpassout        = $rowdatapassout['roll_no'];
+            }}
+        ?>
         <div class="custom-container">
             <div class="custom-body ">
                 <div class="card-body ">
@@ -139,13 +158,25 @@ foreach($result as $row){
                                         <div class="markssdiv">
                                             <div class="row info-student">
                                                 <div class="col-8">
-                                                    <h6>Name : <?php    echo $rowdata['name']  ?></h6>
-                                                    <h6>Guardian's Name : <?php    echo $rowdata['gurdian_name'] ?></h6>
+                                                    <h6>Name : <?php   if ($studentname != null){
+                                                      echo $studentname;
+                                                    }else{
+                                                        echo $studentnamepassout;
+                                                    }  ?></h6>
+                                                    <h6>Guardian's Name : <?php     if ($gurdian != null){
+                                                      echo $gurdian;
+                                                    }else{
+                                                        echo $gurdianpassout;
+                                                    }?></h6>
 
                                                 </div>
                                                 <div class="col-4">
-                                                    <h6>Roll Number : <?php    echo $rowdata['roll_no']  ?></h6>
-                                                    <h6>Class : <?php    echo $rowdata['class'] ;}?></h6>
+                                                    <h6>Roll Number : <?php    if ($roll != null){
+                                                      echo $roll;
+                                                    }else{
+                                                        echo $rollpassout;
+                                                    }?></h6>
+                                                    <h6>Class : <?php    echo $class_stu;?></h6>
 
                                                 </div>
 
@@ -160,6 +191,7 @@ foreach($result as $row){
 
                                                             if ($showStudentfinalexam == 0) {
                                                             echo "Not Avilable.";
+                                                            
                                                             }else{
                                                                 $totalmark = 0;
                                                             foreach ($showStudentfinalexam as $showStudentDetailsshow) {
@@ -170,12 +202,16 @@ foreach($result as $row){
 
                                                             echo '<th>'.$showexam_name.'(FM-'.$showmax_marks.')</th>'; 
 
+                                                            if ($classnumber == 0) {
+                                                                echo "";
+                                                              
+                                                                }else{
                                                             foreach ($classnumber as $class) {
                                                                 
                                                                 $showclasscount = $class['classnumber'];
                                                                 $totalnumber    = $showclasscount * $totalmark;
                                                                
-                                                        }}}
+                                                        }}}}
                                                             
                                                             ?>
                                                         <th>Marks Obtain</th>
@@ -188,7 +224,7 @@ foreach($result as $row){
                                                     $i=1;  
                                                     
                                                     // if($_GET['studentclass'] == 11 && $_GET['studentclass'] == 12){
-                                                    $showStudentDetails = $StudentDetails->showStudentsubjectstream($_GET['stream'], $_GET['studentclass']); 
+                                                    $showStudentDetails = $StudentDetails->showStudentsubjectstream($_GET['stream'], $class_stu); 
                                                     // } else{
                                                     // $showStudentDetails = $StudentDetails->showStudentsubjectDetails1($_GET['studentclass']);
                                                     // }    
@@ -202,9 +238,16 @@ foreach($result as $row){
                                                         $showstudentsubject = $showStudentsDetails['subject'];
                                                         $showid             = $showStudentsDetails['id'];
                                                    
-                                                       $showStudent= $StudentDetails->showStudentmark($showStudentsDetails['subject'], $_GET['studentid'], $_GET['session'], $_GET['studentclass']);
+                                                       $showStudent= $StudentDetails->showStudentmark($showStudentsDetails['subject'], $_GET['studentid'], $_GET['session'], $class_stu);
                                                        foreach ($marktotal as $StudentMT) {
                                                         $showTotal       = $StudentMT['Total'];
+                                                        // division by zero error
+                                                        if ( $totalnumber == 0) {
+
+                                                        $totalnumber = 1;
+
+                                                        }
+                                                        //   end
                                                         $Percentage      = $showTotal/$totalnumber*100;
                                                        }
                                                     ?>
@@ -213,7 +256,11 @@ foreach($result as $row){
                                                         <th><?php    echo $showstudentsubject  ?></th>
                                                         <?php  
                                                         $sum = 0;
-                                                       
+                                                        if ($showStudent == 0) {
+                                                            echo "";
+                                                            }
+                                                            else
+                                                            {
                                                         foreach ($showStudent as $showStudentresult) {
                                                         $sum += $showStudentresult['marks'];
                                                         
@@ -222,7 +269,7 @@ foreach($result as $row){
 
                                                         $subPercentage  =  $sum/$totalmark*100;                                                      
                                                        
-                                                        }  
+                                                        }  }
 
                                                         ?>
                                                         <td><?php    echo $sum  ?>
@@ -230,6 +277,9 @@ foreach($result as $row){
 
                                                         <td><?php
                                                             $Showsubrank = $classes->showgrade();
+                                                            if ($Showsubrank == 0) {
+                                                                echo "Not Avilable.";
+                                                                }else{
                                                             foreach ($Showsubrank as $subrank) {
 
                                                             $min_mraks       = $subrank['Min_marks'];
@@ -239,7 +289,7 @@ foreach($result as $row){
 
                                                             if ($sum >=$min_mraks  && $sum <=$max_mraks){ echo $showchar;}
                                                             }
-
+                                                           }
                                                         
 
                                                         //     if ($subPercentage >=0 & $subPercentage <= 10){ echo "Faill";
@@ -315,7 +365,24 @@ foreach($result as $row){
                                                         <!-- <th colspan="4" class="text-center"></th> -->
                                                         <th colspan="2" class="text-center">Rasult :</th>
                                                         <th colspan="2" class="text-center">
-                                                        <?php    echo $_GET['status'];  ?>
+                                                            <?php 
+                                                                $Showsubrank = $classes->passmarks("Subject Wise");
+                                                                $Showoverall = $classes->passmarks("Overall Wise");
+                                                                foreach ($Showsubrank as $subrank) {
+    
+                                                                $subpass       = $subrank['marks'];
+                                                                }
+                                                                foreach ($Showoverall as $overallrank) {
+    
+                                                                $overalpass = $overallrank['marks'];
+                                                                }
+
+                                                                if($showTotal>= $overalpass && $totalnumber >= $subpass){
+                                                                echo "pass";
+                                                                }else{
+                                                                echo "Faill";
+                                                                } 
+                                                            ?>
                                                         </th>
                                                     </tr>
 

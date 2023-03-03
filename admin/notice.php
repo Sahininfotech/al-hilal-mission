@@ -130,7 +130,7 @@ if($resultdata){
                     <!-- Sales Card -->
                     <div class="col-xxl-12 col-md-12">
                         <div class="card info-card sales-card p-4">
-                        <?php
+                            <?php
                 $adminDt = $Admin->getAdmin($_SESSION['user_name']);
                 foreach ($adminDt as $showStaffdentDetailsshow) {
                 $showname       = $showStaffdentDetailsshow['name'];
@@ -152,27 +152,16 @@ if($resultdata){
                                     <label for="floatingTextarea2">Comments</label>
                                 </div>
 
-                                <div class="mb-3">
+                                <div class="row m-0 p-0 mb-3">
                                     <label for="upload-signature" class="form-label"> Upload previous signature of
                                         In-Charge:
                                     </label>
-
-                                    <select class="form-select" id="form-select" aria-label="Default select example"
-                                        name="oldsignature">
-                                        <option selected disabled>Select previous Image</option>
-                                        <?php
-                                            $updatePage=$emp->shownoticeimage();
-                                            foreach ($updatePage as $showstaffnoticeshow) {
-                                                $showsignature  = $showstaffnoticeshow['signature'];
-                                                $img            = "../image/".$showsignature;
-                                            echo '<option value="'.$img.'">'.$img.'</option>';
-
-                                            }}
-                                            ?>
-                                    </select>
+                                    <input type="text" class="form-control" id='oldsignatures'
+                                        placeholder="Select previous Image" name="oldsignature" data-bs-toggle="modal"
+                                        data-bs-target="#previousimgModalLabel">
 
                                 </div>
-
+                                <?php  }?>
 
                                 <div class="mb-3">
                                     <label for="upload-signature" class="form-label">Upload the signature of In-Charge:
@@ -251,10 +240,11 @@ if($resultdata){
                 $result = $Notice->noticedisplay($limit);
                  if (count($result) > 0) {
                     foreach($result as $row){
-                        $showid = $row['id'];
-                        $showdate = $row['date'];
-                        $datetring = date("d-m-Y", strtotime($showdate));
-                        $shownotice = $row['notice'];
+                        $showid         = $row['id'];
+                        $showdate       = $row['date'];
+                        $datetring      = date("d-m-Y", strtotime($showdate));
+                        $notice         = $row['notice'];
+                        $shownotice     = str_replace("\r",'<br>',$notice);
                         echo' <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card sales-card">
                                     <div class="filter">
@@ -315,49 +305,103 @@ if($resultdata){
 
 
 
-    <!-- ======= Footer ======= -->
-    <?php require_once 'require/addfooter.php'; ?>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"
-        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <!-- Modal -->
+    <div class="modal fade" id="previousimgModalLabel" tabindex="-1" aria-labelledby="previousimgModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addVendorModalLabel">
 
-    <script>
-    const notice = (id) => {
-        let url = 'ajax/noticeedit.ajax.php?noticedata=' + id;
-        $(".notice-modal-body").html(
-            '<iframe width="99%" height="396px" frameborder="0" allowtransparency="true" src="' + url +
-            '"></iframe>')
+                        Select previous Image
 
-    }
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body previousimg-modal-body">
 
-    function deleteNOTICE() {
+                    <div class="row">
+                        <?php
+                        $updatePage=$emp->shownoticeimage();
+                        foreach ($updatePage as $showstaffnoticeshow) {
+                        $showsignature  = $showstaffnoticeshow['signature'];
+                        $img            = "image/".$showsignature;  
+       
+                    ?>
+                        <div class="col-2">
+                            <img class="card-img-top" data-bs-dismiss="modal" aria-label="Close"
+                                src="<?php    echo $img  ?>" alt="bill-invoice" id="<?php    echo $showsignature  ?>"
+                                onclick='imagedata(this.id)'>
 
-        return confirm("Are you sure that you want to delete the Notice Contents ?")
+                            <p style="word-break: break-word;"><?php    echo $showsignature  ?></p>
 
-    };
-    </script>
+                        </div>
 
-    <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict'
-
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.querySelectorAll('.needs-validation')
-
-        // Loop over them and prevent submission
-        Array.prototype.slice.call(forms)
-            .forEach(function(form) {
-                form.addEventListener('submit', function(event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
+                        <?php   
                     }
+                    ?>
+                    </div>
 
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
-    </script>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal end -->
+
+
+        <!-- ======= Footer ======= -->
+        <?php require_once 'require/addfooter.php'; ?>
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+        <script>
+        const notice = (id) => {
+            let url = 'ajax/noticeedit.ajax.php?noticedata=' + id;
+            $(".notice-modal-body").html(
+                '<iframe width="99%" height="396px" frameborder="0" allowtransparency="true" src="' + url +
+                '"></iframe>')
+
+        }
+
+
+
+        function deleteNOTICE() {
+
+            return confirm("Are you sure that you want to delete the Notice Contents ?")
+
+        };
+        </script>
+
+        <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms)
+                .forEach(function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+        </script>
+
+
+        <script>
+        function imagedata(id) {
+            // alert(id);
+            document.getElementById("oldsignatures").value = id;
+        }
+        </script>
 
 
 </body>

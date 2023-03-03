@@ -582,7 +582,7 @@ return $data;
 
 
 
-     // studentclass-1 w
+     // studentclass w
 
      function Studentmark($showstu){
         $sql = "SELECT * FROM `student` WHERE `student_id` = '$showstu'";
@@ -648,7 +648,50 @@ return $data;
 
 
 
+      
+        // student class 
 
+        function studentclass($student_id, $session){
+
+            $data = array();
+            $sql ="SELECT * FROM `student_class` WHERE `student_id` = '$student_id' and `session` = '$session'";
+            
+            $result = $this->conn->query($sql);
+            $rows = $result->num_rows;
+            if ($rows > 0) {
+                while ($row = $result->fetch_array()) {
+                    $data[] = $row;
+                }
+            }
+            return $data;
+            
+             
+        }
+
+
+
+
+    // Studentdata 
+
+    function Studentdata($showstu, $class, $academic_year){
+    $sql = "SELECT * FROM `student_summary` WHERE `student_id` = '$showstu' and `class` = '$class' and `academic_year` = '$academic_year'";
+
+    $studentTypeQuery = $this->conn->query($sql);
+
+    $rows = $studentTypeQuery->num_rows;
+
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $studentTypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+    }
+    // end studentDetails function
+
+     
 
 }
 

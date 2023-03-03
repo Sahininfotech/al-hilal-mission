@@ -24,7 +24,7 @@ if(isset ($_POST["submitdata"])){
 
 
 
-
+    $classid      = $_POST["id"];
 
 
     $classname    = $_POST["classname"];
@@ -50,7 +50,7 @@ if(isset ($_POST["submitdata"])){
   
           move_uploaded_file( $image_tmp_name, $image_folter );
 
-    $resultclass = $classes->classInsert($classname, $description, $image);
+    $resultclass = $classes->classInsert($classid, $classname, $description, $image);
 
 
 

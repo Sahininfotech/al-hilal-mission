@@ -212,11 +212,11 @@ class InstituteDetails extends DatabaseConnection{
 
 
 
-    function classInsert($classname, $description, $image){
+    function classInsert($classid, $classname, $description, $image){
 
         $descriptions = str_replace("<", "&lt", str_replace(">", "&gt;", str_replace("'", "\\", $description)));
 
-        $sql = "INSERT INTO `class` (`classname`, `description`, `image`) VALUES ( '$classname', '$descriptions', '$image')";
+        $sql = "INSERT INTO `class` (`id`, `classname`, `description`, `image`) VALUES ( '$classid', '$classname', '$descriptions', '$image')";
 
 
 

@@ -198,7 +198,7 @@ else
 
    
 
-       $result   = $Student->studenclasstInsert($student_id, $class_id);
+       $result   = $Student->studenclasstInsert($student_id, $class_id, $academic_year);
 
      }
 

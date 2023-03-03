@@ -1,5 +1,13 @@
 <?php
 session_start();
+require_once '../includes/constant.php';
+if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
+
+  header("Location: login.php");
+
+  exit;
+
+}
 $page = "Student Details";
 
 require_once '../_config/dbconnect.php';
@@ -11,29 +19,16 @@ require_once '../classes/fees-accounts.class.php';
 require_once '../classes/utility.class.php';
 require_once '../classes/studdetails.class.php';
 
-require_once '../includes/constant.php';
-
 $Utility        = new Utility(); 
-
 $Admin          = new Admin();
 $Student        = new Student();
 $Examination    = new Examination();
 $FeesAccount    = new FeesAccount();
 $StudentDet     = new StudentDetails();
 
-$showStudentDetails   = $Student->studentByClass($_GET['studenttype']);
-$showStudentfinalexam = $Examination->examByClassName($_GET['studenttype'], $_GET['session']);
-
 $_SESSION['current-url'] = $Utility->currentUrl();
-
-if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
-
-  header("Location: login.php");
-
-  exit;
-
-}
-
+$showStudentDetails      = $Student->studentByClass($_GET['studenttype']);
+$showStudentfinalexam    = $Examination->examByClassName($_GET['studenttype'], $_GET['session']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,9 +153,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                 <th scope="col">Fees Status</th>
                                                 <th scope="col">Action</th>
                                                 <th scope="col">Marksheet</th>
-                                               
-                                                <?php
 
+                                                <?php
+                                                    if ($showStudentDetails == 0) {
+                                                    echo "";
+                                                    }else{
                                                     foreach ($showStudentDetails as $showStudentDetailsshow) {
                                                     $showstuid            = $showStudentDetailsshow['student_id'];
                                                     $StudentData   = $FeesAccount->showFeesdata($showstuid);
@@ -172,7 +169,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                     }else{
                                                     echo '<th scope="col">Fees Add</th>';
                                                     }
-
+                                                    }
                                                 ?>
 
                                             </tr>
@@ -182,7 +179,8 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                             <?php
                                         $i=1;
                                         if ($showStudentDetails == 0) {
-                                        echo "No data Type Avilable.";
+                                            echo 'No data Type Avilable.';
+                                        exit;
                                         }else{
                                         foreach ($showStudentDetails as $showStudentDetailsshow) {
 
@@ -229,17 +227,34 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                         }
 
-
+                                        
 
 
                                         $showStudentmarks = $Student->maxmarks($showclass1, $showacademic_year);
+                                        if ($showStudentmarks == 0) {
+                                            echo 'No data Type Avilable.';
+                                        
+                                        }else{
                                         foreach($showStudentmarks as $row){
                                             $totalnum = $row['sum_marks'];
                                             $totalnumber = $totalnum * $total;
-                                        }
+                                        }}
                                         $showStudent = $Student->Totalmarks($showstuid, $showclass1, $showacademic_year);
+                                        if ($showStudent == 0) {
+                                            echo 'No data Type Avilable.';
+                                        
+                                        }else{
                                         foreach($showStudent as $rowsdata){
                                         $showtotal = $rowsdata['sum'];
+
+                                        // division by zero error
+                                        if ( $totalnumber == 0) {
+
+                                            $totalnumber = 1;
+   
+                                           }
+                                        //   end 
+
                                         $Percentage      = ($showtotal*100) / $totalnumber;
                                         $Percentage = round($Percentage,2);
 
@@ -249,7 +264,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         }
                                         
 
-                                        }
+                                        }}
 
 
                                       
@@ -354,7 +369,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                         value="<?php  echo  $showdistrict;  ?>" name="district[]"
                                                         id="district">
 
-                                                        <input type="hidden" class="form-control form_data"
+                                                    <input type="hidden" class="form-control form_data"
                                                         value="<?php  echo  $showtotal;  ?>" name="totalmark[]"
                                                         id="totalmark">
 
@@ -424,10 +439,12 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                                 }  ?>" name="newclass[]" id="newclass">
 
                                                 </td>
-                                                <td> <a
+                                                <td>
+                                                    <a
                                                         href='attendance-report.php?studentid=<?php    echo $showstuid  ?>&class=<?php    echo $showclass1  ?>'>
                                                         <i class="bi bi-eye-fill pe-4"></i>
-                                                    </a></td>
+                                                    </a>
+                                                </td>
 
                                                 <td>
                                                     <?php 
@@ -435,13 +452,12 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                                         $result=$Student-> studentsByFees($showstuid, $showclass1);
 
-                                                        foreach ($result as $showrow) {
-                                                        $showamount          = $showrow['Total'];
-                                                        $showtotal_amount    = $showrow['total_amount'];
-                                                        $showdate            = $showrow['date'];
+                                                        foreach ($result as $showrow) {                                                 
+                                                        $pendingamount       = $showrow['total_due'];
+                                                        $showtotal_amount    = $showrow['payable_fee'];
 
 
-                                                        $pendingamount       = $showtotal_amount - $showamount;
+                                                        $showamount          = $showtotal_amount - $pendingamount;
 
                                                         $monthly             = $showtotal_amount / 12;
 
@@ -544,11 +560,8 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                                 </td>
 
-                                                <td><a href="marks-report.php?studentclass=<?php    echo $_GET['studenttype']  ?>&studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>&status=<?php if($showtotal >= $overalpass && $sub_marks >= $subpass){
-                                                echo "pass";
-                                                }else{
-                                                    echo "Faill";
-                                                }?>"><i class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
+                                                <td><a href="marks-report.php?studentid=<?php    echo $showstuid  ?>&session=<?php    echo $_GET['session']  ?>&stream=<?php    echo $showstream  ?>
+                                               "><i class="bi bi-file-earmark-arrow-down-fill pe-4"></i>
                                                     </a></td>
 
                                                 <td>
@@ -573,7 +586,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                                 </td>
                                                 <td>
-                                               
+
                                                 </td>
 
 
@@ -582,9 +595,9 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                             </tr>
 
                                             <?php  
-                                        $i++;
-                                      }   }
-                                      ?>
+                                                $i++;
+                                                }}
+                                            ?>
 
                                         </tbody>
 
@@ -600,7 +613,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                     All Submit
                                     </button>
                                     </div>';
-                                    }
+                                    } 
                                     ?>
                                 </form>
 
@@ -650,3 +663,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 </body>
 
 </html>
+
+
+<!-- img delet unlink path -->

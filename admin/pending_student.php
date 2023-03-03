@@ -317,89 +317,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-                                    // $showstu = "pendingfees.ajax.php?feespendings=". $showstuid ."&fee_account". $Fees_account;
-
-
-
-                                    // $result  = $Students-> studentsByFees($showstuid);
-
-
-
-                                    // $showFees_accounts   = $Students->studentFeesaccount($showstuid, $Fees_account);
-
-
-
-                                    // $sameFees_accounts   = $Students->sameFeesaccount($showstuid, $Fees_account);
-
-
-
-                                    // foreach ($result as $showrows) {
-
-
-
-                                    //     $showamount         = $showrows['Total'];
-
-                                    //     } 
-
-
-
-                                    // foreach ($showFees_accounts as $showrow) {
-
-
-
-                                    //     $purpose           = $showrow['purpose'];
-
-                            
-
-                                    //     $amountshow        = $showrow['amount'];
-
-                                                               
-
-                            
-
-                                    //    foreach ($sameFees_accounts as $samefee){
-
-                            
-
-                                    //     $sumdata           = $samefee['sum'];
-
-                                                                                                               
-
-
-
-                                    
-
-                                    // $pendingamount      = $showtotal_amount - $showamount;
-
-
-
-                                    // $monthly            = $showtotal_amount / 12;
-
-                        
-
-                        
-
-                                    // $month              = date("m");
-
-                        
-
-                                    // $monthPending       = $month*$monthly - $showamount;
-
-                                    
-
-                                    // if($showamount >= $month*$monthly && $sumdata >= $amountshow){
-
-
-
-                                    // echo ' '; 
-
-                    
-
-                                    // } else {
-
-
-
-
                                     //    monthly fees pading then it is show 
 
                                     // process start
@@ -417,7 +334,12 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-                                    $showamount         = $showrows['Total'];
+                                    // $showamount         = $showrows['Total'];
+                                    $pendingamount         = $showrows['total_due'];
+
+
+
+                                    $showtotal_amounts   = $showrows['payable_fee'];
 
                                     }                                                       
 
@@ -427,13 +349,13 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-                                    
+                                    $showamount        = $showtotal_amounts - $pendingamount;
 
-                                    $pendingamount      = $showtotal_amount - $showamount;
+                                    // $pendingamount      = $showtotal_amounts - $showamount;
 
 
 
-                                    $monthly            = $showtotal_amount / 12;
+                                    $monthly            = $showtotal_amounts / 12;
 
                         
 
@@ -482,7 +404,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                             <td><?php  echo $showstuid           ?></td>
 
-                                            <td><?php $showtotal_amount   = number_format($showtotal_amount, 2); echo $showtotal_amount        ?>
+                                            <td><?php $showtotal_amounts   = number_format($showtotal_amounts, 2); echo $showtotal_amounts        ?>
                                             </td>
 
                                             <td><?php $total_due   = number_format($total_due, 2); echo $total_due              ?>
