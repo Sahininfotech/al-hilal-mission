@@ -17,6 +17,20 @@ class Classes extends DatabaseConnection{
 
     }// end display
 
+
+       
+        function classesdata($class){
+        
+            $clsData = array();
+            $sql = "SELECT * FROM `class` WHERE `id` = '$class'";
+            $empQuery   = $this->conn->query($sql);
+            while($row  = $empQuery->fetch_array()){    
+                $clsData[]	= $row;
+            }
+            return $clsData;
+    
+        }
+
 }
 
 ?>

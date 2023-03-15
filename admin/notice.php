@@ -244,7 +244,9 @@ if($resultdata){
                         $showdate       = $row['date'];
                         $datetring      = date("d-m-Y", strtotime($showdate));
                         $notice         = $row['notice'];
-                        $shownotice     = str_replace("\r",'<br>',$notice);
+                        $subject        = $row['subject'];
+                        $shownotices    = str_replace("\r",'<br>',$notice);
+                        $shownotice     = substr("$shownotices",0,150).' ...';
                         echo' <div class="col-xxl-4 col-md-4">
                                 <div class="card info-card sales-card">
                                     <div class="filter">
@@ -258,6 +260,7 @@ if($resultdata){
                                     <a href="./notice-pdf-report.php?id='.$showid.'">
                                     <div class="card-body">
                                         <h5 class="card-title" >'.$datetring.'</h5>
+                                        <h4 class="card-title">Subject : '.$subject.' </h4>
                                         <p>'.$shownotice.'
                                     </div>
                                     </a>

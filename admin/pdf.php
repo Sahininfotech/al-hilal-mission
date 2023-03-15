@@ -181,6 +181,6 @@ $pdf->SetFont('Arial','',12);
 //   for($i = 1; $i <= 30; $i++)
 //       $pdf->Cell(0, 10, 'line number ' 
 //               . $i, 0, 1);
-  $pdf->Output('notice-pdf-report.pdf', 'I');
+  $pdf->Output('notice-pdf-report.pdf', 'D');
  }
   ?>

@@ -5,9 +5,12 @@ require_once '../_config/dbconnect.php';
 require_once '../classes/studdetails.class.php';
 require_once '../classes/institutedetails.class.php';
 require_once '../classes/exam.class.php';
+require_once '../classes/classes.class.php';
 $StudentDetails = new StudentDetails();
 $institute      = new  InstituteDetails();
-$classes        = new  Examination();
+$Examination    = new  Examination();
+
+$Classesmark    = new Classes();
 
 
 $showStudentclass = $StudentDetails->studentclass($_GET['studentid'], $_GET['session']);
@@ -237,6 +240,14 @@ $result=$institute->instituteShow();
                                                     foreach ($showStudentDetails as $showStudentsDetails) {
                                                         $showstudentsubject = $showStudentsDetails['subject'];
                                                         $showid             = $showStudentsDetails['id'];
+
+                                                        $ClassMark = $Examination->subjectMark($class_stu, $showstudentsubject);
+
+                                                        foreach($ClassMark as $row){                                         
+
+                                                            $subjectpassMark    = $row['subject_pass_marks'];
+                                
+                                                        }
                                                    
                                                        $showStudent= $StudentDetails->showStudentmark($showStudentsDetails['subject'], $_GET['studentid'], $_GET['session'], $class_stu);
                                                        foreach ($marktotal as $StudentMT) {
@@ -276,7 +287,7 @@ $result=$institute->instituteShow();
                                                         </td>
 
                                                         <td><?php
-                                                            $Showsubrank = $classes->showgrade();
+                                                            $Showsubrank = $Examination->showgrade();
                                                             if ($Showsubrank == 0) {
                                                                 echo "Not Avilable.";
                                                                 }else{
@@ -366,18 +377,29 @@ $result=$institute->instituteShow();
                                                         <th colspan="2" class="text-center">Rasult :</th>
                                                         <th colspan="2" class="text-center">
                                                             <?php 
-                                                                $Showsubrank = $classes->passmarks("Subject Wise");
-                                                                $Showoverall = $classes->passmarks("Overall Wise");
-                                                                foreach ($Showsubrank as $subrank) {
+                                                                // $Showsubrank = $classes->passmarks("Subject Wise");
+                                                                // $Showoverall = $classes->passmarks("Overall Wise");
+                                                                // foreach ($Showsubrank as $subrank) {
     
-                                                                $subpass       = $subrank['marks'];
-                                                                }
-                                                                foreach ($Showoverall as $overallrank) {
+                                                                // $subjectpassMark       = $subrank['marks'];
+                                                                // }
+                                                                // foreach ($Showoverall as $overallrank) {
     
-                                                                $overalpass = $overallrank['marks'];
+                                                                // $overalpass = $overallrank['marks'];
+                                                                // }
+
+
+                                                                $allClass = $Classesmark->classesdata($class_stu);
+
+                                                                foreach($allClass as $class){
+    
+                                                                    $showclassid        = $class['id'];
+    
+                                                                    $overalpass         = $class['overall_pass_marks'];
+                                        
                                                                 }
 
-                                                                if($showTotal>= $overalpass && $totalnumber >= $subpass){
+                                                                if($showTotal>= $overalpass && $totalnumber >= $subjectpassMark){
                                                                 echo "pass";
                                                                 }else{
                                                                 echo "Faill";

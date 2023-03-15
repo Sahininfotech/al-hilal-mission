@@ -245,7 +245,9 @@ if($insertEmpQuery){
                 $showid         = $row['id'];             
                 $showname       = $row['name'];
                 $notice         = $row['notice'];
-                $shownotice     = str_replace("\r",'<br>',$notice);
+                $subject        = $row['subject'];
+                $shownotices    = str_replace("\r",'<br>',$notice);
+                $shownotice     = substr("$shownotices",0,150).' ...';
                 echo' <div class="col-xxl-4 col-md-4 col-sm-4">
                         <div class="card info-card sales-card">
                             <div class="filter">
@@ -263,6 +265,7 @@ if($insertEmpQuery){
                         <div class="card-body">
                         <h5 class="card-title">'.$datetring.'</h5>
                         <h5 class="card-title">'.$showname.'</h5>
+                        <h4 class="card-title">Subject : '.$subject.' </h4>
                         <p>'.$shownotice.'</p> 
                         </a>
                     </div>

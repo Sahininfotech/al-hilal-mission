@@ -6,13 +6,15 @@ require_once './_config/dbconnect.php';
 
 require_once './classes/institutedetails.class.php';
 
+require_once './classes/gallery.class.php';
+
 require_once 'includes/constant.php';
 
 $Institute = new  InstituteDetails();
 
+$Photos    = new  Photos();
 
-
-$instData = $Institute->instituteShow();
+$instData  = $Institute->instituteShow();
 
 
 
@@ -51,9 +53,7 @@ $instData = $Institute->instituteShow();
     <!-- Google Fonts -->
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet">
 
 
@@ -93,6 +93,36 @@ $instData = $Institute->instituteShow();
   * License: https://bootstrapmade.com/license/
 
   ======================================================== -->
+
+
+    <style>
+    .grid-container {
+        columns: 3 200px;
+        column-gap: 0.5rem;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .galleryimg {
+        width: 150px;
+        margin: 0 1.5rem 1.5rem 0;
+        display: inline-block;
+        width: 100%;
+        /* border: solid 2px black; */
+        padding: 5px;
+        /* box-shadow: 5px 5px 5px rgba(0,0,0,0.5); */
+        border-radius: 5px;
+        /* transition: all .25s ease-in-out; */
+    }
+
+    .grid-item {
+        width: 100%;
+        /* filter: grayscale(100%); */
+        border-radius: 5px;
+        margin-bottom: -0.7rem;
+        /* transition: all .25s ease-in-out; */
+    }
+    </style>
 
 </head>
 
@@ -140,81 +170,29 @@ $instData = $Institute->instituteShow();
 
             <!-- Gallery -->
 
-            <div class="row">
+            <div class="grid-container">
+                <?php  
+            $Photo 	= $Photos->getPhoto('gallery.php'); 
 
-                <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+            foreach ($Photo as $showdata) {
 
-                    <img src="assets/img/school/img1.jpg" class="w-100 shadow-1-strong rounded mb-4" />
+            $showphotos = $showdata['photos'];
 
+            $img        = "./admin/image/".$showphotos;
 
-
-                    <img src="assets/img/school/img2.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-                    <img src="assets/img/school/img11.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
+            ?>
+                <div class="galleryimg">
+                    <img class='grid-item grid-item' src="<?php echo $img;?>" alt=''>
                 </div>
-
-
-
-                <div class="col-lg-4 mb-4 mb-lg-0">
-
-                    <img src="assets/img/school/img3.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-
-
-                    <img src="assets/img/school/img6.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-                    <img src="assets/img/school/img9.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-
-
-                </div>
-
-
-
-                <div class="col-lg-4 mb-4 mb-lg-0">
-
-                    <img src="assets/img/school/img5.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-
-
-                    <img src="assets/img/school/img4.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-                    <img src="assets/img/school/img13.jpg" class="w-100 shadow-1-strong rounded mb-4" />
-
-                </div>
-
-
-
-
-
-
-
+                <?php  } ?>
             </div>
-
             <!-- Gallery -->
-
-
-
         </section>
-
-
-
-
-
-
-
-
-
-
 
         <!-- End Gallery Section -->
 
 
-
     </main><!-- End #main -->
-
-
 
     <!--======== Footer Start ========-->
 
@@ -222,12 +200,9 @@ $instData = $Institute->instituteShow();
 
     <!--======== Footer End ========-->
 
-
-
     <div id="preloader"></div>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-
             class="bi bi-arrow-up-short"></i></a>
 
 

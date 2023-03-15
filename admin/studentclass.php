@@ -18,6 +18,7 @@ require_once '../classes/exam.class.php';
 require_once '../classes/fees-accounts.class.php';
 require_once '../classes/utility.class.php';
 require_once '../classes/studdetails.class.php';
+require_once '../classes/classes.class.php';
 
 $Utility        = new Utility(); 
 $Admin          = new Admin();
@@ -25,6 +26,7 @@ $Student        = new Student();
 $Examination    = new Examination();
 $FeesAccount    = new FeesAccount();
 $StudentDet     = new StudentDetails();
+$Classes        = new Classes();
 
 $_SESSION['current-url'] = $Utility->currentUrl();
 $showStudentDetails      = $Student->studentByClass($_GET['studenttype']);
@@ -63,7 +65,7 @@ $showStudentfinalexam    = $Examination->examByClassName($_GET['studenttype'], $
                             Management</a></li>
                     <li class="breadcrumb-item "><a href="http://localhost/institute1/admin/studentdetails.php">Student
                             Details</a></li>
-                    <li class="breadcrumb-item active">Class <?php  echo $_GET['studenttype'], $_GET['session']  ?></li>
+                    <li class="breadcrumb-item active">Class <?php  echo $_GET['studenttype'] ?></li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -401,18 +403,29 @@ $showStudentfinalexam    = $Examination->examByClassName($_GET['studenttype'], $
 
                                                     <?php  
 
+                                                            $allClass = $Classes->classesdata($_GET['studenttype']);
 
-                                                            $Showsubrank = $Examination->passmarks("Subject Wise");
-                                                            $Showoverall = $Examination->passmarks("Overall Wise");
-                                                            foreach ($Showsubrank as $subrank) {
+                                                            foreach($allClass as $class){
 
-                                                            $subpass       = $subrank['marks'];
+                                                                $showclassid        = $class['id'];
 
-                                                            foreach ($Showoverall as $overallrank) {
+                                                                $overalpass         = $class['overall_pass_marks'];
+                                    
+                                                            }                                                          
 
-                                                            $overalpass = $overallrank['marks'];
-                                                            }
-                                                            }  
+                                                            // $Showsubrank = $Examination->passmarks($_GET['studenttype']);
+                                                            // // $Showoverall = $Examination->passmarks("Overall Wise");
+                                                            // foreach ($Showsubrank as $subrank) {
+
+                                                            // $subjectpassMark       = $subrank['marks'];
+
+                                                            // foreach ($Showoverall as $overallrank) {
+
+                                                            // $overalpass = $overallrank['marks'];
+                                                            // }
+                                                            // }  
+
+
                                                             foreach($showSubject as $Subjectrow){
                                                             $subjectshow = $Subjectrow['subject'];
 
@@ -421,18 +434,26 @@ $showStudentfinalexam    = $Examination->examByClassName($_GET['studenttype'], $
                                                             foreach($Studentsubject as $Studentsubjectrow){
                                                             $sub_marks = $Studentsubjectrow['summark'];
 
+                                                            $ClassMark = $Examination->subjectMark($_GET['studenttype'], $subjectshow);
+
+                                                            foreach($ClassMark as $row){                                         
+
+                                                                $subjectpassMark    = $row['subject_pass_marks'];
+                                    
+                                                            }
+
 
                                                             }}
 
                                                         ?>
 
-                                                    <input type="hidden" class="form-control form_data" value="<?php   if($showtotal>= $overalpass && $sub_marks >= $subpass){
+                                                    <input type="hidden" class="form-control form_data" value="<?php   if($showtotal>= $overalpass && $sub_marks >= $subjectpassMark){
                                                  echo "pass";
                                                 }else{
                                                  echo "Faill";
                                                 }  ?>" name="exam_status[]" id="exam_status">
 
-                                                    <input type="hidden" class="form-control form_data" value="<?php   if($showtotal >= $overalpass && $sub_marks >= $subpass){
+                                                    <input type="hidden" class="form-control form_data" value="<?php   if($showtotal>= $overalpass && $sub_marks >= $subjectpassMark){
                                                 echo $showclass1 + "1";
                                                 }else{
                                                  echo $showclass1;

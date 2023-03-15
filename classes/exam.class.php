@@ -334,6 +334,47 @@ class Examination extends DatabaseConnection{
 
 
 
+    function overalMarks($marks, $class_name, $classId){
+
+        $sqledit = "UPDATE `class` SET `overall_pass_marks` = '$marks' WHERE `class`.`ids` = '$classId' and `class`.`classname` = '$class_name'";
+
+        $result = $this->conn->query($sqledit);
+
+        return "Overall Marks Update";
+
+    }
+
+
+
+    function subjectpassMarks($marks, $class_name, $classId, $class_ids){
+
+        $sqledit = "UPDATE `class_subject` SET `subject_pass_marks` = '$marks' WHERE `class_subject`.`id` = '$classId' and `class_subject`.`class_id` = '$class_ids' and `class_subject`.`subject` = '$class_name'";
+
+        $result = $this->conn->query($sqledit);
+
+        return "Subject Marks Update";
+
+    }
+
+
+
+
+
+    //showExams start
+    function subjectMark($class, $subjectshow){
+
+        $exmData = array();
+        $sql = "SELECT * FROM `class_subject` WHERE `class_subject`.`class_id` = '$class' and `class_subject`.`subject` = '$subjectshow'";
+        $exmQuery   = $this->conn->query($sql);
+        while($row  = $exmQuery->fetch_array()){
+            $exmData[]	= $row;
+        }
+        return $exmData;
+
+    }
+
+
+
 
 }
 

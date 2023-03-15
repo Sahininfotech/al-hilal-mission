@@ -362,6 +362,22 @@
 
         <!-- End Profile Page Nav -->
 
+        <!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+
+            <a class="nav-link <?php if($page != "photos"){echo "collapsed";} ?>" href="photos.php">
+
+                <i class="bi bi-building"></i>
+
+                <span>Gallery</span>
+
+            </a>
+
+        </li>
+
+        <!-- End Profile Page Nav -->
+
 
 
         <!-- start Register Page Nav -->

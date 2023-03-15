@@ -390,7 +390,7 @@ if(isset ($_POST["Updateyear"])){
 
                                         <div class="row mb-3">
 
-                                            <label for="inputText" class="col-sm-4 col-form-label">Particular Name
+                                            <label for="inputText" class="col-sm-4 col-form-label">Class Name
                                                 :</label>
 
                                             <div class="col-sm-8">

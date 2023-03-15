@@ -304,36 +304,6 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                             <a href="./studentdetails.php">
 
-                                <?php
-
-
-
-                            
-
-
-
-                              foreach($total as $rowsession){
-
-
-
-                               $session      = $rowsession['session'];
-
-
-
-                               $studentcount = $StudentDetails->countStudentrow($session);
-
-                               $totalstudent = 00;
-
-                               if ($studentcount != null || $studentcount != '') {
-
-                                   $totalstudent = count($studentcount);
-
-                               }
-
-
-
-                            ?>
-
                                 <div class="card-body">
 
                                     <h5 class="card-title">Total Students </h5>
@@ -354,7 +324,30 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                             <h6>
 
-                                                <?php  echo $totalstudent;  }?>
+                                            <?php 
+                                                
+                                                foreach($total as $rowsession){
+
+
+
+                                                $session      = $rowsession['session'];
+
+
+
+                                                $studentcount = $StudentDetails->countStudentrow($session);
+
+                                                $totalstudent = 00;
+
+                                                if ($studentcount != null || $studentcount != '') {
+
+                                                $totalstudent = count($studentcount);
+
+                                                }
+
+                                                echo $totalstudent;  
+
+                                                }
+                                            ?>
 
                                             </h6>
 
