@@ -66,7 +66,6 @@ $viwe=$Contact->viwemessage($_GET['message']);
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item">Pages</li>
                     <li class="breadcrumb-item">Contacts</li>
                     <li class="breadcrumb-item">Contact form Details</li>
                     <li class="breadcrumb-item active">Message</li>

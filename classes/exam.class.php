@@ -340,7 +340,7 @@ class Examination extends DatabaseConnection{
 
         $result = $this->conn->query($sqledit);
 
-        return "Overall Marks Update";
+        return "OVERALL MARKS UPDATED";
 
     }
 
@@ -352,7 +352,7 @@ class Examination extends DatabaseConnection{
 
         $result = $this->conn->query($sqledit);
 
-        return "Subject Marks Update";
+        return "SUBJECT MARKS UPDATED";
 
     }
 

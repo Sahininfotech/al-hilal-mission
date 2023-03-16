@@ -515,7 +515,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-        return confirm("Are you sure! that you want to delete the Department Contents ?")
+        return confirm("DO YOU REALLY WANT TO DELETE THIS DEPARTMENT CONTENTS ?")
 
 
 

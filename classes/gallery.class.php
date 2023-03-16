@@ -24,7 +24,7 @@ function displaydata(){
 
     $empData = array();
 
-    $sql = "SELECT * FROM `gallery` order by id desc";
+    $sql = "SELECT * FROM `gallery` order by id asc";
 
     $insertVenQuery = $this->conn->query($sql);
 

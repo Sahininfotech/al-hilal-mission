@@ -69,7 +69,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <?php require_once 'require/headerLinks.php';?>
 
     <style>
-
     .addnewbtncss {
 
         margin: auto;
@@ -103,7 +102,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
         }
 
     }
-
     </style>
 
 </head>
@@ -158,13 +156,13 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
         <section class="section dashboard">
 
-                <div class="col-lg-12">
+            <div class="col-lg-12">
 
-                    <div class="card recent-sales overflow-auto">
+                <div class="card recent-sales overflow-auto">
 
-                        <div class="card-body">
+                    <div class="card-body">
 
-                            <h5 style="padding: 20px 0 5px 0;
+                        <h5 style="padding: 20px 0 5px 0;
 
                         font-size: 30px;
 
@@ -174,47 +172,42 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                        font-family: 'Poppins', sans-serif">Vendor </h5>
 
-                            <!-- Button trigger modal -->
+                        <!-- Button trigger modal -->
 
 
 
-                            <button type="button"  class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal" data-bs-target="#addVendorModal"
+                        <button type="button" class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal"
+                            data-bs-target="#addVendorModal" onclick="addVendor();">
 
-                                onclick="addVendor();">
+                            Add New
 
-                                Add New
-
-                            </button>
-
+                        </button>
 
 
-                            <!-- Modal -->
 
-                            <div class="modal fade" id="addVendorModal" tabindex="-1"
+                        <!-- Modal -->
 
-                                aria-labelledby="addVendorModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorModalLabel"
+                            aria-hidden="true">
 
-                                <div class="modal-dialog modal-lg">
+                            <div class="modal-dialog modal-lg">
 
-                                    <div class="modal-content">
+                                <div class="modal-content">
 
-                                        <div class="modal-header">
+                                    <div class="modal-header">
 
-                                            <h5 class="modal-title" id="addVendorModalLabel">
+                                        <h5 class="modal-title" id="addVendorModalLabel">
 
-                                                Vendors Add Forms
+                                            Vendors Add Forms
 
-                                            </h5>
+                                        </h5>
 
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
 
-                                                aria-label="Close"></button>
+                                    </div>
 
-                                        </div>
-
-                                        <div class="modal-body donation-modal-body">
-
-                                        </div>                            
+                                    <div class="modal-body donation-modal-body">
 
                                     </div>
 
@@ -222,35 +215,37 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                             </div>
 
-                            <!-- modal end -->
+                        </div>
 
-                            <table class="table datatable ">
+                        <!-- modal end -->
 
-                                <thead>
+                        <table class="table datatable ">
 
-                                    <tr>
+                            <thead>
 
-                                        <th scope="col">S.No</th>
+                                <tr>
 
-                                        <th scope="col">name</th>
+                                    <th scope="col">S.No</th>
 
-                                        <th scope="col">Date</th>
+                                    <th scope="col">name</th>
 
-                                        <th scope="col">address</th>
+                                    <th scope="col">Date</th>
 
-                                        <th scope="col">Vendor Id</th>
+                                    <th scope="col">address</th>
 
-                                        <th scope="col">mob_no</th>
+                                    <th scope="col">Vendor Id</th>
 
-                                        <th scope="col">Action</th>
+                                    <th scope="col">mob_no</th>
 
-                                    </tr>
+                                    <th scope="col">Action</th>
 
-                                </thead>
+                                </tr>
 
-                                <tbody>
+                            </thead>
 
-                                    <?php
+                            <tbody>
+
+                                <?php
 
                                     $i=1;
 
@@ -259,58 +254,53 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         $vendordatetring = date("d-m-Y", strtotime($showvendor));
                                     ?>
 
-                                    <tr>
+                                <?php if ($row['status']== 'active') echo '<tr style="color: black">' ;   if ($row['status']== 'inactive') echo '<tr    style="color: red">' ;?>
 
-                                        <?php if ($row['status']== 'active') echo '<tr style="color: black">' ;   if ($row['status']== 'inactive') echo '<tr    style="color: red">' ;?>
+                                <td><?php echo $i  ?></td>
 
-                                        <td><?php echo $i  ?></td>
+                                <td><?php    echo $row['name']  ?></td>
 
-                                        <td><?php    echo $row['name']  ?></td>
+                                <td><?php    echo $vendordatetring; ?></td>
 
-                                        <td><?php    echo $vendordatetring; ?></td>
+                                <td><?php    echo $row['address']  ?></td>
 
-                                        <td><?php    echo $row['address']  ?></td>
+                                <td><?php    echo $row['vendor_id']  ?></td>
 
-                                        <td><?php    echo $row['vendor_id']  ?></td>
+                                <td><?php    echo $row['mob_no']  ?></td>
 
-                                        <td><?php    echo $row['mob_no']  ?></td>
+                                <td>
 
-                                        <td>
+                                    <a href='../admin/vendor-details.php?vendoredit=<?php    echo $row['id']  ?>'>
 
-                                            <a
+                                        <i class="bi bi-eye-fill pe-4">
 
-                                                href='../admin/vendor-details.php?vendoredit=<?php    echo $row['id']  ?>'>
+                                        </i>
 
-                                                <i class="bi bi-eye-fill pe-4">
+                                    </a>
 
-                                                </i>
-
-                                            </a>
-
-                                            <a style="color: #35dc59"
-                                            href='ajax/vendorctive.action.php?id=<?php    echo $row['id']  ?>'>
-                                            <i class="bi bi-check-lg " data-bs-toggle="modal"
-                                                data-bs-target="#deleteformModal" onclick="return activevendor();"
-                                                <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
-                                            </i>
-                                        </a>
-                                            <a
-                                                href='ajax/vendorcancel.acction.php?id=<?php    echo $row['id']  ?>'>
-                                                <i class="bi bi-x-lg" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteformModal" onclick="return cancel();"
-                                                    <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
-                                                </i>
-                                            </a>
+                                    <a style="color: #35dc59"
+                                        href='ajax/vendorctive.action.php?id=<?php    echo $row['id']  ?>'>
+                                        <i class="bi bi-check-lg " data-bs-toggle="modal"
+                                            data-bs-target="#deleteformModal" onclick="return activevendor();"
+                                            <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
+                                        </i>
+                                    </a>
+                                    <a href='ajax/vendorcancel.acction.php?id=<?php    echo $row['id']  ?>'>
+                                        <i class="bi bi-x-lg" data-bs-toggle="modal" data-bs-target="#deleteformModal"
+                                            onclick="return cancel();"
+                                            <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
+                                        </i>
+                                    </a>
 
 
 
-                                        </td>
+                                </td>
 
-                                    </tr>
+                                </tr>
 
 
 
-                                    <?php
+                                <?php
 
                                         $i++;
 
@@ -318,17 +308,17 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                     ?>
 
-                                </tbody>
+                            </tbody>
 
-                            </table>
+                        </table>
 
-                            <!-- End Table with stripped rows -->
-
-                        </div>
+                        <!-- End Table with stripped rows -->
 
                     </div>
 
                 </div>
+
+            </div>
 
         </section>
 
@@ -342,32 +332,30 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     <!-- End #main -->
 
-    
+
 
     <!-- ======= Footer ======= -->
 
     <?php require_once 'require/addfooter.php'; ?>
 
     <script>
-
     function cancel() {
 
-        return confirm("Are you sure that you want to cancel the vendor contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO CANCEL THIS VENDOR CONTENTS ?")
 
     };
+
     function activevendor() {
-        return confirm("Are you sure that you want to active the vendor contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO ACTIVE THIS VENDOR CONTENTS ?")
     };
     </script>
 
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
-
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
     <script>
-
     const addVendor = () => {
 
         let url = 'ajax/vendor-add.ajax.php';
@@ -409,7 +397,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
     }
-
     </script>
 
 </body>

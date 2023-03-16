@@ -1020,7 +1020,7 @@ $results=$InstituteDetails->instituteShow();
 
     const deleteexamForm = () => {
 
-        return confirm("Are you sure that you want to delete the Examinations Contents ?")
+        return confirm("DO YOU REALLY WANT TO DELETE THIS EXAMINATION CONTENTS ?")
 
     };
 
@@ -1094,7 +1094,7 @@ $results=$InstituteDetails->instituteShow();
 
     const deleteForm = () => {
 
-        return confirm("Are you sure that you want to delete the Subject Grade Contents ?")
+        return confirm("DO YOU REALLY WANT TO DELETE THIS SUBJECT GRADE ?")
 
     };
     </script>

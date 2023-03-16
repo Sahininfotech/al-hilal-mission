@@ -48,7 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         <script>
 
-            alert('Updated!');
+            alert('STAFF DETAILS UPDATED!');
 
             // location.href = 'employee-edit.ajax.php?stafftype='.$id;
 
@@ -62,7 +62,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         <script>
 
-            alert('Failed!');
+            alert('STAFF DETAILS UPDATE FAILED!');
 
             // location.href = 'employee-edit.ajax.php?stafftype='.$id;
 

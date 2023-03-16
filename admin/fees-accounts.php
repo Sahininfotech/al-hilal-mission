@@ -666,7 +666,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     const deleteFeeAcc = () => {
 
-        return confirm("Are you sure that you want to delete the Fees Account Contents ?")
+        return confirm("DO YOU REALLY WANT TO DELETE THIS FEES ACCOUNT CONTENTS ?")
 
     };
 
@@ -678,7 +678,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     const deleteFeestur = () => {
 
-        return confirm("Are you sure that you want to delete the Fees Structure Contents ?")
+        return confirm("DO YOU REALLY WANT TO DELETE THIS FEES STRUCTURE CONTENTS ?")
 
     };
 

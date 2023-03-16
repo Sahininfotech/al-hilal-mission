@@ -326,8 +326,8 @@ $_SESSION['current-url'] = $Utility->currentUrl();
                                     $img            = "../admin/image/".$showphotos;
                                     ?>
                                     <div class="item" style="margin: 1%;">
-                                        <img class='grid-item' src="<?php echo $img;?>" alt="gallery"
-                                            onClick="makeFullScreen()" id="theImage" />
+                                        <img class='grid-item' id="<?php echo $showid;?>" src="<?php echo $img;?>" alt="gallery"
+                                            onClick="makeFullScreen(this.id)"  />
                                         <div class="caption">
                                             <a
                                                 href='ajax/photodelete.ajax.php?id=<?php    echo $showid  ?>&img=<?php    echo $showphotos  ?>'>
@@ -410,9 +410,9 @@ $_SESSION['current-url'] = $Utility->currentUrl();
 
     // <!-- image fullscreen -->
 
-    function makeFullScreen() {
+    function makeFullScreen(id) {
 
-        var divObj = document.getElementById("theImage");
+        var divObj = document.getElementById(id);
 
         //Use the specification method before using prefixed versions
 

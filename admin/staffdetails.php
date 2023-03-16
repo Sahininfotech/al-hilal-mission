@@ -81,7 +81,7 @@ $result    = $employees->showEmployees();
                                             $result=$employees->showEmployees();
                                             foreach($result as $row){
                                         ?>
-                                <tr>
+                            
                                     <?php if ($row['status']== 1) echo '<tr style="color: black">' ;?>
                                     <?php if ($row['status']== 0) echo '<tr style="color: red">' ;?>
                                     <td><?php    echo $sl;  ?></td>
@@ -120,9 +120,7 @@ $result    = $employees->showEmployees();
                                         ?>
                             </tbody>
                         </table>
-                        <?php
-                                    //  }
-                                    ?>
+
                     </div>
                 </div>
             </div>
@@ -169,13 +167,13 @@ $result    = $employees->showEmployees();
     <!-- ======= Footer ======= -->
     <?php // require_once 'require/addfooter.php'; ?>
 
-  
+   
     <script>
     function cencelformdata() {
-        return confirm("Are you sure that you want to cancel the staff details contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO CANCEL THIS STAFF DETAILS ?")
     };
     function activestaff() {
-        return confirm("Are you sure that you want to active the staff details contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO ACTIVE THIS STAFF DETAILS ?")
     };
     </script>
 

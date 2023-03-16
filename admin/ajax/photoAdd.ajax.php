@@ -259,7 +259,7 @@
                             .length == 0) {
                             var _this = this;
                             _this.removeAllFiles();
-                            alert("Upload Success");
+                            alert("Image Uploaded Successfully");
                         }
                        
                         list_image();

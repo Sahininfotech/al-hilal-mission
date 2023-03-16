@@ -370,7 +370,7 @@ if($resultdata){
 
         function deleteNOTICE() {
 
-            return confirm("Are you sure that you want to delete the Notice Contents ?")
+            return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?")
 
         };
         </script>

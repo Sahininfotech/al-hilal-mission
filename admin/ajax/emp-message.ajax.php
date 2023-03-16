@@ -22,14 +22,14 @@ require_once '../../classes/employee.class.php';
         if($sended){
             ?>
 <script>
-alert('Message send sucessfull');
+alert('MESSAGE SEND SUCESSFULLY');
 </script>
 <?php
             }
            else{
             ?>
 <script>
-alert('Message not send ');
+alert('MESSAGE SENDING FAILED');
 </script>
 <?php
           

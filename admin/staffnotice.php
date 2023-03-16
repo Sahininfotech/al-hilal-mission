@@ -372,7 +372,7 @@ if($insertEmpQuery){
 
         function deleteNOTICE() {
 
-            return confirm("Are you sure that you want to delete the Staff Notice Contents ?")
+            return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?")
 
         };
         </script>
@@ -453,7 +453,7 @@ if($insertEmpQuery){
 
         function deletunit() {
 
-            return confirm("Aru you sure want to delete this record ?");
+            return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?");
 
         };
         </script>

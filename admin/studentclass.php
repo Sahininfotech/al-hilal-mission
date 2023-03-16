@@ -651,11 +651,11 @@ $showStudentfinalexam    = $Examination->examByClassName($_GET['studenttype'], $
     <?php require_once 'require/addfooter.php'; ?>
     <script>
     function cancel() {
-        return confirm("Are you sure that you want to cancel the student details contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO CANCEL THIS STUDENT DETAILS ?")
     };
 
     function activedonation() {
-        return confirm("Are you sure that you want to active the student details contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO ACTIVE THIS STUDENT DETAILS ?")
     };
     </script>
 

@@ -851,15 +851,15 @@
     <script>
     function cancel() {
 
-        return confirm("Are you sure that you want to cancel the expenses contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO CANCEL THIS EXPENSES CONTENTS ?")
 
     };
 
-
+    
 
     function activeexpenses() {
 
-        return confirm("Are you sure that you want to active the expenses contents ?")
+        return confirm("ARE YOU SURE THAT YOU WANT TO ACTIVE THIS EXPENSES CONTENTS ?")
 
     };
     </script>

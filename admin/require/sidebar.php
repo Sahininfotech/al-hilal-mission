@@ -122,7 +122,7 @@
 
                 </li>
 
-                <li>
+                <!-- <li>
 
                     <a href="staffattendance.php" <?php if($page == "Staff Attendance"  ){echo "class='active'";} ?>>
 
@@ -130,7 +130,7 @@
 
                     </a>
 
-                </li>
+                </li> -->
 
                 <li>
 

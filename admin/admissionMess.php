@@ -80,7 +80,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 <ol class="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item">Pages</li>
+                    <li class="breadcrumb-item">Contacts</li>
                     <li class="breadcrumb-item active">Admission Query Details</li>
                 </ol>
             </nav>

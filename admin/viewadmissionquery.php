@@ -66,7 +66,6 @@ $viwe=$Contact->viweadmission($_GET['message']);
             <nav>
                 <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item">Pages</li>
                     <li class="breadcrumb-item">Contacts</li>
                     <li class="breadcrumb-item">Admission Query Details</li>
                     <li class="breadcrumb-item active">Message</li>

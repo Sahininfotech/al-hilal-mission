@@ -612,7 +612,7 @@ if(isset ($_POST["Updateyear"])){
 
 
 
-        return confirm("Are you sure that you want to delete the Class Contents ?")
+        return confirm("ARE YOU SURE TO DELETE THIS CLASS CONTENTS ?")
 
 
 
