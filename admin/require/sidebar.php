@@ -97,26 +97,36 @@
         <!-- start staff management -->
 
         <li
-            class="nav-item <?php if($page == "add-new-staff" || $page == "Staff Attendance" || $page == "Staff Details"){echo "active";} ?>">
+            class="nav-item <?php if($page == "add-new-staff" || $page == "Staff Attendance" || $page == "Staff Details" || $page == "Employee Designation"){echo "active";} ?>">
 
-            <a class="nav-link <?php if($page == "add-new-staff" || $page == "Staff Attendance" || $page == "Staff Details"){ echo "noaction";}else {
+            <a class="nav-link <?php if($page == "add-new-staff" || $page == "Staff Attendance" || $page == "Staff Details" || $page == "Employee Designation"){ echo "noaction";}else {
 
                 echo "collapsed";} ?> " data-bs-target="#staffmanagement-nav" data-bs-toggle="collapse" href="#">
 
-                <i class="bi bi-menu-button-wide"></i><span>Staff Management</span><i
+                <i class="bi bi-menu-button-wide"></i><span>Employee Management</span><i
                     class="bi bi-chevron-down ms-auto"></i>
 
             </a>
 
             <ul id="staffmanagement-nav"
-                class="nav-content collapse <?php if($page == "add-new-staff" || $page == "Staff Attendance" || $page == "Staff Details"){echo "show";} ?>"
+                class="nav-content collapse <?php if($page == "add-new-staff" || $page == "Staff Attendance" || $page == "Staff Details" || $page == "Employee Designation"){echo "show";} ?>"
                 data-bs-parent="#sidebar-nav">
+
+                <li>
+
+                    <a href="empdesignation.php" <?php if($page == "Employee Designation"){echo "class='active'";} ?>>
+
+                        <i class="bi bi-circle"></i><span>Employee Designation</span>
+
+                    </a>
+
+                </li>
 
                 <li>
 
                     <a href="addnewstaff.php" <?php if($page == "add-new-staff"  ){echo "class='active'";} ?>>
 
-                        <i class="bi bi-circle"></i><span>Add New Staff</span>
+                        <i class="bi bi-circle"></i><span>Add New Employee</span>
 
                     </a>
 
@@ -124,7 +134,7 @@
 
                 <!-- <li>
 
-                    <a href="staffattendance.php" <?php if($page == "Staff Attendance"  ){echo "class='active'";} ?>>
+                    <a href="staffattendance.php" <?php if($page == "Staff Attendance"){echo "class='active'";} ?>>
 
                         <i class="bi bi-circle"></i><span>Staff Attendance</span>
 
@@ -136,7 +146,7 @@
 
                     <a href="staffdetails.php" <?php if($page == "Staff Details"  ){echo "class='active'";} ?>>
 
-                        <i class="bi bi-circle"></i><span>Staff Details</span>
+                        <i class="bi bi-circle"></i><span>Employee Details</span>
 
                     </a>
 
@@ -362,7 +372,7 @@
 
         <!-- End Profile Page Nav -->
 
-        <!-- End Profile Page Nav -->
+        <!-- End Gallery Page Nav -->
 
         <li class="nav-item">
 
@@ -371,6 +381,24 @@
                 <i class="bi bi-building"></i>
 
                 <span>Gallery</span>
+
+            </a>
+
+        </li>
+
+        <!-- End Gallery Page Nav -->
+
+
+
+        <!-- End Profile Page Nav -->
+
+        <li class="nav-item">
+
+            <a class="nav-link <?php if($page != "event"){echo "collapsed";} ?>" href="events.php">
+
+                <i class="bi bi-building"></i>
+
+                <span>Event</span>
 
             </a>
 

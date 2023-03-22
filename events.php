@@ -8,11 +8,13 @@ require_once './_config/dbconnect.php';
 
 require_once './classes/institutedetails.class.php';
 
+require_once './classes/events.class.php';
+
 require_once 'includes/constant.php';
 
 $Institute = new  InstituteDetails();
 
-
+$Events    = new Event();
 
 $instData = $Institute->instituteShow();
 
@@ -46,16 +48,14 @@ $instData = $Institute->instituteShow();
 
     <link href=<?php echo FAVICON_LINK; ?> rel="icon">
 
-   <link href=<?php echo FAVICON_LINK_A; ?> rel="apple-touch-icon">
+    <link href=<?php echo FAVICON_LINK_A; ?> rel="apple-touch-icon">
 
 
 
     <!-- Google Fonts -->
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet">
 
 
@@ -144,7 +144,34 @@ $instData = $Institute->instituteShow();
 
                 <div class="row">
 
+                    <?php  
+            $event 	= $Events->getEvent(); 
 
+            foreach ($event as $showdata) {
+
+            $showname        = $showdata['event_name'];
+
+            $showdate        = $showdata['event_date'];
+
+            $datetring       = date("l jS \of F Y", strtotime($showdate));
+
+            $eventdate       = date("Ymd", strtotime($showdate));
+
+            $showtime        = $showdata['event_time'];
+
+            $showdescription = $showdata['description'];
+
+            $showphotos      = $showdata['image'];
+
+            $img             = "./admin/image/".$showphotos;
+
+            $currentdate     = date("Ymd");
+
+           if($currentdate > $eventdate){
+            echo '';
+
+           }else{
+            ?>
 
                     <div class="col-md-4 d-flex align-items-stretch mx-auto">
 
@@ -152,28 +179,28 @@ $instData = $Institute->instituteShow();
 
                             <div class="card-img">
 
-                                <img src="assets/img/school/ind.jpg" alt="...">
+                                <img src="<?php   echo $img ?>" alt="...">
 
                             </div>
-
                             <div class="card-body">
 
-                                <h5 class="card-title">Independence's Day</h5>
+                                <h5 class="card-title"><?php   echo $showname ?></h5>
 
-                                <p class="fst-italic text-center">Sunday, September 26th at 7:00 pm</p>
+                                <p class="fst-italic text-center"><?php   echo $datetring ?> at
+                                    <?php   echo $showtime ?>
+                                </p>
 
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-
-                                    ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-
-                                    ullamco laboris nisi ut aliquip ex ea commodo consequat</p>
+                                <p class="card-text"><?php   echo $showdescription ?></p>
 
                             </div>
 
                         </div>
 
                     </div>
+                    <?php    }}
+                    ?>
 
+                    <!-- 
                     <div class="col-md-4 d-flex align-items-stretch mx-auto">
 
                         <div class="card">
@@ -230,7 +257,7 @@ $instData = $Institute->instituteShow();
 
 
 
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -263,7 +290,6 @@ $instData = $Institute->instituteShow();
     <div id="preloader"></div>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-
             class="bi bi-arrow-up-short"></i></a>
 
 

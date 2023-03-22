@@ -7,20 +7,20 @@
 
   if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-    $password = $_POST["password"];
+    $password = $_POST["confirm_password"];
 
     $id       = $_POST["id"];
-
-    $update   = $employees->updatepassword($id, $password);
+    $hashpass = password_hash($password, PASSWORD_DEFAULT);
+    $update   = $employees->updatepassword($id, $hashpass);
 
   }
 
   if(!$update){
-  echo "<h1>Password Updated!<br><h1>";
-  }
-  else{
-  echo header("Location: users-profile.php");
-
+    echo "<script>alert('Password Not Updated!');
+    document.location = '../users-profile.php'</script>";
+  } else{
+    echo "<script>alert('Password Updated!');
+    document.location = '../users-profile.php'</script>";
   }
 
 ?>

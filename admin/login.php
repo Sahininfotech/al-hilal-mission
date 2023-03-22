@@ -1,9 +1,4 @@
 <?php
-
-  // $page = "Login";
-
-
-
 require_once '../_config/dbconnect.php';
 
 require_once '../classes/admin.class.php';
@@ -20,10 +15,6 @@ $Admin     = new  Admin();
 
 
 
-
-
-
-
 if(isset ($_POST["submit"])) {
 
  
@@ -32,29 +23,20 @@ if(isset ($_POST["submit"])) {
 
       $password = $_POST["password"];
 
-
-
-      //$name   = $_POST["name"];
-
-       $login   = $Admin->logIn($username, $password);
-
-    
+       $login   = $Admin->logIn($username);
 
        if (count($login) == 1) {
 
-         foreach ($login as $user) {
+        foreach ($login as $user) {
+            $database_password        = $user['password'];
 
-          if ($user['username'] == $username && $user['password'] == $password) {
+            if (password_verify($password, $database_password)) {
 
             session_start();
-
-            
 
             $_SESSION['user_name'] = $username; 
 
             $_SESSION['loggedin']  = true;
-
-            
 
             if (isset($_SESSION['current-url'])) {
 
@@ -125,9 +107,7 @@ if(isset ($_POST["submit"])) {
     <link href="https://fonts.gstatic.com" rel="preconnect">
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet">
 
 
@@ -183,7 +163,6 @@ if(isset ($_POST["submit"])) {
 
 
             <section
-
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
 
                 <div class="container">
@@ -245,7 +224,6 @@ if(isset ($_POST["submit"])) {
                                                 <!-- <span class="input-group-text" id="inputGroupPrepend">@</span> -->
 
                                                 <input type="text" name="username" class="form-control"
-
                                                     id="yourUsername" required>
 
                                                 <div class="invalid-feedback">Please enter your username.</div>
@@ -261,7 +239,6 @@ if(isset ($_POST["submit"])) {
                                             <label for="yourPassword" class="form-label">Password</label>
 
                                             <input type="password" name="password" class="form-control"
-
                                                 id="yourPassword" required>
 
                                             <div class="invalid-feedback">Please enter your password!</div>
@@ -275,7 +252,6 @@ if(isset ($_POST["submit"])) {
                                             <div class="form-check">
 
                                                 <input class="form-check-input" type="checkbox" name="remember"
-
                                                     value="true" id="rememberMe">
 
                                                 <label class="form-check-label" for="rememberMe">Remember me</label>
@@ -287,11 +263,10 @@ if(isset ($_POST["submit"])) {
                                         <div class="col-12">
 
                                             <button class="btn btn-primary w-100" type="submit"
-
                                                 name="submit">Login</button>
 
                                         </div>
-<!-- 
+                                        <!-- 
                                         <div class="col-12">
 
                                             <p class="small mb-0">Don't have account? <a
@@ -347,7 +322,6 @@ if(isset ($_POST["submit"])) {
 
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-
             class="bi bi-arrow-up-short"></i></a>
 
 

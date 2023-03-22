@@ -6,9 +6,12 @@ class Admin extends DatabaseConnection{
 
 
 
-    function adminInsert( $name,  $email, $username, $password,$ph_no, $profession, $image){
+    function adminInsert($name,  $email, $username, $pwd_hashed, $ph_no, $profession, $address, $country, $image){
+        // echo $pwd_hashed;
+        // exit;
 
-        $sql = "INSERT INTO `admins` ( `profession`, `name`, `email`, `username`, `password`, `ph_no`, `Profile_image`) VALUES ( '$profession', '$name',  '$email', '$username', '$password', '$ph_no', '$image')";
+        $sql = "INSERT INTO `admins` ( `profession`, `name`, `email`, `username`, `password`, `ph_no`, `address`, `country`, `Profile_image`)
+         VALUES ( '$profession', '$name',  '$email', '$username', '$pwd_hashed', '$ph_no', '$address', '$country','$image')";
 
         $insertEmpQuery = $this->conn->query($sql);
 
@@ -78,9 +81,9 @@ class Admin extends DatabaseConnection{
 
     // update start
 
-    function updatepassword($id, $password){
+    function updatepassword($id, $hashpass){
 
-        $sql = "UPDATE  `admins` SET `id`= '$id', `password`= '$password' WHERE `admins`.`id` = '$id'";
+        $sql = "UPDATE  `admins` SET `id`= '$id', `password`= '$hashpass' WHERE `admins`.`id` = '$id'";
         $result = $this->conn->query($sql);
         return $result;
 
@@ -95,10 +98,10 @@ class Admin extends DatabaseConnection{
 
     // login start w
 
-    function logIn($username, $password){
+    function logIn($username){
 
         $data = array();
-        $sql  = "SELECT * FROM `admins` WHERE `username` = '$username' AND `password` = '$password'";
+        $sql  = "SELECT * FROM `admins` WHERE `username` = '$username'";
         // echo $sql.$this->conn->error;
         $res  = $this->conn->query($sql);
         $rows =  $res->num_rows;

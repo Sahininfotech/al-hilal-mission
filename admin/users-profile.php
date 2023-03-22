@@ -202,7 +202,7 @@ $Admin = new  Admin();
 
                                                 <img src="<?php echo $img; ?>" width=110 height=105 alt=""
                                                     onerror="this.src='assets/img/user.jpg';" width=100 height=100
-                                                    class="rounded-circle" style="margin-left: -2rem;" id="output" >
+                                                    class="rounded-circle" style="margin-left: -2rem;" id="output">
 
                                                 <div class="image-upload pt-2">
                                                     <label for="file-input">
@@ -321,20 +321,11 @@ $Admin = new  Admin();
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="currentPassword"
-                                                class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input type="password" class="form-control" id="currentPassword"
-                                                    value="<?php echo $showpassword; ?>">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
                                             <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New
                                                 Password</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="password" type="password" class="form-control"
-                                                    id="newPassword">
+                                                    id="password" onkeyup='check();' onChange="onChange()" required>
                                             </div>
                                         </div>
 
@@ -342,9 +333,11 @@ $Admin = new  Admin();
                                             <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter
                                                 New Password</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="password" type="password" class="form-control"
-                                                    id="renewPassword">
+                                                <input type="password" class="form-control" name="confirm_password"
+                                                    id="confirm_password" onkeyup='check();' onChange="onChange()"
+                                                    required>
                                             </div>
+                                            <span id='message'></span>
                                         </div>
 
                                         <div class="text-center">
@@ -416,6 +409,33 @@ $Admin = new  Admin();
 
     // <!-- image fullscreen end -->
     </script>
+
+<script>
+var check = function() {
+        var password = document.getElementById('password').value;
+        var confirm_password = document.getElementById('confirm_password').value;
+        if (password == confirm_password) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'Passwords matching';
+        }else{
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'Passwords do not match';
+        }
+    }
+
+
+
+    function onChange() {
+        const password = document.querySelector('input[name=password]');
+        const confirm = document.querySelector('input[name=confirm_password]');
+        if (confirm.value === password.value) {
+            confirm.setCustomValidity('');
+        } else {
+            confirm.setCustomValidity('Passwords do not match');
+        }
+    }
+    </script>
+
 
 </body>
 

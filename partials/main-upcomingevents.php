@@ -7,20 +7,51 @@
         </div>
 
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
-            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
-                <div class="course-item">
-                    <img src="assets/img/school/ind.jpg" class="img-fluid" alt="...">
-                    <div class="course-content">
-                        <h3><a href="events.php">Independent's Day</a></h3>
-                        <p>August 15, 2022, <br>
-                            Years of nonviolent resistance to British rule, led by Mohandas GANDHI and
-                            Jawaharlal NEHRU,
-                            eventually resulted in Indian independence in 1947.</p>
-                    </div>
+            <?php  
+            $event 	= $Events->getEvent(); 
+
+            if($event == 0){
+               echo"Up Coming Events Not Avilable.";
+            }else{
+
+            foreach ($event as $showdata) {
+
+            $showname        = $showdata['event_name'];
+
+            $showdate        = $showdata['event_date'];
+
+            $datetring       = date("l jS \of F Y", strtotime($showdate));
+
+            $eventdate       = date("Ymd", strtotime($showdate));
+
+            $showtime        = $showdata['event_time'];
+
+            $showdescription = $showdata['description'];
+
+            $showphotos      = $showdata['image'];
+
+            $img             = "./admin/image/".$showphotos;
+
+            $currentdate     = date("Ymd");
+
+           if($currentdate < $eventdate){
+            echo '<div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <div class="course-item">
+                <img src='.$img.' class="img-fluid" alt="...">
+                <div class="course-content">
+                    <h3><a href="events.php">'.$showname.'</a></h3>
+                    <p>'.$datetring.'<br>
+                        '.$showdescription.'</p>
                 </div>
             </div>
+        </div>';
+
+           } }}
+            ?>
+            
+
             <!-- End Independent's Day-->
-            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                 <div class="course-item">
                     <img src="assets/img/school/eid.jpg" class="img-fluid" alt="...">
                     <div class="course-content">
@@ -30,9 +61,9 @@
                             tempore.</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- End Eid-al-Adha-->
-            <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
                 <div class="course-item">
                     <img src="assets/img/school/gandhi.jpg" class="img-fluid" alt="...">
                     <div class="course-content">
@@ -42,7 +73,7 @@
                             tempore.</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- End gandhi jayanytri-->
         </div>
 

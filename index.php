@@ -5,10 +5,13 @@ require_once './_config/dbconnect.php';
 require_once './classes/institutedetails.class.php';
 require_once 'includes/constant.php';
 require_once './classes/notice.class.php';
-
+require_once './classes/events.class.php';
 
 $Institute = new  InstituteDetails();
+
 $Notice     = new Notice();
+
+$Events    = new Event();
 
 $instData = $Institute->instituteShow();
 

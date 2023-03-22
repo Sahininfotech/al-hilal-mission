@@ -8,9 +8,15 @@ require_once './classes/institutedetails.class.php';
 
 require_once 'includes/constant.php';
 
+require_once './classes/employee.class.php';
+
+require_once './classes/stadetails.class.php';
+
 $Institute = new  InstituteDetails();
 
+$employees = new  Employee();
 
+$empRole   = new institute();
 
 $instData = $Institute->instituteShow();
 
@@ -26,59 +32,61 @@ $instData = $Institute->instituteShow();
 
 <head>
 
-  <meta charset="utf-8">
+    <meta charset="utf-8">
 
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-
-
-  <title>Teachers - <?php echo SITE_NAME; ?></title>
-
-  <meta content="" name="description">
-
-  <meta content="" name="keywords">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 
 
-  <!-- Favicons -->
+    <title>Teachers - <?php echo SITE_NAME; ?></title>
 
-  <link href=<?php echo FAVICON_LINK; ?> rel="icon">
+    <meta content="" name="description">
 
-  <link href=<?php echo FAVICON_LINK_A; ?> rel="apple-touch-icon">
-
-
-
-  <!-- Google Fonts -->
-
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+    <meta content="" name="keywords">
 
 
 
-  <!-- Vendor CSS Files -->
+    <!-- Favicons -->
 
-  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href=<?php echo FAVICON_LINK; ?> rel="icon">
 
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href=<?php echo FAVICON_LINK_A; ?> rel="apple-touch-icon">
 
 
 
-  <!-- Template Main CSS File -->
+    <!-- Google Fonts -->
 
-  <link href="assets/css/style.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+        rel="stylesheet">
 
 
 
-  <!-- =======================================================
+    <!-- Vendor CSS Files -->
+
+    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+
+
+    <!-- Template Main CSS File -->
+
+    <link href="assets/css/style.css" rel="stylesheet">
+
+
+
+    <!-- =======================================================
 
   * Template Name: Mentor - v4.7.0
 
@@ -98,73 +106,103 @@ $instData = $Institute->instituteShow();
 
 
 
-     <!--======== Header start ========-->
+    <!--======== Header start ========-->
 
-     <?php require_once 'require/header.php'; ?>
+    <?php require_once 'require/header.php'; ?>
 
-     <!--======== Header End ========-->
-
-
-
-  <main id="main" data-aos="fade-in">
+    <!--======== Header End ========-->
 
 
 
-    <!-- ======= Breadcrumbs ======= -->
-
-    <div class="breadcrumbs">
-
-      <div class="container">
-
-        <h2>Teachers</h2>
-
-        <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
-
-      </div>
-
-    </div><!-- End Breadcrumbs -->
+    <main id="main" data-aos="fade-in">
 
 
 
-    <!-- ======= Trainers Section ======= -->
+        <!-- ======= Breadcrumbs ======= -->
 
-    <section id="trainers" class="trainers">
+        <div class="breadcrumbs">
 
-      <div class="container" data-aos="fade-up">
+            <div class="container">
 
+                <h2>Teachers</h2>
 
-
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
-
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
-
-            <div class="member">
-
-              <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid" alt="">
-
-              <div class="member-content">
-
-                <a href="teacher-profile.php">
-
-                <h4 class="text-dark">Walter White</h4></a>
-
-                <span>Web Development</span>
-
-                <p>
-
-                  Magni qui quod omnis unde et eos fuga et exercitationem. Odio veritatis perspiciatis quaerat qui aut aut aut
-
-                </p>
-
-              </div>
+                <p>Est dolorum ut non facere possimus quibusdam eligendi voluptatem. Quia id aut similique quia voluptas
+                    sit quaerat debitis. Rerum omnis ipsam aperiam consequatur laboriosam nemo harum praesentium. </p>
 
             </div>
 
-          </div>
+        </div><!-- End Breadcrumbs -->
 
 
 
-          <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+        <!-- ======= Trainers Section ======= -->
+
+        <section id="trainers" class="trainers">
+
+            <div class="container" data-aos="fade-up">
+
+
+
+
+                <div class="row" data-aos="zoom-in" data-aos-delay="100">
+
+
+                  <?php  
+                  $employeedata 	= $employees->EmpRoledById("ROLEOFTHETEACHER"); 
+
+                  foreach ($employeedata as $showdata) {
+
+                  $showphotos  = $showdata['profile_image'];
+
+                  $showname    = $showdata['name'];
+
+                  $designation = $showdata['designation'];
+
+                  $img         = "./admin/image/".$showphotos;
+
+                  $displaydata = $empRole->RoledataById($designation);
+
+                  foreach ($displaydata as $showRoledata) {
+
+                  $showRolename    = $showRoledata['designation_name'];
+
+                  $showdescription = $showRoledata['description'];
+
+                  $showid          = $showRoledata['id'];
+
+                  ?>
+
+                    <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
+
+                        <div class="member">
+
+                            <img src="<?php   echo $img ?>" class="img-fluid" alt="">
+
+                            <div class="member-content">
+
+                                <a href="teacher-profile.php">
+
+                                    <h4 class="text-dark"><?php   echo $showname ?></h4>
+                                </a>
+
+                                <span><?php   echo $showRolename ?></span>
+
+                                <p>
+
+                                <?php   echo $showdescription ?>
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <?php     }}
+                    ?>
+
+                    <!-- <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
 
             <div class="member">
 
@@ -452,53 +490,54 @@ $instData = $Institute->instituteShow();
 
             </div>
 
-          </div>
+          </div> -->
 
-        </div>
-
-
-
-      </div>
-
-    </section><!-- End Trainers Section -->
+                </div>
 
 
 
-  </main><!-- End #main -->
+            </div>
+
+        </section><!-- End Trainers Section -->
 
 
 
-  <!--======== Footer Start ========-->
-
-  <?php require_once 'require/footer.php'; ?>
-
-  <!--======== Footer End ========-->
+    </main><!-- End #main -->
 
 
 
-  <div id="preloader"></div>
+    <!--======== Footer Start ========-->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <?php require_once 'require/footer.php'; ?>
 
-
-
-  <!-- Vendor JS Files -->
-
-  <script src="assets/vendor/purecounter/purecounter.js"></script>
-
-  <script src="assets/vendor/aos/aos.js"></script>
-
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <script src="assets/vendor/php-email-form/validate.js"></script>
+    <!--======== Footer End ========-->
 
 
 
-  <!-- Template Main JS File -->
+    <div id="preloader"></div>
 
-  <script src="assets/js/main.js"></script>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+
+
+    <!-- Vendor JS Files -->
+
+    <script src="assets/vendor/purecounter/purecounter.js"></script>
+
+    <script src="assets/vendor/aos/aos.js"></script>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+
+
+
+    <!-- Template Main JS File -->
+
+    <script src="assets/js/main.js"></script>
 
 
 

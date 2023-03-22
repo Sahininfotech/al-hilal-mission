@@ -8,7 +8,7 @@ require_once '../classes/admin.class.php';
 
 require_once '../includes/constant.php';
 
-
+$Admin = new  Admin();
 
   if(isset($_POST["submit"])){
 
@@ -34,9 +34,9 @@ require_once '../includes/constant.php';
 
     $profession   = $_POST["profession"];
 
-    $profession   = $_POST["address"];
+    $address      = $_POST["address"];
 
-    $profession   = $_POST["country"];
+    $country      = $_POST["country"];
 
 
     //image uplod 
@@ -47,16 +47,14 @@ require_once '../includes/constant.php';
   //   echo $image_tmp_name; exit;
 
       move_uploaded_file( $image_tmp_name, $image_folter );
+      $pwd_hashed = password_hash($v_pass, PASSWORD_DEFAULT);
+// $pwd_hashed           = password_hash($v_pass, PASSWORD_DEFAULT);
+// add_user_to_database($username, $pwd_hashed);
 
+        //   echo $pwd_hashed;
+        //   exit;
 
-
-    if ($pass === $v_pass) {
-
-
-
-            $Admin = new  Admin();
-
-            $result = $Admin->adminInsert( $name,  $email, $username, $pass, $ph_no, $profession, $image);
+            $result = $Admin->adminInsert($name,  $email, $username, $pwd_hashed, $ph_no, $profession, $address, $country, $image);
 
             
 
@@ -66,18 +64,7 @@ require_once '../includes/constant.php';
 
                 exit;
 
-            }else{
-
-                echo "<script>alert('woops something wrong went')</script>";
-
             }
-
-        }else {
-
-            echo "<script>alert('Verify Password Does Not Matched!')</script>";
-
-        }
-
     }
 
 ?>
@@ -357,7 +344,7 @@ require_once '../includes/constant.php';
                                             <label for="yourPassword" class="form-label">Create Password</label>
 
                                             <input type="password" maxlength="20" name="password" class="form-control"
-                                                id="yourPassword" required>
+                                                id="yourPassword" onChange="onChange()" required>
 
                                             <div class="invalid-feedback">Please enter your password!</div>
 
@@ -367,8 +354,8 @@ require_once '../includes/constant.php';
 
                                             <label for="yourPassword" class="form-label"> Verify Password</label>
 
-                                            <input type="password" maxlength="20" name="v-password" class="form-control"
-                                                id="yourPassword" required>
+                                            <input type="password" maxlength="20" name="v-password"
+                                                onChange="onChange()" class="form-control" id="yourPassword" required>
 
                                             <div class="invalid-feedback">Please enter your password!</div>
 
@@ -516,6 +503,16 @@ require_once '../includes/constant.php';
             })
 
     })()
+
+    function onChange() {
+        const password = document.querySelector('input[name=password]');
+        const confirm = document.querySelector('input[name=v-password]');
+        if (confirm.value === password.value) {
+            confirm.setCustomValidity('');
+        } else {
+            confirm.setCustomValidity('Passwords do not match');
+        }
+    }
     </script>
 
 

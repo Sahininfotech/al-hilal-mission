@@ -3,7 +3,7 @@
 
 class institute extends DatabaseConnection{
 
-    //   inshat dada start w
+    //   inshat data start w
 
     function Staffinsert( $name,  $email, $address, $contactno, $gender, $qualification, $experience, $date){
 
@@ -116,6 +116,91 @@ class institute extends DatabaseConnection{
 
 
 
+//   inshat employee role
+
+function empRoleInsert($roleId, $roleName, $description){
+
+    $sql = "INSERT INTO `employee_designation` (`designation_id`, `designation_name`, `description`, `added_on`) VALUES ( '$roleId',  '$roleName', '$description', NOW())";
+
+    $insertEmpQuery = $this->conn->query($sql);
+
+    return $insertEmpQuery;
+
+}
+
+// inshat data end
+
+
+
+
+
+  // display DESIGNATION
+  function RoleList(){
+        
+    $EMPData = array();
+    $sql = "SELECT * FROM `employee_designation`";
+    $empQuery   = $this->conn->query($sql);
+    while($row  = $empQuery->fetch_array()){    
+        $EMPData[]	= $row;
+    }
+    return $EMPData;
+
+}// end display
+
+
+
+
+
+
+function Roleupdate($RoleName, $description, $id){
+
+
+
+    $sqledit = "UPDATE `employee_designation` SET `designation_name` = '$RoleName', `modified_on` = now(), `description`= '$description' WHERE `employee_designation`.`id` = '$id'";
+
+
+
+    $result = $this->conn->query($sqledit);
+
+
+
+    return $result;
+
+
+
+}
+
+
+
+// display DESIGNATION
+
+  function RoledataById($id){
+        
+    $EMPData = array();
+    $sql = "SELECT * FROM `employee_designation` WHERE `designation_id` = '$id'";
+    $empQuery   = $this->conn->query($sql);
+    while($row  = $empQuery->fetch_array()){    
+        $EMPData[]	= $row;
+    }
+    return $EMPData;
+
+}// end display
+
+
+
+
+    // delete start
+
+    function deleteEmpRole($id){
+
+        $sqldal = "DELETE FROM `employee_designation` WHERE  `id` = $id";
+
+        $result = $this->conn->query($sqldal);
+
+        return $result;
+    }
+    
+    // end deleteEmpRole function
 
 
 

@@ -5,13 +5,13 @@ class Employee extends DatabaseConnection{
 
     //   inshat dada start
     //rand auto id
-    function staffInsert( $name,  $email, $address, $contactno, $gender, $qualification, $experience, $joinin_date, $post_office, $sdo_or_bdo, $police_station, $district, $pin_code, $state, $status, $hash, $hash1){
+    function staffInsert( $name,  $email, $address, $contactno, $gender, $qualification, $experience, $joinin_date, $post_office, $sdo_or_bdo, $police_station, $district, $pin_code, $state, $status, $hash, $image, $RoleName){
        
         $code    = rand(1, 99999);
         $user_id = "STA".$code;
 
-        $sql = "INSERT INTO `staff` ( `user_id`,`name`, `email`, `address`, `contactno`, `gender`, `qualification`, `experience`, `joinin_date`, `post_office`,`sdo_or_bdo`, `police_station`, `district`, `pin_code`, `state`, `status`, `Password`, `password1`)
-        VALUES ('$user_id', '$name', '$email', '$address', '$contactno', '$gender', '$qualification', '$experience', '$joinin_date', '$post_office', '$sdo_or_bdo', '$police_station', '$district', '$pin_code', '$state', '$status', '$hash', '$hash1')";
+        $sql = "INSERT INTO `staff` ( `user_id`,`name`, `email`, `address`, `contactno`, `gender`, `qualification`, `experience`, `joinin_date`, `post_office`,`sdo_or_bdo`, `police_station`, `district`, `pin_code`, `state`, `status`, `Password`, `profile_image`, `designation`)
+        VALUES ('$user_id', '$name', '$email', '$address', '$contactno', '$gender', '$qualification', '$experience', '$joinin_date', '$post_office', '$sdo_or_bdo', '$police_station', '$district', '$pin_code', '$state', '$status', '$hash', '$image', '$RoleName')";
        
        $insertEmpQuery = $this->conn->query($sql);
 
@@ -420,6 +420,26 @@ class Employee extends DatabaseConnection{
         return $result;
 
     }
+
+
+
+    
+// display DESIGNATION
+
+  function EmpRoledById($id){
+        
+    $EMPData = array();
+    $sql = "SELECT * FROM `staff` WHERE `designation` = '$id'";
+    $empQuery   = $this->conn->query($sql);
+    while($row  = $empQuery->fetch_array()){    
+        $EMPData[]	= $row;
+    }
+    return $EMPData;
+
+}// end display
+
+
+
 
 }
 ?>
