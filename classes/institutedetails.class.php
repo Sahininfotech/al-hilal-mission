@@ -124,15 +124,15 @@ class InstituteDetails extends DatabaseConnection{
 
 
 
-    // update start w
+    // princple details update start 
 
 
 
-    function princpleupdate($address,  $name, $qualification, $email,  $contact_no){
+    function princpleupdate($address,  $name, $qualification, $email,  $contact_no, $c_image){
 
 
 
-        $sqledit1 = "UPDATE  `princple_details` SET `address` = '{$address}', `name`= '{$name}', `qualification` = '{$qualification}', `email` = '{$email}', `contact_no`= '{$contact_no}'";
+        $sqledit1 = "UPDATE  `princple_details` SET `address` = '$address', `name`= '$name', `qualification` = '$qualification', `email` = '$email', `contact_no`= '$contact_no', `image`= '$c_image'";
 
 
 

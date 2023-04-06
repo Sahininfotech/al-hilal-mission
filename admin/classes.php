@@ -331,7 +331,8 @@ if(isset ($_POST["Updateyear"])){
                                                 data-bs-target="#classFormModal" id="<?php echo $row['id']; ?>"
                                                 onclick="classView(this.id);"></i>
 
-                                            <a href='ajax/classdelete.ajax.php?id=<?php    echo $row['id']  ?>&img=<?php    echo $class_image  ?>'>
+                                            <a
+                                                href='ajax/classdelete.ajax.php?id=<?php    echo $row['id']  ?>&img=<?php    echo $class_image  ?>'>
 
                                                 <i class="bi bi-trash" data-bs-toggle="modal"
                                                     data-bs-target="#deleteclassFormModal"
@@ -395,57 +396,56 @@ if(isset ($_POST["Updateyear"])){
 
                                             <div class="col-sm-8">
 
-                                                <input type="text" maxlength="55" class="form-control"
-                                                    name="classname" required>
+                                                <input type="text" maxlength="55" class="form-control" name="classname"
+                                                    required>
 
                                             </div>
 
                                         </div>
-                                     
 
 
-                                            <div class="row mb-3">
 
-                                                <label for="inputText" class="col-sm-4 col-form-label">Class Image
-                                                    :</label>
+                                        <div class="row mb-3">
 
-                                                <div class="col-sm-8">
+                                            <label for="inputText" class="col-sm-4 col-form-label">Class Image
+                                                :</label>
 
-                                                    <input type="file" class="form-control" name="upload_image"
-                                                        accept="image/*" required>
+                                            <div class="col-sm-8">
 
-                                                </div>
+                                                <input type="file" class="form-control" name="upload_image"
+                                                    accept="image/*" required>
 
                                             </div>
 
-                                            <div class="row mb-3">
+                                        </div>
 
-                                                <label for="inputAddress" class="col-sm-4 col-form-label">Description
+                                        <div class="row mb-3">
 
-                                                    :</label>
+                                            <label for="inputAddress" class="col-sm-4 col-form-label">Description
 
-                                                <div class="col-sm-8">
+                                                :</label>
 
-                                                    <textarea class="form-control" style="height: 100px"
-                                                        name="description" required></textarea>
+                                            <div class="col-sm-8">
 
-                                                </div>
+                                                <textarea class="form-control" style="height: 100px" name="description"
+                                                    id="description" required></textarea>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row mb-3">
+
+                                            <div class="col-sm-12  d-flex justify-content-center align-items-center">
+
+                                                <button type="submit" name="submitdata" class="btn btn-primary"
+                                                    onclick="return checkWordCount()">Submit
+
+                                                </button>
 
                                             </div>
 
-                                            <div class="row mb-3">
-
-                                                <div
-                                                    class="col-sm-12  d-flex justify-content-center align-items-center">
-
-                                                    <button type="submit" name="submitdata"
-                                                        class="btn btn-primary">Submit
-
-                                                    </button>
-
-                                                </div>
-
-                                            </div>
+                                        </div>
 
                                     </form>
 
@@ -710,17 +710,21 @@ if(isset ($_POST["Updateyear"])){
     })();
     </script>
 
-
-
-
-
+    <script>
+    function checkWordCount() {
+        s = document.getElementById("description").value;
+        s = s.replace(/(^\s*)|(\s*$)/gi, "");
+        s = s.replace(/[ ]{2,}/gi, " ");
+        s = s.replace(/\n /, "\n");
+        if (s.split(' ').length <= 100) {
+            alert("OOPS! Class Description needs Minimum 100 words .....");
+            return false;
+        }
+    }
+    </script>
 
 
 </body>
-
-
-
-
 
 
 

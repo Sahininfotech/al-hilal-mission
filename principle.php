@@ -8,7 +8,8 @@ $Institute = new  InstituteDetails();
 
 
 $result = $Institute->princpledisplaydata();
-$instData = $Institute->institutedisplaydata();
+// $instData = $Institute->institutedisplaydata();
+$instData = $Institute->instituteShow();
 
 
 
@@ -47,9 +48,7 @@ $instData = $Institute->institutedisplaydata();
     <!-- Google Fonts -->
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet">
 
 
@@ -135,23 +134,25 @@ $instData = $Institute->institutedisplaydata();
 
 
 
-        <section class="section profile">
+            <section class="section profile">
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 pb-2 pt-2">
                         <div class="card">
-                                <div class="member ">
-                                    <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid w-100" alt="">
-                                    <div class="member-content" style="margin: 1.5rem;text-align: center; ">
-                                    <?php
+                            <div class="member ">
+                                <?php
                                     foreach($result as $row){
-
+                                    $showuimage             = $row['image'];
+                                    $imgs                   = "./admin/image/".$showuimage;
                                     ?>
-                                        <h4 class="text-dark" style=" font-weight: 700;
+                                <img src="<?php echo $imgs;  ?>" class="img-fluid w-100" alt="">
+                                <div class="member-content" style="margin: 1.5rem;text-align: center; ">
+
+                                    <h4 class="text-dark" style=" font-weight: 700;
                                        margin-bottom: 10px;
                                         font-size: 32px;"><?php echo $row['name'];  ?></h4>
-                                        <span style="font-size: 1.2rem;">Web Development</span>
-                                    </div>
+                                    <span style="font-size: 1.2rem;">Princple</span>
                                 </div>
+                            </div>
                         </div>
 
                     </div>
@@ -182,7 +183,7 @@ $instData = $Institute->institutedisplaydata();
                                             <div class="col-lg-3 col-md-4 label">Qualification</div>
                                             <div class="col-lg-9 col-md-8"><?php echo $row['qualification']; ?></div>
                                         </div>
-<!-- 
+                                        <!-- 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Job</div>
                                             <div class="col-lg-9 col-md-8">Web Designer</div>
@@ -209,7 +210,7 @@ $instData = $Institute->institutedisplaydata();
                                         </div>
                                     </div>
                                 </div>
-                            <?php
+                                <?php
                                 }
                             ?>
                             </div>
@@ -223,7 +224,7 @@ $instData = $Institute->institutedisplaydata();
 
 
 
-          
+
 
         </div>
 
@@ -506,7 +507,6 @@ $instData = $Institute->institutedisplaydata();
     <div id="preloader"></div>
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-
             class="bi bi-arrow-up-short"></i></a>
 
 

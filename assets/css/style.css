@@ -741,6 +741,8 @@ section {
 }
 .trainers .member img {
   margin: -1px -1px 30px -1px;
+  width: 304px;
+  height: 300px;
 }
 .trainers .member .member-content {
   padding: 0 20px 30px 20px;
@@ -984,6 +986,8 @@ section {
 .events .card-img img {
   max-width: 100%;
   transition: all 0.3s ease-in-out;
+  width: 32rem;
+  height: 22rem;
 }
 .events .card-body {
   z-index: 10;

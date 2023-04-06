@@ -145,8 +145,10 @@ $instData = $Institute->instituteShow();
                 <div class="row">
 
                     <?php  
+               
+                    $count = 1;
             $event 	= $Events->getEvent(); 
-
+       
             foreach ($event as $showdata) {
 
             $showname        = $showdata['event_name'];
@@ -167,38 +169,48 @@ $instData = $Institute->instituteShow();
 
             $currentdate     = date("Ymd");
 
-           if($currentdate > $eventdate){
-            echo '';
+            $emptyevent      = ($currentdate < $eventdate);
+            
 
-           }else{
-            ?>
-
-                    <div class="col-md-4 d-flex align-items-stretch mx-auto">
+           if($currentdate <= $eventdate){
+             $count--;
+                 echo'   <div class="col-md-4 d-flex align-items-stretch mx-auto">
 
                         <div class="card">
 
                             <div class="card-img">
 
-                                <img src="<?php   echo $img ?>" alt="...">
+                                <img src="'.$img.'" alt="...">
 
                             </div>
                             <div class="card-body">
 
-                                <h5 class="card-title"><?php   echo $showname ?></h5>
+                                <h5 class="card-title">'.$showname.'</h5>
 
-                                <p class="fst-italic text-center"><?php   echo $datetring ?> at
-                                    <?php   echo $showtime ?>
+                                <p class="fst-italic text-center">'.$datetring.' at
+                                '.$showtime.'
                                 </p>
 
-                                <p class="card-text"><?php   echo $showdescription ?></p>
+                                <p class="card-text">'.$showdescription.'</p>
 
                             </div>
 
                         </div>
 
-                    </div>
-                    <?php    }}
-                    ?>
+                    </div>';
+                      
+                    }else{
+                        echo"";
+                     }                     
+                     }
+                     if($count == 1){
+                        
+                   echo ' <div class="card col-md-4 d-flex align-items-stretch mx-auto" style="margin-top: 7rem;">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color: #5fcf80;">There Are No Upcoming Events At This Time</h5>                        
+                        </div>
+                    </div>';
+                      }?>
 
                     <!-- 
                     <div class="col-md-4 d-flex align-items-stretch mx-auto">

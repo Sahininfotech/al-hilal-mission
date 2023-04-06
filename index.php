@@ -13,7 +13,8 @@ $Notice     = new Notice();
 
 $Events    = new Event();
 
-$instData = $Institute->instituteShow();
+$instData       = $Institute->instituteShow();
+$princpledata   = $Institute->princpledisplaydata();
 
 ?>
 
@@ -159,8 +160,7 @@ $instData = $Institute->instituteShow();
                                     <div class="hmenoticesec">
 
                                         <a class="colorforatag"
-                                            href="./admin/notice-pdf-report.php?id=<?php echo $showid; ?>"
-                                           ><?php echo $i; ?>.
+                                            href="./admin/notice-pdf-report.php?id=<?php echo $showid; ?>"><?php echo $i; ?>.
                                             <?php echo $showsubject; ?>
                                         </a>
 
@@ -252,8 +252,13 @@ $instData = $Institute->instituteShow();
                 <div class="row">
 
                     <div class="col-lg-6 order-1 order-lg-1" data-aos="fade-left" data-aos-delay="100">
-
-                        <img src="assets/img/about.jpg" class="img-fluid" alt="">
+                        <?php
+                                    foreach($princpledata as $row){
+                                    $showuimage             = $row['image'];
+                                    $imgs                   = "./admin/image/".$showuimage;
+                                    ?>
+                        <img src="<?php echo $imgs;  ?>" class="img-fluid" alt="">
+                        <?php }?>
 
                     </div>
 
@@ -422,21 +427,21 @@ $instData = $Institute->instituteShow();
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
-         <script>
-             function generatePDF() {
-                 var pdf = new jsPDF({
-                     orientation: 'p',
-                     unit: 'mm',
-                     format: 'a5',
-                     putOnlyUsedFonts:true
-                     });
-                 pdf.text("Generate a PDF with JavaScript", 20, 20);
-                 pdf.text("published on APITemplate.io", 20, 30);
-                 pdf.addPage();
-                 pdf.text(20, 20, 'The second page');
-                 pdf.save('jsPDF_2Pages.pdf');
-             }
-         </script>
+    <script>
+    function generatePDF() {
+        var pdf = new jsPDF({
+            orientation: 'p',
+            unit: 'mm',
+            format: 'a5',
+            putOnlyUsedFonts: true
+        });
+        pdf.text("Generate a PDF with JavaScript", 20, 20);
+        pdf.text("published on APITemplate.io", 20, 30);
+        pdf.addPage();
+        pdf.text(20, 20, 'The second page');
+        pdf.save('jsPDF_2Pages.pdf');
+    }
+    </script>
 
 
 </body>

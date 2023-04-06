@@ -5,10 +5,11 @@ class Event extends DatabaseConnection{
 
 
     function eventInsert($eventName, $eventDate, $eventTime, $description, $image){
+        $descriptions = addslashes($description);
         $sql = "INSERT INTO `event` 
                             (`event_name`, `event_date`, `event_time`, `description`, `image`, `added_on`)
                             VALUES
-                            ('$eventName', '$eventDate', '$eventTime', '$description', '$image', now())";
+                            ('$eventName', '$eventDate', '$eventTime', '$descriptions', '$image', now())";
         
         $insertEventQuery = $this->conn->query($sql);
         return $insertEventQuery;
@@ -55,7 +56,7 @@ function getEvent(){
 
     $eveData = array();
 
-    $sql = "SELECT * FROM `event` ORDER BY id DESC LIMIT 3";
+    $sql = "SELECT * FROM `event` ORDER BY id DESC";
 
     $insertEVenQuery = $this->conn->query($sql);
 
