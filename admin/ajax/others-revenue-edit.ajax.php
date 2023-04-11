@@ -1,7 +1,5 @@
 <?php
 
-
-
 require_once '../../_config/dbconnect.php';
 
 require_once '../../classes/revenue.class.php';
@@ -22,12 +20,6 @@ $Revenue             = new  Revenue();
 
 
 
-
-
-$showRevenue         = $Revenue->othersRevenueById($_GET['editothers']);
-
-
-
 $vendorresult        = $vendors->vendordisplaydata();
 
 
@@ -36,47 +28,27 @@ $vendorresult        = $vendors->vendordisplaydata();
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-    
-
     $source       = $_POST["source"];
-
-
 
     $amount       = $_POST["amount"];
 
-
-
     $status       = $_POST["status"];
 
-
+    $description  = $_POST["description"];
 
     $id           = $_POST["id"];
 
-
-
     $vendor_id   = $_POST['vendor_id'];
 
-
-
     $payment_type = $_POST['payment_type'];
-
-
 
     $payment_id   = $_POST['payment_id'];
 
     $date         = $_POST['date'];
 
-    
-
-
-
     $payment_id   = '';
 
-
-
     if ($payment_type != 'Cash') {
-
-
 
        $payment_id     = $_POST["payment_id"];
 
@@ -101,10 +73,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
    
+// echo $description ;
+// exit;
 
 
-
-    $update            = $Revenue->editOtherRevenue($source, $amount, $status, $id, $vendor_id, $payment_type, $payment_id,  $paid_by, $date); 
+    $update            = $Revenue->editOtherRevenue($source, $amount, $status, $id, $vendor_id, $payment_type, $payment_id,  $paid_by, $date, $description); 
 
 
 
@@ -315,6 +288,7 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
     <?php
+            $showRevenue         = $Revenue->othersRevenueById($_GET['editothers']);
 
                foreach ($showRevenue as $showdonation) {
 
@@ -342,7 +316,7 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
                 $showpayment_type   = $showdonation['payment_type'];
 
-
+                $showdescription    = $showdonation['description'];
 
                 $showpayment_id     = $showdonation['payment_id'];
 
@@ -796,7 +770,7 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
                 </div>
 
-                <div class="row mb-3">
+                <div class="row mb-3 p-0 m-0">
 
                 <label for="inputaddress" class="col-sm-2 col-form-label">Date :</label>
 
@@ -807,7 +781,7 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
                 </div>
 
                 </div>
-                <div class="row mb-3">
+                <div class="row mb-3 p-0 m-0">
 
                 <label for="inputaddress" class="col-sm-2 col-form-label">Update Date:</label>
 
@@ -819,7 +793,12 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
                 </div>
 
-
+                <div class="row mb-3 p-0 m-0">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Description :</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" style="height: 68px" name="description" required><?php echo $showdescription; ?></textarea>
+                    </div>
+                </div>
 
                 <div class="row mb-3 p-0 m-0">
 

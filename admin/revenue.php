@@ -93,6 +93,7 @@ $othersdata    = $revenues->revenueothersdisplay();
   ======================================================== -->
 
     <style>
+
     .addnewbtncss {
 
         margin: auto;
@@ -166,6 +167,7 @@ $othersdata    = $revenues->revenueothersdisplay();
         }
 
     }
+
     </style>
 
 </head>
@@ -247,6 +249,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -302,6 +305,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -356,6 +360,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -408,6 +413,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -460,6 +466,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                                 <div>
 
                                                     <input type="date" class="form-control" name="searchstudent"
+
                                                         value="<?php if(isset($_GET['searchstudent'])){echo $_GET['searchstudent']; }?>">
 
                                                 </div>
@@ -477,6 +484,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                             <div>
 
                                                 <input type="date" class="form-control" name="searchstudents"
+
                                                     value="<?php if(isset($_GET['searchstudents'])){echo $_GET['searchstudents']; }?>" />
 
                                             </div>
@@ -490,6 +498,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <div class="row mb-3 pt-4">
 
                                             <button type="text" class="btn btn-primary"
+
                                                 style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Find</button>
 
                                         </div>
@@ -529,6 +538,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <h5 class="card-title">Student Fees </h5>
 
                         <button type="button" class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal"
+
                             data-bs-target="#revenuestudentModalLabel" onclick="addFeesRevenue();"> Add Student Fees
 
                         </button>
@@ -538,6 +548,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Modal -->
 
                         <div class="modal fade" id="revenuestudentModalLabel" tabindex="-1"
+
                             aria-labelledby="revenuestudentModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog modal-xl">
@@ -547,6 +558,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="modal-header">
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+
                                             aria-label="Close"></button>
 
                                     </div>
@@ -602,6 +614,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                 ?>
 
                                 <tr
+
                                     <?php if ($row['status']== 'active') echo ' style="color: black"' ; if ($row['status']== 'inactive') echo 'style="color: red"' ;?>>
 
                                     <td><?php    echo $i  ?></td>
@@ -622,12 +635,15 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <td>
 
                                         <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
+
                                             data-bs-target="#feesRevenueModal" id="<?php    echo $row['id']  ?>"
+
                                             onclick="feesRevenue(this.id);"></i>
 
                                         <!-- Modal -->
 
                                         <div class="modal fade" id="feesRevenueModal" tabindex="-1"
+
                                             aria-labelledby="feesRevenueModalLabel" aria-hidden="true">
 
                                             <div class="modal-dialog modal-lg">
@@ -637,6 +653,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                                     <div class="modal-header">
 
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+
                                                             aria-label="Close"></button>
 
                                                     </div>
@@ -654,9 +671,11 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <!-- modal end -->
 
                                         <a
+
                                             href='../admin/ajax/revenuefeescancel.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-x-lg" onclick="return cancel();"
+
                                                 <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
 
                                             </i>
@@ -664,9 +683,11 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         </a>
 
                                         <a style="color: #35dc59"
+
                                             href='../admin/ajax/revenuefeesactive.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-check-lg " onclick="return activerevenuefees();"
+
                                                 <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
 
                                             </i>
@@ -718,6 +739,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -770,6 +792,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -822,6 +845,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -876,6 +900,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -934,6 +959,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div>
 
                                         <input type="date" class="form-control" name="searchdonations"
+
                                             value="<?php if(isset($_GET['searchdonations'])){echo $_GET['searchdonations']; }?>">
 
                                     </div>
@@ -951,6 +977,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                 <div>
 
                                     <input type="date" class="form-control" name="searchdonation"
+
                                         value="<?php if(isset($_GET['searchdonation'])){echo $_GET['searchdonation']; }?>" />
 
                                 </div>
@@ -964,6 +991,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                             <div class="row mb-3 pt-4">
 
                                 <button type="text" class="btn btn-primary"
+
                                     style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Find</button>
 
                             </div>
@@ -999,6 +1027,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Button trigger modal -->
 
                         <button type="button" class="btn btn-primary mb-4 addnewbtncss1" data-bs-toggle="modal"
+
                             data-bs-target="#donationModalLabel" onclick="revenuedonation();"> Add Donation
 
                         </button>
@@ -1006,6 +1035,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Modal -->
 
                         <div class="modal fade" id="donationModalLabel" tabindex="-1"
+
                             aria-labelledby="donationModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog modal-lg">
@@ -1015,6 +1045,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="modal-header">
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+
                                             aria-label="Close"></button>
 
                                     </div>
@@ -1070,6 +1101,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     ?>
 
                                 <tr
+
                                     <?php if ($row['status']== 'active') echo ' style="color: black"' ; if ($row['status']== 'inactive') echo 'style="color: red"' ;?>>
 
                                     <td><?php    echo $i  ?></td>
@@ -1089,12 +1121,15 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <td>
 
                                         <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
+
                                             data-bs-target="#editdonationModalLabel" id="<?php    echo $row['id']  ?>"
+
                                             onclick="editrevenuedonation(this.id);"></i>
 
                                         <!-- Modal -->
 
                                         <div class="modal fade" id="editdonationModalLabel" tabindex="-1"
+
                                             aria-labelledby="editdonationModalLabel" aria-hidden="true">
 
                                             <div class="modal-dialog modal-lg">
@@ -1104,6 +1139,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                                     <div class="modal-header">
 
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+
                                                             aria-label="Close"></button>
 
                                                     </div>
@@ -1123,7 +1159,9 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <a href='ajax/donationcancel.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-x-lg" data-bs-toggle="modal"
+
                                                 data-bs-target="#deleteformModal" onclick="return canceldonation();"
+
                                                 <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
 
                                             </i>
@@ -1131,10 +1169,13 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         </a>
 
                                         <a style="color: #35dc59"
+
                                             href='../admin/ajax/donationactive.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-check-lg " data-bs-toggle="modal"
+
                                                 data-bs-target="#deleteformModal" onclick="return activedonation();"
+
                                                 <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
 
                                             </i>
@@ -1186,6 +1227,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1238,6 +1280,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1290,6 +1333,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1342,6 +1386,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
+
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1400,6 +1445,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div>
 
                                         <input type="date" class="form-control" name="searchother"
+
                                             value="<?php if(isset($_GET['searchother'])){echo $_GET['searchother']; }?>">
 
                                     </div>
@@ -1417,6 +1463,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                 <div>
 
                                     <input type="date" class="form-control" name="searchothers"
+
                                         value="<?php if(isset($_GET['searchothers'])){echo $_GET['searchothers']; }?>">
 
                                 </div>
@@ -1430,6 +1477,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                             <div class="row mb-3 pt-4">
 
                                 <button type="text" class="btn btn-primary"
+
                                     style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Find</button>
 
                             </div>
@@ -1465,6 +1513,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Button trigger modal -->
 
                         <button type="button" class="btn btn-primary mb-4 addnewbtncss1" data-bs-toggle="modal"
+
                             data-bs-target="#addotherrevenuModal" onclick="addOtherRevenue();">
 
                             Add Other Revenue
@@ -1474,6 +1523,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Modal -->
 
                         <div class="modal fade" id="addotherrevenuModal" tabindex="-1"
+
                             aria-labelledby="addotherrevenuModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog modal-lg">
@@ -1483,6 +1533,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="modal-header">
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+
                                             aria-label="Close"></button>
 
                                     </div>
@@ -1536,6 +1587,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         ?>
 
                                 <tr
+
                                     <?php if ($row['status']== 'active') echo ' style="color: black"' ; if ($row['status']== 'inactive') echo 'style="color: red"' ;?>>
 
                                     <td><?php    echo $i  ?></td>
@@ -1551,12 +1603,15 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <td>
 
                                         <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
+
                                             data-bs-target="#editothersModalLabel" id="<?php    echo $row['id']  ?>"
+
                                             onclick="editOthersRevenue(this.id);"></i>
 
                                         <!-- Modal -->
 
                                         <div class="modal fade" id="editothersModalLabel" tabindex="-1"
+
                                             aria-labelledby="editothersModalLabel" aria-hidden="true">
 
                                             <div class="modal-dialog modal-lg">
@@ -1568,6 +1623,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
+
                                                             aria-label="Close"></button>
 
                                                     </div>
@@ -1591,7 +1647,9 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <a href='../admin/ajax/otherscancel.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-x-lg " data-bs-toggle="modal"
+
                                                 data-bs-target="#deleteformModal" onclick="return cancelothers();"
+
                                                 <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
 
                                             </i>
@@ -1599,10 +1657,13 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         </a>
 
                                         <a style="color: #35dc59"
+
                                             href='../admin/ajax/othersactive.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-check-lg " data-bs-toggle="modal"
+
                                                 data-bs-target="#deleteformModal" onclick="return activeOthers();"
+
                                                 <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
 
                                             </i>
@@ -1668,6 +1729,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
     <div class="modal fade" id="revenuestudentModalLabel" tabindex="-1" aria-labelledby="revenuestudentModalLabel"
+
         aria-hidden="true">
 
 
@@ -1745,6 +1807,7 @@ $othersdata    = $revenues->revenueothersdisplay();
     <!-- Modal -->
 
     <div class="modal fade" id="feesRevenueModal" tabindex="-1" aria-labelledby="feesRevenueModalLabel"
+
         aria-hidden="true">
 
 
@@ -1824,15 +1887,15 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
+
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous">
 
     </script>
 
 
 
-
-
     <script>
+
     function cancel() {
 
 
@@ -1846,7 +1909,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     function activerevenuefees() {
 
-        return confirm("DO YOU REALLY WANT TO ACTIVE REVENUE CONTENTS OF THIS STUDENT ?")
+       return confirm("DO YOU REALLY WANT TO ACTIVE REVENUE CONTENTS OF THIS STUDENT ?")
 
     };
 
@@ -1863,7 +1926,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     };
 
-
+    
 
     function cancelothers() {
 
@@ -1875,7 +1938,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     };
 
-
+    
 
     function activeOthers() {
 
@@ -1883,14 +1946,13 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     };
 
-
+    
 
     function activedonation() {
 
         return confirm("DO YOU REALLY WANT TO ACTIVE REVENUE CONTENTS OF THIS DONATION ?")
 
     };
-
 
     // ============ Fees Revenue Functions ============
 
@@ -1990,7 +2052,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         $(".otherrevenu-modal-body").html(
 
-            '<iframe width="100%" height="437px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%" height="520px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 
@@ -2008,13 +2070,14 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         $(".editothers-modal-body").html(
 
-            '<iframe width="100%" height="550px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%" height="655px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 
 
 
     }
+
     </script>
 
 

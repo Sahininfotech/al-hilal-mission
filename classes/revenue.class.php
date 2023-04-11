@@ -58,11 +58,11 @@ class Revenue extends DatabaseConnection{
 
 
 
-function revenueothersinsert($source, $amount, $date, $status, $added_by, $payment_type, $payment_id, $vendor_id, $paidBy){
+function revenueothersinsert($source, $amount, $date, $status, $added_by, $payment_type, $payment_id, $vendor_id, $paidBy, $description){
 
+    $descriptions = addslashes($description);
 
-
-    $sql = "INSERT INTO `revenue_others` ( `source`, `amount`, `date`, `status`, `added_by`, `payment_type`, `payment_id`, `vendor_id`,  `paid_by`) VALUES ('$source', '$amount', '$date', '$status', '$added_by', '$payment_type', '$payment_id', '$vendor_id',  '$paidBy')";
+    $sql = "INSERT INTO `revenue_others` ( `source`, `amount`, `date`, `status`, `added_by`, `payment_type`, `payment_id`, `vendor_id`, `paid_by`, `description`) VALUES ('$source', '$amount', '$date', '$status', '$added_by', '$payment_type', '$payment_id', '$vendor_id', '$paidBy', '$descriptions')";
 
 
 
@@ -1437,9 +1437,9 @@ function editrevenuedonation($name, $address, $amount, $status, $id, $paying, $o
 
     
 
-    function editOtherRevenue($source, $amount, $status, $id, $vendor_id, $payment_type, $payment_id,  $paid_by, $date ){
+    function editOtherRevenue($source, $amount, $status, $id, $vendor_id, $payment_type, $payment_id, $paid_by, $date, $description){
 
-
+        $descriptions = addslashes($description);
 
                             $sqledit = "UPDATE  
 
@@ -1461,7 +1461,9 @@ function editrevenuedonation($name, $address, $amount, $status, $id, $paying, $o
 
                             `paid_by` = '$paid_by',
 
-                            `date` = '$date'
+                            `date` = '$date',
+
+                            `description` = '$descriptions'
 
                             WHERE
 
