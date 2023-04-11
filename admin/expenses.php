@@ -668,7 +668,7 @@
 
                                     <td><?php    echo date("d-m-Y", strtotime($row['date']));  ?></td>
 
-                                    <td><?php    echo $row['purpore']  ?></td>
+                                    <td></td>
 
                                     <td><?php    echo $row['payment_type']  ?></td>
 
@@ -876,7 +876,7 @@
 
         $(".expenses-modal-body").html(
 
-            '<iframe width="100%%" height="543px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%%" height="623px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 

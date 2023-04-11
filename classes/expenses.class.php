@@ -8,9 +8,9 @@ class Expenses extends DatabaseConnection{
    // inshat dada start w
 
 
-    function expensesInsert($purpore, $bill_no, $amount, $payment_type, $description, $date, $image, $status, $added_by, $payment_id, $paidBy){
+    function expensesInsert($bill_no, $amount, $payment_type, $description, $date, $image, $status, $added_by, $payment_id, $paidBy, $paidTo, $accountsSelect, $subcategory){
 
-        $sql = "INSERT INTO `expenses` ( `purpore`, `date`, `bill_no`,`amount`, `payment_type`, `payment_id`, `description`, `upload_bill`, `status`,`added_by`, `paid_by`) VALUES ('$purpore', '$date','$bill_no', '$amount',  '$payment_type', '$payment_id', '$description', '$image','$status','$added_by', '$paidBy')";
+        $sql = "INSERT INTO `expenses` (`date`, `bill_no`,`amount`, `payment_type`, `payment_id`, `description`, `upload_bill`, `status`,`added_by`, `paid_by`, `paid_to`, `head_of_accounts_id`, `hfa_sub_category_id`) VALUES ('$date','$bill_no', '$amount',  '$payment_type', '$payment_id', '$description', '$image','$status','$added_by', '$paidBy', '$paidTo', '$accountsSelect', '$subcategory')";
 
         $insertEmpQuery = $this->conn->query($sql);
 

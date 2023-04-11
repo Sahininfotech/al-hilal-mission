@@ -7,8 +7,11 @@
  require_once '../../classes/utility.class.php';
  require_once '../../classes/expenses.class.php';
  require_once '../../classes/employee.class.php';
- 
+ require_once '../../classes/vendor.class.php';
+ require_once '../../classes/head_of_accounts.class.php';
 
+ $grocery    = new HeadOfAccounts();
+ $vendors    = new Vendor();
  $Employee   = new Employee();
  $Expenses   = new Expenses();
  $Utility    = new Utility();
@@ -24,7 +27,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
   if(isset ($_POST["submit"])){
  // if($_SERVER['REQUEST METHOD'] == 'POST'){
-    $purpose        = $_POST["purpose"];
     $bill_no        = $_POST["bill_no"];
     $amount         = $_POST["amount"];
     $payment_type   = $_POST["payment_type"];
@@ -35,6 +37,17 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     $payment_id     = $_POST["payment_id"];
     $paidBySelect   = $_POST["paid-by-select"];
     $others_paid    = $_POST["others_paid"];
+    $paidToSelect   = $_POST["paid-to-select"];
+    $otherspaid_to  = $_POST["Otherspaid_to"];
+
+    $accountsSelect = $_POST["accounts-select"];
+    $subcategory    = '';
+    if (isset($_POST["sub-accounts-select"])) {
+
+        $subcategory    = $_POST["sub-accounts-select"];
+
+    }
+
     $status         = 1;
 
     if ($paidBySelect == 'Others') {
@@ -43,6 +56,14 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     
     if ($others_paid == '') {
         $paidBy = $paidBySelect; 
+    }
+
+    if ($paidToSelect == 'Otherspaid') {
+        $paidTo = $otherspaid_to; 
+    }
+    
+    if ($otherspaid_to == '') {
+        $paidTo = $paidToSelect; 
     }
     
     //image uplod 
@@ -54,7 +75,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
         move_uploaded_file( $image_tmp_name, $image_folter );
 
-        $added = $Expenses->expensesInsert($purpose, $bill_no, $amount, $payment_type, $description, $date ,$image, $status,$added_by,$payment_id, $paidBy);
+        $added = $Expenses->expensesInsert($bill_no, $amount, $payment_type, $description, $date ,$image, $status,$added_by,$payment_id, $paidBy, $paidTo, $accountsSelect, $subcategory);
       
         if($added){
 
@@ -107,7 +128,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                 <div class="row mb-3 m-0 p-0">
 
-                    <label for="inputaddress" class="col-sm-2 col-form-label">Bill No :</label>
+                    <label for="inputaddress" class="col-sm-2 col-form-label">Voucher No:</label>
                     <div class="col-sm-10">
                         <input type="address" class="form-control" name="bill_no" required />
                     </div>
@@ -122,7 +143,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 </div>
 
                 <div class="row mb-3 m-0 p-0">
-                    <label for="inputText" class="col-sm-2 col-form-label ">Payment :</label>
+                    <label for="inputText" class="col-sm-2 col-form-label ">Mode Of Payment:</label>
                     <div class="col-sm-4">
                         <select class="form-select" id="form-selectdata" name="payment_type" onclick="selectPayment()"
                             required>
@@ -143,6 +164,36 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                     </div>
                 </div>
 
+                <div class="row mb-3 m-0 p-0">
+                    <label class="col-sm-2 col-form-label">Paid To :</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="form-selectpaidto" aria-label="Default select example"
+                            onclick="selectpaidto()" name="paid-to-select" required>
+                            <option disabled selected value>Select Name</option>
+                            <option value="Otherspaid" style="color: blue;">Others</option>
+
+                            <?php
+                            $vendorresult      = $vendors->vendordisplaydata();                            
+                            foreach ($vendorresult as $showVendor) {
+                                $showVen_id    = $showVendor['id'];
+                                $showVen_name  = $showVendor['name'];
+                                $showvendor_id = $showVendor['vendor_id'];
+    
+                                    echo ' <option value="'.$showvendor_id.'">'.$showVen_name.'</option>';
+                                }
+                        ?>
+
+                        </select>
+                    </div>
+
+                    <label for="inputText" class="col-sm-2 col-form-label" id="otherpaid" style="display: none;">Others
+                        :</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" name="Otherspaid_to" id="otherspaid"
+                            style="display: none;">
+                    </div>
+                </div>
+
 
                 <div class="row mb-3 m-0 p-0">
                     <label class="col-sm-2 col-form-label">Paid By :</label>
@@ -156,7 +207,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                 $emps =$Employee->showEmployees();
 
                                 foreach ($emps as $emp) {
-                                    $empId   = $emp['id'];
+                                    $empId   = $emp['user_id'];
                                     $empName = $emp['name'];
                                     echo ' <option value="'.$empId.'">'.$empName.'</option>';
                                 }
@@ -176,8 +227,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 <div class="row mb-3 m-0 p-0">
                     <label for="inputNumber" class="col-sm-2 col-form-label">Upload Bill :</label>
                     <div class="col-sm-4">
-                        <input class="form-control" type="file" id="formFile" name="upload_bill" accept="image/*"
-                            required />
+                        <input class="form-control" type="file" id="formFile" name="upload_bill" accept="image/*" />
                     </div>
                     <!-- </div>
             <div class="row mb-3 m-0 p-0"> -->
@@ -188,10 +238,31 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                 </div>
 
                 <div class="row mb-3 m-0 p-0">
-                    <label for="inputText" class="col-sm-2 col-form-label">Purpose :</label>
-                    <div class="col-sm-10">
-                        <!-- <input type="text" class="form-control" name="purpore" required /> -->
-                        <textarea class="form-control" id="" rows="3" name="purpose" required></textarea>
+                    <label class="col-sm-2 col-form-label">Head Of Accounts :</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="form-selectaccount" aria-label="Default select example"
+                            onchange="getsubcategory(this.value)" name="accounts-select" required>
+                            <option disabled selected value>Select Name</option>
+
+                            <?php
+                                     $grocerydata =$grocery->parentCategory();                              
+                                     foreach($grocerydata as $row){ 
+                                      $category   = $row['category'];
+                                      $categoryId = $row['category_id'];                                                                                 
+                                    echo '<option value="'.$categoryId.'">'.$category.'</option>';
+                                     }
+                        ?>
+
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label" id="subdata" style="display: none;">sub category:</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
+                            name="sub-accounts-select" required style="display: none;">
+                            <option disabled selected value="">Select Name</option>
+
+
+                        </select>
                     </div>
                 </div>
 
@@ -238,6 +309,49 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
         } else {
             demo_two.style.display = "none";
         }
+    }
+
+    function selectpaidto() {
+        var demo_two = document.getElementById('otherpaid');
+        var demo = document.getElementById('form-selectpaidto');
+        if (demo.value == 'Otherspaid') {
+            demo_two.style.display = "block";
+        } else {
+            demo_two.style.display = "none";
+        }
+        var demo_two = document.getElementById('otherspaid');
+        var demo = document.getElementById('form-selectpaidto');
+        if (demo.value == 'Otherspaid') {
+            demo_two.style.display = "block";
+        } else {
+            demo_two.style.display = "none";
+        }
+    }
+    </script>
+    <script>
+    const getsubcategory = (value) => {
+        subcategoryList = document.getElementById("form-selectaccountsub");
+        console.log(value);
+        // alert(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+            // subcategoryList.style.display = 'block';
+            //==================== SubCategory List ====================
+            subcategory = 'getsubcategory.ajax.php?subcategory=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+            if (xmlhttp.responseText != "") {
+                subcategoryList.style.display = 'block';
+                document.getElementById("subdata").style.display = 'block';
+            } else {
+                subcategoryList.style.display = 'none';
+                document.getElementById("subdata").style.display = 'none';
+            }
+        }
+
     }
     </script>
 

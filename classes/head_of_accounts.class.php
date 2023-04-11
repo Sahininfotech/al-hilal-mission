@@ -42,12 +42,47 @@ function showCategory(){
 
 // end display
 
+// display start 
+
+function parentCategory(){
+
+    $empData = array();
+
+    $sql = "SELECT * FROM `head_of_accounts` WHERE `parent_category` LIKE 0";
+
+    $empQuery   = $this->conn->query($sql);
+
+    while($row  = $empQuery->fetch_array()){    
+
+    $empData[]	= $row;
+
+    }
+
+    return $empData;
+
+}
+
+// end display
+
 
 //accountById start 
 
 function accountById($Id){
 
     $sql = "SELECT * FROM head_of_accounts WHERE `head_of_accounts`.`id` = '$Id'";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}//eof
+
+//accountById start 
+
+function subCategory($parent_category){
+
+    $sql = "SELECT * FROM head_of_accounts WHERE `head_of_accounts`.`parent_category` = '$parent_category'";
 
     $result = $this->conn->query($sql);
 
