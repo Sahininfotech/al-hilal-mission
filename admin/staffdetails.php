@@ -6,11 +6,13 @@ require_once '../_config/dbconnect.php';
 
 require_once '../classes/admin.class.php';
 require_once '../classes/employee.class.php';
+require_once '../classes/stadetails.class.php';
 require_once '../includes/constant.php';
 
 
 $Admin      = new Admin();
 $employees  = new Employee();
+$empRole    = new institute();
 
 $result    = $employees->showEmployees();
 
@@ -72,51 +74,90 @@ $result    = $employees->showEmployees();
                                     <th>Employee Id</th>
                                     <th>Employee Name</th>
                                     <th>Mobile No</th>
+                                    <th>Designation</th>
+                                    <th>Add Features Page</th>
                                     <th class="ps-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                            $sl = 1;
-                                            $result=$employees->showEmployees();
-                                            foreach($result as $row){
-                                        ?>
-                            
-                                    <?php if ($row['status']== 1) echo '<tr style="color: black">' ;?>
-                                    <?php if ($row['status']== 0) echo '<tr style="color: red">' ;?>
-                                    <td><?php    echo $sl;  ?></td>
-                                    <td><?php    echo $row['user_id']  ?></td>
-                                    <td><?php    echo $row['name']  ?></td>
-                                    <td><?php    echo $row['contactno']  ?></td>
-                                    <td><i class="bi bi-chat-fill pe-3" data-bs-toggle="modal"
-                                            data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
-                                            onclick="message(this.id);"></i>
+                                $sl = 1;
+                                $result=$employees->showEmployees();
+                                foreach($result as $row){
+                                $designationid = $row['designation'];
+                                $roleid=$empRole->RoledataById($designationid);
+                                foreach($roleid as $emproles){ 
+                                    $myuid = uniqid('role');
+                                ?>
+
+                                <?php if ($row['status']== 1) echo '<tr style="color: black">' ;?>
+                                <?php if ($row['status']== 0) echo '<tr style="color: red">' ;?>
+                                <td><?php    echo $sl;  ?></td>
+                                <td><?php    echo $row['user_id']  ?></td>
+                                <td><?php    echo $row['name']  ?></td>
+                                <td><?php    echo $row['contactno']  ?></td>
+                                <td><?php    echo $emproles['designation_name']  ?></td>
+                                <td>
+                                    
+                                    <!-- <label>
+                                    <input type="checkbox" data-bs-toggle="modal"
+                                        data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
+                                        onclick="message(this.id);" <?php if ($row['status']== 0) echo ' style="display: none;"' ;?>>
+                                        op1</label>
+                                        <label>
+                                    <input type="checkbox" data-bs-toggle="modal"
+                                        data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
+                                        onclick="message(this.id);" style="color: #35dc59" <?php if ($row['status']== 1) echo ' style="display: none;"' ;?>>
+                                        op1</label> -->
+
+                                       
+                                <div class="col-xl-4 col-lg-4 mb-3 p-0 genderingrow">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1"
+                                            value="Male" required>
+                                        <label class="form-check-label" for="gridRadios1">
+                                            Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2"
+                                            value="Female" required>
+                                        <label class="form-check-label" for="gridRadios2">
+                                            Female
+                                        </label>
+                                    </div>
+                                    
+                                </td>
+                                <td><i class="bi bi-chat-fill pe-3" data-bs-toggle="modal"
+                                        data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
+                                        onclick="message(this.id);"></i>
 
 
-                                        <i class="bi bi-pencil-square pe-3" data-bs-toggle="modal"
-                                            data-bs-target="#editModal" id="<?php echo $row['user_id']; ?>"
-                                            onclick="edit(this.id);"></i>
+                                    <i class="bi bi-pencil-square pe-3" data-bs-toggle="modal"
+                                        data-bs-target="#editModal" id="<?php echo $row['user_id']; ?>"
+                                        onclick="edit(this.id);"></i>
 
 
-                                        <!-- <i class="bi bi-pencil-square pe-3"></i> -->
-                                        <a href='ajax/staffp.action.php?id=<?php echo $row['id']; ?>'>
-                                            <i class="bi bi-x-lg" data-bs-toggle="modal"
-                                                data-bs-target="#deleteformModal" onclick="return cencelformdata();"
-                                                <?php if ($row['status']== 0) echo ' style="display: none;"' ;?>></i></a>
+                                    <!-- <i class="bi bi-pencil-square pe-3"></i> -->
+                                    <a href='ajax/staffp.action.php?id=<?php echo $row['id']; ?>'>
+                                        <i class="bi bi-x-lg" data-bs-toggle="modal" data-bs-target="#deleteformModal"
+                                            onclick="return cencelformdata();"
+                                            <?php if ($row['status']== 0) echo ' style="display: none;"' ;?>></i></a>
 
-                                        <a style="color: #35dc59"
-                                            href='ajax/staactive.action.php?id=<?php    echo $row['id']; ?>'>
-                                            <i class="bi bi-check-lg " data-bs-toggle="modal"
-                                                data-bs-target="#deleteformModal" onclick="return activestaff();"
-                                                <?php if ($row['status']== 1) echo ' style="display: none;"' ;?>>
-                                            </i>
-                                        </a>
-                                    </td>
+                                    <a style="color: #35dc59"
+                                        href='ajax/staactive.action.php?id=<?php    echo $row['id']; ?>'>
+                                        <i class="bi bi-check-lg " data-bs-toggle="modal"
+                                            data-bs-target="#deleteformModal" onclick="return activestaff();"
+                                            <?php if ($row['status']== 1) echo ' style="display: none;"' ;?>>
+                                        </i>
+                                    </a>
+                                </td>
+
                                 </tr>
 
                                 <?php
                                     $sl++;
-                                        }
+                                        }}
                                         ?>
                             </tbody>
                         </table>
@@ -167,11 +208,12 @@ $result    = $employees->showEmployees();
     <!-- ======= Footer ======= -->
     <?php // require_once 'require/addfooter.php'; ?>
 
-   
+
     <script>
     function cencelformdata() {
         return confirm("ARE YOU SURE THAT YOU WANT TO CANCEL THIS STAFF DETAILS ?")
     };
+
     function activestaff() {
         return confirm("ARE YOU SURE THAT YOU WANT TO ACTIVE THIS STAFF DETAILS ?")
     };
@@ -216,8 +258,22 @@ $result    = $employees->showEmployees();
 
     <!-- Template Main JS File -->
     <script src="../admin/assets/js/main.js"></script>
+    <script>
+    // function validacion(id) {
+    //         let td = document.getElementById(id);
+    //         var ids = $(td).val();
+    //     alert(id);
+    //     if (ids.checked) {
+    //         var x61 = "uu";
+    //         alert(" Me gusta : " + x61);
+    //     } else {
+    //         var x61 = "";
+    //         alert(" Me gusta : " + x61);
+    //     }
 
 
+    // }
+    </script>
 </body>
 
 </html>

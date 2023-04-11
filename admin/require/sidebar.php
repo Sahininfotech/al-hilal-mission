@@ -224,9 +224,10 @@
 
         <!-- start accountant -->
 
-        <li class="nav-item <?php if($page == "Expenses" || $page == "Revenue"){echo "active";} ?>">
+        <li
+            class="nav-item <?php if($page == "Expenses" || $page == "Revenue" || $page == "Head Of Accounts"){echo "active";} ?>">
 
-            <a class="nav-link <?php if($page == "Expenses" || $page == "Revenue"){echo "noaction";} else {
+            <a class="nav-link <?php if($page == "Expenses" || $page == "Revenue" || $page == "Head Of Accounts"){echo "noaction";} else {
 
                 echo "collapsed"; 
 
@@ -237,7 +238,7 @@
             </a>
 
             <ul id="accountant-nav"
-                class="nav-content collapse <?php if($page == "Expenses" || $page == "Revenue"){echo "show";} ?> "
+                class="nav-content collapse <?php if($page == "Expenses" || $page == "Revenue" || $page == "Head Of Accounts"){echo "show";} ?> "
                 data-bs-parent="#sidebar-nav">
 
                 <li>
@@ -260,8 +261,15 @@
 
                 </li>
 
+                <li>
 
+                    <a href="head_of_accounts.php" <?php if($page == "Head Of Accounts"  ){echo "class='active'";} ?>>
 
+                        <i class="bi bi-circle"></i><span>Head Of Accounts</span>
+
+                    </a>
+
+                </li>
 
 
             </ul>

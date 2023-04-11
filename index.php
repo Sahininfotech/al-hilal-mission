@@ -257,7 +257,8 @@ $princpledata   = $Institute->princpledisplaydata();
                                     $showuimage             = $row['image'];
                                     $imgs                   = "./admin/image/".$showuimage;
                                     ?>
-                        <img src="<?php echo $imgs;  ?>" class="img-fluid" alt="">
+                        <img src="<?php echo $imgs;  ?>" class="img-fluid" alt=""
+                            style="width: 36rem; height: 36rem; margin-top: -3rem;">
                         <?php }?>
 
                     </div>
