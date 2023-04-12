@@ -140,6 +140,20 @@ function headofAccountsEdit($id, $head_of_accounts_name, $parent_name, $descript
 
 
 
+//categoryById start 
+
+function categoryById($head_of_accounts){
+
+    $sql = "SELECT * FROM head_of_accounts WHERE `head_of_accounts`.`category_id` = '$head_of_accounts'";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}//eof
+
+
 
 }
 ?>

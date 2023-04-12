@@ -10,7 +10,9 @@ class Expenses extends DatabaseConnection{
 
     function expensesInsert($bill_no, $amount, $payment_type, $description, $date, $image, $status, $added_by, $payment_id, $paidBy, $paidTo, $accountsSelect, $subcategory){
 
-        $sql = "INSERT INTO `expenses` (`date`, `bill_no`,`amount`, `payment_type`, `payment_id`, `description`, `upload_bill`, `status`,`added_by`, `paid_by`, `paid_to`, `head_of_accounts_id`, `hfa_sub_category_id`) VALUES ('$date','$bill_no', '$amount',  '$payment_type', '$payment_id', '$description', '$image','$status','$added_by', '$paidBy', '$paidTo', '$accountsSelect', '$subcategory')";
+        $descriptions = addslashes($description);
+
+        $sql = "INSERT INTO `expenses` (`date`, `bill_no`,`amount`, `payment_type`, `payment_id`, `description`, `upload_bill`, `status`,`added_by`, `paid_by`, `paid_to`, `head_of_accounts_id`, `hfa_sub_category_id`) VALUES ('$date','$bill_no', '$amount',  '$payment_type', '$payment_id', '$descriptions', '$image','$status','$added_by', '$paidBy', '$paidTo', '$accountsSelect', '$subcategory')";
 
         $insertEmpQuery = $this->conn->query($sql);
 
@@ -395,18 +397,23 @@ class Expenses extends DatabaseConnection{
     //end updateEmp function
 
 
-        function expensesupdate($id, $purpore, $bill_no, $amount, $payment_type, $date, $c_image, $payment_id, $paid_by){
+        function expensesupdate($id, $bill_no, $amount, $payment_type, $date, $c_image, $payment_id, $paid_by, $paid_to, $description, $accountsSelect, $subcategory){
 
-        $sql = "UPDATE  `expenses` 
-                SET `id`        = '$id',
-                `purpore`       = '$purpore',
-                `bill_no`       = '$bill_no',
-                `amount`        = '$amount',
-                `payment_type`  = '$payment_type',
-                `date`          = '$date',
-                `upload_bill`   = '$c_image',
-                `payment_id`    = '$payment_id',
-                `paid_by`       = '$paid_by'
+            $descriptions = addslashes($description);
+       
+       $sql = "UPDATE  `expenses` 
+                SET `id`                = '$id',
+                `bill_no`               = '$bill_no',
+                `amount`                = '$amount',
+                `payment_type`          = '$payment_type',
+                `date`                  = '$date',
+                `upload_bill`           = '$c_image',
+                `payment_id`            = '$payment_id',
+                `paid_by`               = '$paid_by',
+                `paid_to`               = '$paid_to',
+                `description`           = '$descriptions',
+                `head_of_accounts_id`   = '$accountsSelect',
+                `hfa_sub_category_id`   = '$subcategory'
                 WHERE
                 `expenses`.`id` = '$id'";
 

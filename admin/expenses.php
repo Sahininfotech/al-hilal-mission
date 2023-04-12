@@ -16,7 +16,9 @@
 
     require_once '../includes/constant.php';
 
+    require_once '../classes/head_of_accounts.class.php';
 
+    $grocery    = new HeadOfAccounts();
 
     $Utility    = new Utility(); 
 
@@ -626,7 +628,9 @@
 
                                     <th scope="col">Date</th>
 
-                                    <th scope="col">Purpose</th>
+                                    <th scope="col">Head Of Accounts</th>
+
+                                    <th scope="col">HFA Sub Category</th>
 
                                     <th scope="col">Type</th>
 
@@ -648,7 +652,9 @@
 
                                     $i=1;
 
-                                    foreach($revenueresult as $row){                        
+                                    foreach($revenueresult as $row){      
+                                        $head_of_accounts_id = $row['head_of_accounts_id'];
+                                        $hfa_sub_category_id = $row['hfa_sub_category_id'];
 
                                     ?>
 
@@ -668,7 +674,23 @@
 
                                     <td><?php    echo date("d-m-Y", strtotime($row['date']));  ?></td>
 
-                                    <td></td>
+                                    <td>
+                                        <?php $categorydata =$grocery->categoryById($head_of_accounts_id);                              
+                                        foreach($categorydata as $rows){ 
+                                        $category_name   = $rows['category'];
+                                        echo $category_name;
+                                        }
+                                        ?>
+                                    </td>
+
+                                    <td>
+                                        <?php $categorydata =$grocery->categoryById($hfa_sub_category_id);                              
+                                        foreach($categorydata as $rows){ 
+                                        $category_name   = $rows['category'];
+                                        echo $category_name;
+                                        }
+                                        ?>
+                                    </td>
 
                                     <td><?php    echo $row['payment_type']  ?></td>
 
@@ -855,7 +877,7 @@
 
     };
 
-    
+
 
     function activeexpenses() {
 
@@ -890,7 +912,7 @@
 
         $(".edit-modal-body").html(
 
-            '<iframe width="100%" height="559px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%" height="660px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 

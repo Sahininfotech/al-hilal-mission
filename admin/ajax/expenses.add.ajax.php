@@ -179,7 +179,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                 $showVen_name  = $showVendor['name'];
                                 $showvendor_id = $showVendor['vendor_id'];
     
-                                    echo ' <option value="'.$showvendor_id.'">'.$showVen_name.'</option>';
+                                    echo ' <option value="'.$showVen_name.'">'.$showVen_name.'</option>';
                                 }
                         ?>
 
@@ -209,7 +209,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                 foreach ($emps as $emp) {
                                     $empId   = $emp['user_id'];
                                     $empName = $emp['name'];
-                                    echo ' <option value="'.$empId.'">'.$empName.'</option>';
+                                    echo ' <option value="'.$empName.'">'.$empName.'</option>';
                                 }
                         ?>
 
@@ -258,7 +258,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                     <label class="col-sm-2 col-form-label" id="subdata" style="display: none;">sub category:</label>
                     <div class="col-sm-4">
                         <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
-                            name="sub-accounts-select" required style="display: none;">
+                            name="sub-accounts-select" style="display: none;">
                             <option disabled selected value="">Select Name</option>
 
 

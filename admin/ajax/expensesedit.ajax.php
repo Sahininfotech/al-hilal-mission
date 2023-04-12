@@ -7,11 +7,13 @@ require_once '../../_config/dbconnect.php';
 require_once '../../classes/expenses.class.php';
 
 // require_once '../class/employee.class.php';
-
+require_once '../../classes/vendor.class.php';
 require_once '../../classes/employee.class.php';
+require_once '../../classes/head_of_accounts.class.php';
 
+$grocery  = new HeadOfAccounts();
 $Employee = new Employee();
-
+$vendors  = new Vendor();
 $Expenses = new Expenses();
 
 ?>
@@ -41,9 +43,7 @@ $Expenses = new Expenses();
     <link href="https://fonts.gstatic.com" rel="preconnect" />
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
     <!-- Vendor CSS Files -->
@@ -88,31 +88,24 @@ $Expenses = new Expenses();
 
                 $billNo             = $expenses['bill_no'];
 
-
+                $hfa_sub_category_id= $expenses['hfa_sub_category_id'];
 
                 $billAmount         = $expenses['amount'];
 
 
-
-                $showpurpore        = $expenses['purpore'];
-
-
-
                 $showpayment_type   = $expenses['payment_type'];
 
-
+                $head_of_accounts_id= $expenses['head_of_accounts_id'];
 
                 $showpayment_id     = $expenses['payment_id'];
 
-
+                $paidTo             = $expenses['paid_to'];
 
                 $paidBy             = $expenses['paid_by'];
 
-
+                $showdescription    = $expenses['description'];
 
                 $showdate           = $expenses['date'];
-
-
 
                 $showupload_bill    = $expenses['upload_bill'];
 
@@ -141,7 +134,6 @@ $Expenses = new Expenses();
                 <div class="col-sm-10">
 
                     <img id="theImage" src="<?php echo $img; ?>" alt="bill-invoice" width="100" height="50"
-
                         style="border-radius: 7% " onClick="makeFullScreen()">
 
                 </div>
@@ -186,12 +178,11 @@ $Expenses = new Expenses();
 
                     <div class="row">
 
-                        <label for="<?php echo $billNo; ?>" class="col-sm-4 form-label">Bill No :</label>
+                        <label for="<?php echo $billNo; ?>" class="col-sm-4 form-label">Voucher No :</label>
 
                         <div class="col-sm-8">
 
                             <input type="text" class="form-control" id="<?php echo $billNo; ?>"
-
                                 value="<?php echo $billNo; ?>" name="bill_no">
 
                         </div>
@@ -210,7 +201,8 @@ $Expenses = new Expenses();
 
                         <div class="col-sm-8">
 
-                            <input type="date" class="form-control" id="bill-date" name="date" value="<?php echo $showdate; ?>" >
+                            <input type="date" class="form-control" id="bill-date" name="date"
+                                value="<?php echo $showdate; ?>">
 
                         </div>
 
@@ -260,7 +252,7 @@ $Expenses = new Expenses();
 
 
 
-                <label for="inputText" class="col-sm-2 col-form-label">Payment :</label>
+                <label for="inputText" class="col-sm-2 col-form-label">Payment Mode :</label>
 
 
 
@@ -329,7 +321,6 @@ $Expenses = new Expenses();
 
 
                     <div class=" row <?php echo ($showpayment_type == 'Cash') ? ( 'd-none'):('d') ?> "
-
                         id="payment_id_bx">
 
 
@@ -343,7 +334,6 @@ $Expenses = new Expenses();
 
 
                             <input type="number" class="form-control" value="<?php echo $showpayment_id; ?>"
-
                                 name="payment_id">
 
 
@@ -360,8 +350,72 @@ $Expenses = new Expenses();
 
 
 
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Paid To :</label>
+                <?php
+
+                 // echo gettype($paidBy) != 'integer' ? 'selected' : 'none';
+                  ?>
+                <div class="col-sm-4">
+                    <?php
+                 // echo $paidBy;
+                 ?>
+                    <select class="form-select" id="form-select" onChange="selectpaidto(this.value)"
+                        name="paid-to-select" required>
+
+                        <?php
+
+                        echo '<option  style="color: blue;">'.$paidTo.'</option>';
+                    
+                        ?>
+                        <option value="Others" style="color: blue;">Others</option>
+                        <?php
+
+                        $vendorresult      = $vendors->vendordisplaydata();                            
+                        foreach ($vendorresult as $showVendor) {
+                        $showVen_id    = $showVendor['id'];
+                        $showVen_name  = $showVendor['name'];
+                        $showvendor_id = $showVendor['vendor_id'];
+
+                        echo ' <option value="'.$showVen_name.'">'.$showVen_name.'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
 
 
+
+                <div class="col-sm-6 <?php echo gettype($paidTo) != 'integer' ? 'd-none' : 'd-block'; ?>"
+                    id="others-vendors">
+
+                    <div class="row">
+
+                        <label for="inputText" class="col-sm-4 col-form-label">Name :</label>
+
+
+
+                        <div class="col-sm-8">
+
+
+
+                            <input type="text" class="form-control" name="others_paid_to"
+                                value="<?php echo $showVen_name; ?>">
+
+
+
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
 
 
 
@@ -405,7 +459,6 @@ $Expenses = new Expenses();
 
 
                     <select class="form-select" id="form-select" onChange="selectOthers(this.value)"
-
                         name="paid-by-select" required>
 
 
@@ -491,16 +544,9 @@ $Expenses = new Expenses();
 
 
                 <div class="col-sm-6 <?php echo gettype($paidBy) != 'integer' ? 'd-none' : 'd-block'; ?>"
-
                     id="others-staff">
 
-
-
                     <div class="row">
-
-
-
-
 
 
 
@@ -537,21 +583,43 @@ $Expenses = new Expenses();
 
 
 
+            <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Head Of Accounts :</label>
+                <div class="col-sm-4">
+                    <select class="form-select" id="form-selectaccount" aria-label="Default select example"
+                        onclick="getsubcategory(this.value)" name="accounts-select" required>
 
+                        <?php
+                        $categorydata =$grocery->categoryById($head_of_accounts_id);                              
+                        foreach($categorydata as $rows){ 
+                        $category_name   = $rows['category'];
+                        echo '<option  style="color: blue;">'.$category_name.'</option>';
+                        }
+                        $grocerydata =$grocery->parentCategory();                              
+                        foreach($grocerydata as $row){ 
+                        $category   = $row['category'];
+                        $categoryId = $row['category_id'];                                                                                 
+                        echo '<option value="'.$categoryId.'">'.$category.'</option>';
+                        }
+                        ?>
 
+                    </select>
+                </div>
+                <label class="col-sm-2 col-form-label" id="subdata">sub category:</label>
+                <div class="col-sm-4">
+                    <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
+                        name="sub-accounts-select">
+                        <?php
+                        $categorydata =$grocery->categoryById($hfa_sub_category_id);                              
+                        foreach($categorydata as $rows){ 
+                        $category_name   = $rows['category'];
+                        echo '<option  style="color: blue;">'.$category_name.'</option>';
+                        }
+                        ?>
 
-
-
-
-
-
-
-
-
-
-
-
-
+                    </select>
+                </div>
+            </div>
 
 
 
@@ -588,19 +656,15 @@ $Expenses = new Expenses();
 
 
 
-                <label for="inputText" class="col-sm-2 col-form-label">Purpose :</label>
-
-
-
+                <label for="inputText" class="col-sm-2 col-form-label">Description :</label>
                 <div class="col-sm-10">
-
-
 
                     <!-- <textarea name="" id="" cols="30" rows="10"></textarea> -->
 
 
 
-                    <textarea class="form-control" id="" rows="3" name="purpore"><?php echo $showpurpore; ?></textarea>
+                    <textarea class="form-control" id="" rows="3"
+                        name="description"><?php echo $showdescription; ?></textarea>
 
 
 
@@ -637,7 +701,6 @@ $Expenses = new Expenses();
 
 
                     <button type="submit" name="update" class="btn btn-primary m-auto d-flex justify-content-center "
-
                         id="upedit" style="width: 105px">Update</button>
 
 
@@ -711,7 +774,6 @@ $Expenses = new Expenses();
 
 
     <script>
-
     // <!-- image fullscreen -->
 
 
@@ -832,6 +894,42 @@ $Expenses = new Expenses();
 
 
 
+    const selectpaidto = (vendors) => {
+
+
+
+
+
+
+
+        var vendorsBx = document.getElementById('others-vendors');
+
+
+
+        if (vendors == "Others") {
+
+
+
+            vendorsBx.classList.remove('d-none');
+
+
+
+        } else {
+
+
+
+            vendorsBx.classList.add('d-none');
+
+
+
+        }
+
+    }
+
+
+
+
+
     const selectOthers = (staff) => {
 
 
@@ -862,18 +960,36 @@ $Expenses = new Expenses();
 
         }
 
-
-
-
-
-
-
     }
-
     </script>
 
 
+    <script>
+    const getsubcategory = (value) => {
+        subcategoryList = document.getElementById("form-selectaccountsub");
+        console.log(value);
+        // alert(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+            // subcategoryList.style.display = 'block';
+            //==================== SubCategory List ====================
+            subcategory = 'getsubcategory.ajax.php?subcategory=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+            if (xmlhttp.responseText != "") {
+                subcategoryList.style.display = 'block';
+                document.getElementById("subdata").style.display = 'block';
+            } else {
+                subcategoryList.style.display = 'none';
+                document.getElementById("subdata").style.display = 'none';
+            }
+        }
 
+    }
+    </script>
 
 
 
