@@ -98,35 +98,20 @@ $result    = $employees->showEmployees();
                                 <td><?php    echo $row['contactno']  ?></td>
                                 <td><?php    echo $emproles['designation_name']  ?></td>
                                 <td>
-                                    
-                                    <!-- <label>
-                                    <input type="checkbox" data-bs-toggle="modal"
-                                        data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
-                                        onclick="message(this.id);" <?php if ($row['status']== 0) echo ' style="display: none;"' ;?>>
-                                        op1</label>
-                                        <label>
-                                    <input type="checkbox" data-bs-toggle="modal"
-                                        data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
-                                        onclick="message(this.id);" style="color: #35dc59" <?php if ($row['status']== 1) echo ' style="display: none;"' ;?>>
-                                        op1</label> -->
 
-                                       
-                                <div class="col-xl-4 col-lg-4 mb-3 p-0 genderingrow">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios1"
-                                            value="Male" required>
-                                        <label class="form-check-label" for="gridRadios1">
-                                            Male
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="gridRadios2"
-                                            value="Female" required>
-                                        <label class="form-check-label" for="gridRadios2">
-                                            Female
-                                        </label>
-                                    </div>
-                                    
+                                    <label class="form-switch">
+                                        <?php if($row['feature_page'] == 'yes'): ?>
+                                        <input id="cheak" class="form-check-input"
+                                            data-id="<?php echo $row['user_id']; ?>" value="yes"
+                                            onclick="return disapproved();" type="checkbox" checked>
+                                        <?php else: ?>
+                                        <input id="cheak" class="form-check-input"
+                                            data-id="<?php echo $row['user_id']; ?>" value="no"
+                                            onclick="return approved();" type="checkbox">
+                                        <?php endif ?>
+
+                                    </label>
+
                                 </td>
                                 <td><i class="bi bi-chat-fill pe-3" data-bs-toggle="modal"
                                         data-bs-target="#messageModal" id="<?php echo $row['user_id']; ?>"
@@ -259,20 +244,45 @@ $result    = $employees->showEmployees();
     <!-- Template Main JS File -->
     <script src="../admin/assets/js/main.js"></script>
     <script>
-    // function validacion(id) {
-    //         let td = document.getElementById(id);
-    //         var ids = $(td).val();
-    //     alert(id);
-    //     if (ids.checked) {
-    //         var x61 = "uu";
-    //         alert(" Me gusta : " + x61);
-    //     } else {
-    //         var x61 = "";
-    //         alert(" Me gusta : " + x61);
-    //     }
 
+function disapproved() {
 
-    // }
+return confirm("ARE YOU SURE TO HIDE THE DETAILS ?")
+
+};
+
+function approved() {
+
+return confirm("ARE YOU SURE TO SHOW THE DETAILS ?")
+
+};
+ 
+
+    $(document).on("change", "#cheak", function(e) {
+        var approved = $(this).val();
+        var id = $(this).data('id');
+        if (approved == 'yes') {
+            approved = 'no';
+        } else {
+            approved = 'yes';
+        }
+
+        console.log(approved);
+        $.ajax({
+            url: "ajax/featureapage.ajax.php",
+            type: "POST",
+            data: {
+                approved: approved,
+                id: id
+            },
+            success: function(data) {
+
+            // alert(data);
+            }
+
+        });
+    });
+    // });
     </script>
 </body>
 

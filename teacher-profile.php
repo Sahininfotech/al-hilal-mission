@@ -2,9 +2,16 @@
 $page = "teacher-profile";
 require_once './_config/dbconnect.php';
 require_once './classes/institutedetails.class.php';
-$Institute = new  InstituteDetails();
+require_once './classes/employee.class.php';
+require_once './classes/stadetails.class.php';
 
-$instData = $Institute->institutedisplaydata();
+$Institute = new  InstituteDetails();
+$employees = new  Employee();
+$empRole   = new institute();
+
+$instData = $Institute->instituteShow();
+
+$displaydata = $employees->staffById($_GET['id']);
 
 ?>
 <!DOCTYPE html>
@@ -55,6 +62,30 @@ $instData = $Institute->institutedisplaydata();
 
     <main id="main" data-aos="fade-in">
 
+        <?php  
+     foreach ($displaydata as $showdata) {
+        $showname        = $showdata['name'];
+        $showemail    = $showdata['email'];
+        $showaddress    = $showdata['address'];
+        $showcontactno    = $showdata['contactno'];
+        $showdesignation    = $showdata['designation'];
+        $showphotos  = $showdata['profile_image'];
+        $showgender    = $showdata['gender'];
+        $showstate    = $showdata['state'];
+        $img         = "./admin/image/".$showphotos;
+
+        $displaydata = $empRole->RoledataById($showdesignation);
+
+        foreach ($displaydata as $showRoledata) {
+
+        $showRolename    = $showRoledata['designation_name'];
+
+        $showdescription = $showRoledata['description'];
+        }
+      
+     }
+    ?>
+
         <!-- ======= Breadcrumbs ======= -->
         <div class="breadcrumbs">
             <div class="container">
@@ -70,16 +101,16 @@ $instData = $Institute->institutedisplaydata();
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 pb-2 pt-2">
                         <div class="card">
-                                <div class="member ">
-                                    <img src="assets/img/trainers/trainer-1.jpg" class="img-fluid w-100" alt="">
-                                    <div class="member-content" style="margin: 1.5rem;text-align: center; ">
+                            <div class="member ">
+                                <img src="<?php   echo $img; ?>" class="img-fluid w-100" alt="" style="height: 366px;">
+                                <div class="member-content" style="margin: 1.5rem;text-align: center; ">
 
-                                        <h4 class="text-dark" style=" font-weight: 700;
+                                    <h4 class="text-dark" style=" font-weight: 700;
                                        margin-bottom: 10px;
-                                        font-size: 32px;">Walter White</h4>
-                                        <span style="font-size: 1.2rem;">Web Development</span>
-                                    </div>
+                                        font-size: 32px;"><?php   echo $showname ?></h4>
+                                    <span style="font-size: 1.2rem;"><?php   echo $showRolename ?></span>
                                 </div>
+                            </div>
                         </div>
 
                     </div>
@@ -103,37 +134,37 @@ $instData = $Institute->institutedisplaydata();
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                                            <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showname; ?></div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Company</div>
-                                            <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                                            <div class="col-lg-3 col-md-4 label">State</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showstate ?></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Job</div>
-                                            <div class="col-lg-9 col-md-8">Web Designer</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showRolename ?></div>
                                         </div>
 
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Country</div>
-                                            <div class="col-lg-9 col-md-8">USA</div>
+                                            <div class="col-lg-3 col-md-4 label">Gender</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showgender ?></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Address</div>
-                                            <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showaddress ?></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Phone</div>
-                                            <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showcontactno; ?></div>
                                         </div>
 
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label">Email</div>
-                                            <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                                            <div class="col-lg-9 col-md-8"><?php   echo $showemail; ?></div>
                                         </div>
 
                                     </div>
@@ -144,6 +175,7 @@ $instData = $Institute->institutedisplaydata();
 
                     </div>
                 </div>
+
             </section>
         </div>
 

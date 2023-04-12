@@ -147,7 +147,7 @@ $instData = $Institute->instituteShow();
                 <div class="row" data-aos="zoom-in" data-aos-delay="100">
 
 
-                  <?php  
+                    <?php  
                   $employeedata 	= $employees->EmpRoledById("ROLEOFTHETEACHER"); 
 
                   foreach ($employeedata as $showdata) {
@@ -157,6 +157,8 @@ $instData = $Institute->instituteShow();
                   $showname    = $showdata['name'];
 
                   $designation = $showdata['designation'];
+
+                  $showid      = $showdata['id'];
 
                   $img         = "./admin/image/".$showphotos;
 
@@ -168,7 +170,8 @@ $instData = $Institute->instituteShow();
 
                   $showdescription = $showRoledata['description'];
 
-                  $showid          = $showRoledata['id'];
+                 
+                  $showteacher_profile = "teacher-profile.php?id=".$showid;
 
                   ?>
 
@@ -180,7 +183,7 @@ $instData = $Institute->instituteShow();
 
                             <div class="member-content">
 
-                                <a href="teacher-profile.php">
+                                <a href="<?php   echo $showteacher_profile ?>">
 
                                     <h4 class="text-dark"><?php   echo $showname ?></h4>
                                 </a>
@@ -189,7 +192,7 @@ $instData = $Institute->instituteShow();
 
                                 <p>
 
-                                <?php   echo $showdescription ?>
+                                    <?php   echo $showdescription ?>
 
                                 </p>
 

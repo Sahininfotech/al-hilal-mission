@@ -440,6 +440,56 @@ class Employee extends DatabaseConnection{
 
 
 
+	//Status updated
+	function featureUpdate($user_id, $approved){
+
+		$blog_id							=	addslashes(trim($user_id));
+		$approved							=	addslashes(trim($approved));
+		// $updated_by							=	addslashes(trim($updated_by));
+		
+		//statement
+		$sql	= "UPDATE staff 
+					SET 
+					feature_page = '$approved'
+					WHERE 
+					user_id = '$user_id'";			 
+		//execute query
+		$query	= $this->conn->query($sql);
+	
+		return $query;
+	}//eof
+
+
+
+
+    function empByFeaturespage($empFeature){
+
+        $data = array();
+        $sql = "SELECT * FROM staff WHERE `staff`.`feature_page` = '$empFeature'";
+        $res = $this->conn->query($sql);
+        if ($res->num_rows > 0 ) {
+
+            while ($result = $res->fetch_array()) {
+                $data[] = $result;
+            }
+
+        }
+        return $data;
+    }
+
+
+
+    function staffById($Id){
+
+        $sql = "SELECT * FROM staff WHERE `staff`.`id` = '$Id'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+    }
+
+
+
 
 }
 ?>
