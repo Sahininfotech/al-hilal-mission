@@ -14,7 +14,11 @@ $Grocery = new  HeadOfAccounts();
 
     $description               = $_POST["description"];
 
-    $result                    = $Grocery->headofAccountsadd($head_of_accounts_name, $parent_name, $description);
+    $code            = rand(1, 99999);
+
+    $category_id     = "CATE".$code;
+
+    $result                    = $Grocery->headofAccountsadd($head_of_accounts_name, $parent_name, $description, $category_id);
 
     if($result){
 

@@ -8,11 +8,11 @@ class HeadOfAccounts extends DatabaseConnection{
    // inshat dada start w
 
 
-function headofAccountsadd($head_of_accounts_name, $parent_name, $description){
+function headofAccountsadd($head_of_accounts_name, $parent_name, $description, $category_id){
 
     $descriptions = addslashes($description);
 
-    $sql = "INSERT INTO `head_of_accounts` (`category`, `parent_category`, `description`, `added_on`) VALUES ('$head_of_accounts_name', '$parent_name','$descriptions', now())";
+    $sql = "INSERT INTO `head_of_accounts` (`category`, `parent_category`, `description`, `added_on`, `category_id`) VALUES ('$head_of_accounts_name', '$parent_name','$descriptions', now(), '$category_id')";
 
     $insertGroQuery = $this->conn->query($sql);
 
