@@ -190,6 +190,7 @@ if($insertEmpQuery){
                                             required></textarea>
                                         <label for="floatingTextarea2">Comments</label>
                                     </div>
+
                                     <div class="row m-0 p-0 mb-3">
                                         <label for="upload-signature" class="form-label"> Upload previous signature of
                                             In-Charge:
@@ -199,7 +200,6 @@ if($insertEmpQuery){
                                             data-bs-toggle="modal" data-bs-target="#previousimgModalLabel">
 
                                     </div>
-
 
                                     <div class="mb-3">
                                         <label for="upload-signature" class="form-label">Upload the signature of
@@ -242,10 +242,10 @@ if($insertEmpQuery){
                 foreach($showNotice as $row){
                 $showdate       = $row['date'];
                 $datetring      = date("d-m-Y", strtotime($showdate));
-                $showid         = $row['id'];             
+                $showid         = $row['id'];
                 $showname       = $row['name'];
-                $notice         = $row['notice'];
                 $subject        = $row['subject'];
+                $notice         = $row['notice'];
                 $shownotices    = str_replace("\r",'<br>',$notice);
                 $shownotice     = substr("$shownotices",0,150).' ...';
                 echo' <div class="col-xxl-4 col-md-4 col-sm-4">
@@ -311,6 +311,7 @@ if($insertEmpQuery){
 
     <!-- modal end -->
 
+
     <!-- Modal -->
     <div class="modal fade" id="previousimgModalLabel" tabindex="-1" aria-labelledby="previousimgModalLabel"
         aria-hidden="true">
@@ -327,8 +328,8 @@ if($insertEmpQuery){
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body previousimg-modal-body">
-            
-                    <div class="row">
+                   
+                <div class="row">
                         <?php
                         $updatePage=$emp->showimage();
                         foreach ($updatePage as $showstaffnoticeshow) {
@@ -348,145 +349,146 @@ if($insertEmpQuery){
                         <?php   
                     }
                     ?>
-                    </div>
-
                 </div>
+
             </div>
         </div>
+    </div>
 
-        <!-- modal end -->
+    <!-- modal end -->
 
-        <script src="https://code.jquery.com/jquery-3.6.0.js"
-            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-        <script>
-        const staffnotice = (id) => {
-            let url = 'ajax/staffnoticeedit.ajax.php?staffnoticedata=' + id;
-            $(".staffnotice-modal-body").html(
-                '<iframe width="99%" height="412px" frameborder="0" allowtransparency="true" src="' + url +
-                '"></iframe>')
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script>
+    const staffnotice = (id) => {
+        let url = 'ajax/staffnoticeedit.ajax.php?staffnoticedata=' + id;
+        $(".staffnotice-modal-body").html(
+            '<iframe width="99%" height="412px" frameborder="0" allowtransparency="true" src="' + url +
+            '"></iframe>')
+
+    }
+
+
+
+    function deleteNOTICE() {
+
+        return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?")
+
+    };
+    </script>
+
+    <script type="text/javascript">
+    function getDetail(searchFor) {
+
+        var searchword = $('#user_id').val();
+
+        $.ajax({
+
+            url: "ajax/staff-list.ajax.php",
+
+            type: "POST",
+
+            data: {
+
+                search: searchFor
+
+            },
+
+            success: function(data) {
+
+                $("#table-datas").html(data);
+
+            }
+
+        });
+
+        if (searchword.length == 0) {
+
+            document.getElementById("table-datas").style.display = "none";
+
+        } else {
+
+            document.getElementById("table-datas").style.display = "block";
 
         }
 
+        if (searchword.length == 0) {
 
-
-        function deleteNOTICE() {
-
-            return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?")
-
-        };
-        </script>
-
-        <script type="text/javascript">
-        function getDetail(searchFor) {
-
-            var searchword = $('#user_id').val();
-
-            $.ajax({
-
-                url: "ajax/staff-list.ajax.php",
-
-                type: "POST",
-
-                data: {
-
-                    search: searchFor
-
-                },
-
-                success: function(data) {
-
-                    $("#table-datas").html(data);
-
-                }
-
-            });
-
-            if (searchword.length == 0) {
-
-                document.getElementById("table-datas").style.display = "none";
-
-            } else {
-
-                document.getElementById("table-datas").style.display = "block";
-
-            }
-
-            if (searchword.length == 0) {
-
-                document.getElementById("tabledata").style.display = "none";
-
-            } else {
-
-                document.getElementById("tabledata").style.display = "block";
-
-            }
-
-        };
-        </script>
-
-
-
-        <script>
-        const selectdatas = (t) => {
-
-            let name = document.getElementById(t.id).childNodes[1];
-
-            let staff_id = document.getElementById(t.id).childNodes[3];
-
-            if (window.getComputedStyle(staff_id).visibility === "hidden") {
-
-                staff_id.style.visibility = "visible";
-
-            }
-
-            document.getElementById("user_id").value = name.innerText;
-
-            document.getElementById("staff_id").value = staff_id.innerText;
-
-            document.getElementById("table-datas").style.display = "none";
-
-            document.getElementById("table-datas").style.display = "none";
             document.getElementById("tabledata").style.display = "none";
+
+        } else {
+
+            document.getElementById("tabledata").style.display = "block";
+
         }
 
+    };
+    </script>
 
-        function deletunit() {
 
-            return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?");
 
-        };
-        </script>
+    <script>
+    const selectdatas = (t) => {
 
-        <script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict'
+        let name = document.getElementById(t.id).childNodes[1];
 
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.querySelectorAll('.needs-validation')
+        let staff_id = document.getElementById(t.id).childNodes[3];
 
-            // Loop over them and prevent submission
-            Array.prototype.slice.call(forms)
-                .forEach(function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (!form.checkValidity()) {
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }
+        if (window.getComputedStyle(staff_id).visibility === "hidden") {
 
-                        form.classList.add('was-validated')
-                    }, false)
-                })
-        })()
-        </script>
+            staff_id.style.visibility = "visible";
 
-        <script>
-        function imagedata(id) {
-            // alert(id);
-            document.getElementById("oldsignatures").value = id;
         }
-        </script>
+
+        document.getElementById("user_id").value = name.innerText;
+
+        document.getElementById("staff_id").value = staff_id.innerText;
+
+        document.getElementById("table-datas").style.display = "none";
+
+        document.getElementById("table-datas").style.display = "none";
+        document.getElementById("tabledata").style.display = "none";
+    }
+
+
+    function deletunit() {
+
+        return confirm("ARE YOU SURE TO DELETE THIS CONTENT ?");
+
+    };
+    </script>
+
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+    </script>
+
+    <script>
+    function imagedata(id) {
+        // alert(id);
+        document.getElementById("oldsignatures").value = id;
+    }
+    </script>
 
 </body>
 

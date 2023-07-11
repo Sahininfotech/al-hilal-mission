@@ -114,7 +114,7 @@ class Examination extends DatabaseConnection{
 
     
 
-    
+
 
 
 
@@ -147,6 +147,8 @@ class Examination extends DatabaseConnection{
     }
 
     // SELECT * FROM `exam` WHERE `class_name` = '4' and `year` = '2022-2023' ORDER BY class_name
+
+
 
 
 
@@ -333,7 +335,6 @@ class Examination extends DatabaseConnection{
 
 
 
-
     function overalMarks($marks, $class_name, $classId){
 
         $sqledit = "UPDATE `class` SET `overall_pass_marks` = '$marks' WHERE `class`.`ids` = '$classId' and `class`.`classname` = '$class_name'";
@@ -345,7 +346,9 @@ class Examination extends DatabaseConnection{
     }
 
 
+    
 
+    
     function subjectpassMarks($marks, $class_name, $classId, $class_ids){
 
         $sqledit = "UPDATE `class_subject` SET `subject_pass_marks` = '$marks' WHERE `class_subject`.`id` = '$classId' and `class_subject`.`class_id` = '$class_ids' and `class_subject`.`subject` = '$class_name'";
@@ -359,9 +362,8 @@ class Examination extends DatabaseConnection{
 
 
 
-
-    //showExams start
-    function subjectMark($class, $subjectshow){
+       //showExams start
+       function subjectMark($class, $subjectshow){
 
         $exmData = array();
         $sql = "SELECT * FROM `class_subject` WHERE `class_subject`.`class_id` = '$class' and `class_subject`.`subject` = '$subjectshow'";
@@ -372,6 +374,8 @@ class Examination extends DatabaseConnection{
         return $exmData;
 
     }
+
+
 
 
 

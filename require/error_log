@@ -10,3 +10,10 @@ Stack trace:
 #1 /home3/activaga/public_html/alhilalmission/require/query.ajax.php(31): admissionQuery->addFormQuery('Smita Roy', 'Dep Roy', 'r@123gmail.com', '3423454565', 'Male', 'kolkata school', '11', '12', 'kolkata ', 'kolkata', 'kolkata', '222222', 'west bengal', 'book', '2023-01-20', '0')
 #2 {main}
   thrown in /home3/activaga/public_html/alhilalmission/classes/query-form.class.php on line 10
+[06-Jul-2023 13:32:49 Asia/Kolkata] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home3/activaga/public_html/alhilalmission/_config/dbconnect.php:94
+Stack trace:
+#0 /home3/activaga/public_html/alhilalmission/_config/dbconnect.php(94): mysqli->__construct('localhost', 'activaga__al_hi...', Object(SensitiveParameterValue), 'activaga_al_hil...')
+#1 /home3/activaga/public_html/alhilalmission/_config/dbconnect.php(65): DatabaseConnection->db_connect()
+#2 /home3/activaga/public_html/alhilalmission/require/query.ajax.php(7): DatabaseConnection->__construct()
+#3 {main}
+  thrown in /home3/activaga/public_html/alhilalmission/_config/dbconnect.php on line 94

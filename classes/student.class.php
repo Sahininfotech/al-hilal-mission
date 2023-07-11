@@ -194,6 +194,7 @@ function studentsByFees($student_Id, $showclass){
 
 
 
+
 // display start
 function studentFeesaccount($student_Id, $feesaccounts){
 
@@ -691,7 +692,6 @@ function studentamount($class_id, $total_amount, $class, $session){
 }
 //enf
 
-
 //  changedata start 
 function changedata($newclass, $class, $session, $student_ids){
 
@@ -742,14 +742,14 @@ function studentdelect($class){
 
 // ---------- Student summary end -------------
 
-// SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year' order by sum desc
+
 
    // display Totalmarks start
    function Totalmarks($showstuid, $showclass1, $showacademic_year){
 
     $data = array();
 
-    $sql = "SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year' order by marks asc";
+    $sql = "SELECT *, SUM(marks) as sum FROM `subject_marks` WHERE `student_id` = '$showstuid' and `class_id` = '$showclass1' and `session` = '$showacademic_year' order by SUM(marks) asc";
 
     $empQuery = $this->conn->query($sql);
     if ($empQuery->num_rows > 0) {

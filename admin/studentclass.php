@@ -646,7 +646,7 @@ $showStudentfinalexam    = $Examination->examByClassName($_GET['studenttype'], $
         </section>
 
     </main><!-- End #main -->
-
+    
     <!-- ======= Footer ======= -->
     <?php require_once 'require/addfooter.php'; ?>
     <script>

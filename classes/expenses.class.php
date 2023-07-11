@@ -8,11 +8,11 @@ class Expenses extends DatabaseConnection{
    // inshat dada start w
 
 
-    function expensesInsert($bill_no, $amount, $payment_type, $description, $date, $image, $status, $added_by, $payment_id, $paidBy, $paidTo, $accountsSelect, $subcategory){
+    function expensesInsert($bill_no, $amount, $payment_type, $description, $date, $image, $status, $added_by, $payment_id, $paidBy, $paidTo, $subcategory){
 
         $descriptions = addslashes($description);
 
-        $sql = "INSERT INTO `expenses` (`date`, `bill_no`,`amount`, `payment_type`, `payment_id`, `description`, `upload_bill`, `status`,`added_by`, `paid_by`, `paid_to`, `head_of_accounts_id`, `hfa_sub_category_id`) VALUES ('$date','$bill_no', '$amount',  '$payment_type', '$payment_id', '$descriptions', '$image','$status','$added_by', '$paidBy', '$paidTo', '$accountsSelect', '$subcategory')";
+        $sql = "INSERT INTO `expenses` (`date`, `voucher_no`,`amount`, `payment_type`, `payment_id`, `description`, `upload_bill`, `status`,`added_by`, `paid_by`, `paid_to`, `head_of_accounts_id`) VALUES ('$date','$bill_no', '$amount',  '$payment_type', '$payment_id', '$descriptions', '$image','$status','$added_by', '$paidBy', '$paidTo', '$subcategory')";
 
         $insertEmpQuery = $this->conn->query($sql);
 
@@ -27,7 +27,7 @@ class Expenses extends DatabaseConnection{
     
     function expensestoDate($search_expenses1, $search_expenses){
 
-        $sql = "SELECT * FROM `expenses` WHERE concat(`date`)  between '$search_expenses1' and '$search_expenses'";
+        $sql = "SELECT * FROM `expenses` WHERE concat(`date`)  between '$search_expenses1' and '$search_expenses' and `status` LIKE '1'";
 
         $studentTypeQuery = $this->conn->query($sql);
 
@@ -53,7 +53,7 @@ class Expenses extends DatabaseConnection{
 
     function finddataExpenses($search_expenses1, $search_expenses){
 
-        $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` WHERE concat(`date`)  between '$search_expenses1' and '$search_expenses';";
+        $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` WHERE concat(`date`)  between '$search_expenses1' and '$search_expenses' and `status` LIKE '1'";
 
         $result = $this->conn->query($sql);
 
@@ -86,7 +86,7 @@ class Expenses extends DatabaseConnection{
 
     function totalamountDay(){
 
-        $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
+        $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '1' ORDER BY DAY(amount);";
 
         $result = $this->conn->query($sql);
 
@@ -100,7 +100,7 @@ class Expenses extends DatabaseConnection{
 
     function totalamountYear(){
 
-        $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
+        $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '1' ORDER BY YEAR(amount);";
 
         $result = $this->conn->query($sql);
 
@@ -113,7 +113,7 @@ class Expenses extends DatabaseConnection{
 
     function totalamountMonth(){
 
-        $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
+        $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '1' ORDER BY MONTH(amount)";
 
         $result = $this->conn->query($sql);
 
@@ -128,7 +128,7 @@ class Expenses extends DatabaseConnection{
 
     function totalamount(){
 
-        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `expenses`;";
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `expenses` WHERE `status` LIKE '1'";
 
         $result = $this->conn->query($sql);
 
@@ -160,7 +160,7 @@ class Expenses extends DatabaseConnection{
 
     function expenseschartMonth($expenses_chart){
 
-        $sql = "SELECT * FROM `expenses`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
+        $sql = "SELECT * FROM `expenses`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '1' ORDER BY MONTH(amount)";
 
         $studentTypeQuery = $this->conn->query($sql);
         $rows = $studentTypeQuery->num_rows;
@@ -182,14 +182,14 @@ class Expenses extends DatabaseConnection{
     
 
 
-
+    
 
 
     //updatePage start w
 
     function expenseschartday($expenses_chart){
 
-        $sql = "SELECT * FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount)";
+        $sql = "SELECT * FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '1' ORDER BY DAY(amount)";
 
         $studentTypeQuery = $this->conn->query($sql);
         $rows = $studentTypeQuery->num_rows;
@@ -214,7 +214,7 @@ class Expenses extends DatabaseConnection{
 
     function expenseschartyear($expenses_chart){
 
-        $sql = "SELECT * FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount)";
+        $sql = "SELECT * FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '1' ORDER BY YEAR(amount)";
 
        
         $studentTypeQuery = $this->conn->query($sql);
@@ -280,11 +280,49 @@ class Expenses extends DatabaseConnection{
 
     // display start w
 
+
+    function displayStatus(){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `status`";
+
+        $insertEmpQuery = $this->conn->query($sql);
+
+        while($row      = $insertEmpQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+
     function displaydata(){
 
         $empData = array();
 
         $sql = "SELECT * FROM `expenses` order by id desc ";
+
+        $insertEmpQuery = $this->conn->query($sql);
+
+        while($row      = $insertEmpQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+
+
+    function displayBystatus(){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `expenses` WHERE `status` LIKE '1' order by id desc ";
 
         $insertEmpQuery = $this->conn->query($sql);
 
@@ -397,13 +435,13 @@ class Expenses extends DatabaseConnection{
     //end updateEmp function
 
 
-        function expensesupdate($id, $bill_no, $amount, $payment_type, $date, $c_image, $payment_id, $paid_by, $paid_to, $description, $accountsSelect, $subcategory){
+        function expensesupdate($id, $bill_no, $amount, $payment_type, $date, $c_image, $payment_id, $paid_by, $paid_to, $description, $subcategory, $status){
 
             $descriptions = addslashes($description);
        
        $sql = "UPDATE  `expenses` 
                 SET `id`                = '$id',
-                `bill_no`               = '$bill_no',
+                `voucher_no`            = '$bill_no',
                 `amount`                = '$amount',
                 `payment_type`          = '$payment_type',
                 `date`                  = '$date',
@@ -412,8 +450,8 @@ class Expenses extends DatabaseConnection{
                 `paid_by`               = '$paid_by',
                 `paid_to`               = '$paid_to',
                 `description`           = '$descriptions',
-                `head_of_accounts_id`   = '$accountsSelect',
-                `hfa_sub_category_id`   = '$subcategory'
+                `head_of_accounts_id`   = '$subcategory',
+                `status`                = '$status'
                 WHERE
                 `expenses`.`id` = '$id'";
 
@@ -566,24 +604,611 @@ function expenseweekbarchat(){
 
 
 
-//     function expensesLastMonth($expenses_chart){
 
-//         $sql = "SELECT * FROM `expenses`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
-
-//         $studentTypeQuery = $this->conn->query($sql);
-//         $rows = $studentTypeQuery->num_rows;
-//         if ($rows == 0) {
-//         return 0;
-//         }else{
-//         while ($result = $studentTypeQuery->fetch_array()) {
-//         $data[] = $result;
-//         }
-//         return $data;
-//         }
-
-//     }
+// ############################################### head of accounts expenses ###################################################
 
 
+
+//    ==============================Today==============================
+
+
+function expensesHOAday($expenses_HOA){
+
+    $sql = "SELECT * FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`head_of_accounts_id`= '$expenses_HFA' and `status` LIKE '1' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountDayHOA($expenses_HOA){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+//    ==============================MONTH==============================
+
+
+function expensesHOAmonth($expenses_HOA){
+
+    $sql = "SELECT * FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountMonthHOA($expenses_HOA){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+//    ==============================YEAR==============================
+
+
+function expensesHOAyear($expenses_HOA){
+
+    $sql = "SELECT * FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountYearHOA($expenses_HOA){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayHOA($expenses_HOA){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `expenses` where `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1' order by id desc ";
+
+        $hfaQuery = $this->conn->query($sql);
+
+        while($row      = $hfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalamountHOA($expenses_HOA){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where `expenses`.`head_of_accounts_id`= '$expenses_HOA' and `status` LIKE '1'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
+
+
+
+
+
+
+    
+// ############################################### Vendors expenses ###################################################
+
+
+
+//    ==============================Today==============================
+
+
+function expensesVENday($expenses_VEN){
+
+    $sql = "SELECT * FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountDayVEN($expenses_VEN){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+//    ==============================MONTH==============================
+
+
+function expensesVENmonth($expenses_VEN){
+
+    $sql = "SELECT * FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountMonthVEN($expenses_VEN){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+//    ==============================YEAR==============================
+
+
+function expensesVENyear($expenses_VEN){
+
+    $sql = "SELECT * FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountYearVEN($expenses_VEN){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayVEN($expenses_VEN){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `expenses` where `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1' order by id desc ";
+
+        $HfaQuery = $this->conn->query($sql);
+
+        while($row      = $HfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalamountVEN($expenses_VEN){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where `expenses`.`paid_to`= '$expenses_VEN' and `status` LIKE '1'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
+
+
+
+
+
+
+
+    
+    
+// ############################################### Employee expenses by ###################################################
+
+
+
+//    ==============================Today==============================
+
+
+function expensesEMPday($expenses_EMP){
+
+    $sql = "SELECT * FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountDayEMP($expenses_EMP){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+//    ==============================MONTH==============================
+
+
+function expensesEMPmonth($expenses_EMP){
+
+    $sql = "SELECT * FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountMonthEMP($expenses_EMP){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+//    ==============================YEAR==============================
+
+
+function expensesEMPyear($expenses_EMP){
+
+    $sql = "SELECT * FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountYearEMP($expenses_EMP){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayEMP($expenses_EMP){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `expenses` where `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1' order by id desc ";
+
+        $HfaQuery = $this->conn->query($sql);
+
+        while($row      = $HfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalamountEMP($expenses_EMP){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where `expenses`.`paid_by`= '$expenses_EMP' and `status` LIKE '1'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
+
+
+
+
+
+
+
+        
+// ############################################### cancel expenses by ###################################################
+
+
+
+//    ==============================Today==============================
+
+
+function expensesCANday(){
+
+    $sql = "SELECT * FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '0' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountDayCAN(){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE()))  and `status` LIKE '0' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+//    ==============================MONTH==============================
+
+
+function expensesCANmonth(){
+
+    $sql = "SELECT * FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '0' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountMonthCAN(){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '0' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+//    ==============================YEAR==============================
+
+
+function expensesCANyear(){
+
+    $sql = "SELECT * FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '0' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountYearCAN(){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE '0' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayCAN(){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `expenses` where `status` LIKE '0' order by id desc ";
+
+        $HfaQuery = $this->conn->query($sql);
+
+        while($row      = $HfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalamountCAN(){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `expenses` where `status` LIKE '0'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
 
 }
 ?>

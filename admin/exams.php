@@ -390,106 +390,6 @@ $results=$InstituteDetails->instituteShow();
 
         </section>
 
-
-        <section class="section dashboard">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card m-0 ">
-                        <div class="card-body p-3">
-                            <h5 class="card-title">add Subject Pass marks</h5>
-                            <?php
-                           $type = "Subject Wise";
-                                $result=$Examination->passMarkshow($type);
-                                foreach($result as $row){   
-                                ?>
-                            <form method="POST" action="./ajax/percentage.action.php">
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Subject Pass Marks</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control"
-                                            value="<?php echo $row['marks']  ?>" name="marks" required>
-                                        <input type="hidden" maxlength="55" class="form-control"
-                                            value="<?php echo $row['id']  ?>" name="id" required>
-                                    </div>
-                                </div>
-                                <input type="hidden" maxlength="55" class="form-control"
-                                    value="<?php echo $row['type']  ?>" name="type" required>
-
-
-                                <?php
-                               
-                               foreach($results as $row){   
-                               ?>
-                                <input type="hidden" maxlength="55" class="form-control"
-                                    value="<?php echo $row['session']  ?>" name="session" readonly required>
-                                <?php  } ?>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-12  d-flex justify-content-center align-items-center">
-                                        <button class="btn btn-primary me-md-2" name="submitdata"
-                                            type="submit">Update</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <!-- End Session -->
-                            <?php  } ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card m-0 ">
-                        <div class="card-body p-3">
-                            <h5 class="card-title">add Overall Pass Marks</h5>
-                            <?php
-                         $types = "Overall Wise";
-                                $result=$Examination->passMarkshow($types);
-                                foreach($result as $row){   
-                                ?>
-                            <form method="POST" action="./ajax/percentage.action.php">
-                                <div class="row mb-3">
-                                    <label for="inputText" class="col-sm-4 col-form-label">Overall Pass Marks</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" maxlength="55" class="form-control"
-                                            value="<?php echo $row['marks']  ?>" name="marks" required>
-                                        <input type="hidden" maxlength="55" class="form-control"
-                                            value="<?php echo $row['id']  ?>" name="id" required>
-                                    </div>
-                                </div>
-                                <input type="hidden" maxlength="55" class="form-control"
-                                    value="<?php echo $row['type']  ?>" name="type" required>
-
-                                <?php
-                               
-                               foreach($results as $row){   
-                               ?>
-                                <input type="hidden" maxlength="55" class="form-control"
-                                    value="<?php echo $row['session']  ?>" name="session" required>
-                                <?php  } ?>
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-12  d-flex justify-content-center align-items-center">
-                                        <button class="btn btn-primary me-md-2" name="Updatedata"
-                                            type="submit">Update</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <!-- End Session -->
-                            <?php
-                                    }            
-                                    ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-
-
-
-
-
-
         <section class="section dashboard" style="margin-top: 3rem;">
             <div class="row">
                 <div class="col-lg-6">
@@ -600,7 +500,6 @@ $results=$InstituteDetails->instituteShow();
 
 
 
-
         <section class="section dashboard">
 
 
@@ -672,7 +571,6 @@ $results=$InstituteDetails->instituteShow();
 
                                         <?php        $showclassid   = $class['id'].$idbtn                 ?>
 
-
                                         <td><?php  echo $showid  ?></td>
 
                                         <td>
@@ -743,8 +641,6 @@ $results=$InstituteDetails->instituteShow();
 
 
 
-
-
         <section class="section dashboard">
 
 
@@ -811,13 +707,13 @@ $results=$InstituteDetails->instituteShow();
 
                                     <tr>
 
-                                        <?php        $shownameid    = $row['id'].$myuid.$showsubject     ?>
+                                        <?php        $shownameid    = $row['id'].$myuid.$showsubject      ?>
 
-                                        <?php        $showbtnid     = $row['id'].$idbtn.$myuid           ?>
+                                        <?php        $showbtnid     = $row['id'].$idbtn.$myuid            ?>
 
-                                        <?php        $showclassid   = $row['id'].$idbtn                  ?>
+                                        <?php        $showclassid   = $row['id'].$idbtn                   ?>
 
-                                        <?php        $showclass_id   = $row['id'].$row['subject'].$idbtn ?>
+                                        <?php        $showclass_id   = $row['id'].$row['subject'].$idbtn  ?>
 
 
                                         <td><?php  echo $showid  ?></td>
@@ -891,6 +787,7 @@ $results=$InstituteDetails->instituteShow();
             </div>
 
         </section>
+
 
 
 
@@ -1015,7 +912,7 @@ $results=$InstituteDetails->instituteShow();
     }
 
 
-
+    
 
 
     const deleteexamForm = () => {
@@ -1089,7 +986,7 @@ $results=$InstituteDetails->instituteShow();
 
 
 
-
+   
 
 
     const deleteForm = () => {
@@ -1136,6 +1033,7 @@ $results=$InstituteDetails->instituteShow();
 
     };
 
+
     function savesubjectItem(class_ids, ids, id, classid) {
 
         let marksdata = document.getElementById(id);
@@ -1179,5 +1077,6 @@ $results=$InstituteDetails->instituteShow();
 
 
 </body>
+
 
 </html>

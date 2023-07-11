@@ -87,9 +87,7 @@ $feeAcc = $FeesAccount->classById($_GET['feesdata']);
     <link href="https://fonts.gstatic.com" rel="preconnect" />
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
     <!-- Vendor CSS Files -->
@@ -138,6 +136,12 @@ $feeAcc = $FeesAccount->classById($_GET['feesdata']);
 
         $showid = $showClassdata['id'];
 
+        $feesDetails = $FeesAccount->schowAccountById($showpurpose);   
+                                                
+        foreach($feesDetails as $feesacc){
+
+            $acc_name = $feesacc['account_name'];
+
         ?>
 
 
@@ -156,8 +160,7 @@ $feeAcc = $FeesAccount->classById($_GET['feesdata']);
 
                     <div class="col-sm-9">
 
-                        <input type="text" maxlength="55" class="form-control" value="<?php echo $showpurpose; ?>"
-
+                        <input type="text" maxlength="55" class="form-control" value="<?php echo $acc_name; ?>"
                             name="purpose" readonly required>
 
                     </div>
@@ -173,7 +176,6 @@ $feeAcc = $FeesAccount->classById($_GET['feesdata']);
                     <div class="col-sm-9">
 
                         <input type="text" maxlength="55" class="form-control" value="<?php echo $showamount; ?>"
-
                             name="amount" required>
 
                     </div>
@@ -194,7 +196,7 @@ $feeAcc = $FeesAccount->classById($_GET['feesdata']);
 
         </div>
 
-        <?php } ?>
+        <?php }} ?>
 
     </form>
 

@@ -1,15 +1,7 @@
 <?php
 
 
-
-
-
 class Vendor extends DatabaseConnection{
-
-
-
-
-
     
 
     //   inshat dada start w
@@ -630,6 +622,28 @@ function vendordisplaydata(){
 
 
 
+    
+    function vendorByid($Id){
+
+
+
+        $sql = "SELECT * FROM vendor WHERE `vendor`.`vendor_id` = '$Id'";
+
+
+
+        $result = $this->conn->query($sql);
+
+
+
+        return $result;
+
+
+
+    }
+
+
+
+
     // end updatePage
 
 
@@ -701,9 +715,6 @@ function vendordisplaydata(){
 
 
 
-
-
 }
 
 ?>
-

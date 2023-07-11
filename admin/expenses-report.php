@@ -10,18 +10,15 @@ require_once '../includes/constant.php';
 
 require_once '../classes/expenses.class.php';
 
-$expensesclass = new Expenses();
-
-
+require_once '../classes/head_of_accounts.class.php';
 
 require_once '../classes/institutedetails.class.php';
 
-$expenses = new  InstituteDetails();
+$expensesclass = new Expenses();
 
+$HFA           = new HeadOfAccounts();
 
-
-
-
+$expenses      = new  InstituteDetails();
 
 
     if(isset ($_GET['dayreport']) ){
@@ -56,7 +53,7 @@ $expenses = new  InstituteDetails();
 
     if(isset ($_GET['totalreport']) ){
 
-    $expenseschartbox=$expensesclass->displaydata($_GET['totalreport']);
+    $expenseschartbox=$expensesclass->displayBystatus($_GET['totalreport']);
 
     $totalresult=$expensesclass->totalamount();
 
@@ -74,12 +71,165 @@ $expenses = new  InstituteDetails();
 
 
 
+    if(isset ($_POST['duration']) && isset ($_POST['head_of_account']) && isset ($_POST['select_typpe'])){
+
+        if($_POST['select_typpe'] == "HFA"){
+            
+            if($_POST['duration'] == date("l")){
+
+                $expenseschartbox = $expensesclass->expensesHOAday($_POST['head_of_account']);
         
+                $totalresult=$expensesclass->totalamountDayHOA($_POST['head_of_account']);
+        
+            }
+            if($_POST['duration'] == date('M')){
+        
+                $expenseschartbox = $expensesclass->expensesHOAmonth($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountMonthHOA($_POST['head_of_account']);
+        
+            }
+        
+            if($_POST['duration'] == date('Y')){
+        
+                $expenseschartbox = $expensesclass->expensesHOAyear($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountYearHOA($_POST['head_of_account']);
+        
+            }
+        
+            if($_POST['duration'] == "Total"){
+        
+                $expenseschartbox = $expensesclass->displayHOA($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountHOA($_POST['head_of_account']);
+        
+            }
+            $hfadata =$HFA->categoryById($_POST['head_of_account']); 
+        }
+    
+    
+    
+    
+        if($_POST['select_typpe'] == "VendorsNAME"){
+            
+            if($_POST['duration'] == date("l")){
+
+                $expenseschartbox = $expensesclass->expensesVENday($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountDayVEN($_POST['head_of_account']);
+        
+            }
+            if($_POST['duration'] == date('M')){
+        
+                $expenseschartbox = $expensesclass->expensesVENmonth($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountMonthVEN($_POST['head_of_account']);
+        
+            }
+        
+            if($_POST['duration'] == date('Y')){
+        
+                $expenseschartbox = $expensesclass->expensesVENyear($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountYearVEN($_POST['head_of_account']);
+        
+            }
+        
+            if($_POST['duration'] == "Total"){
+        
+                $expenseschartbox = $expensesclass->displayVEN($_POST['head_of_account']);
+        
+                $totalresult=$expensesclass->totalamountVEN($_POST['head_of_account']);
+        
+            }
+            
+            }
+    
+    
+    
+            if($_POST['select_typpe'] == "Employee"){
+            
+                if($_POST['duration'] == date("l")){
+    
+                    $expenseschartbox = $expensesclass->expensesEMPday($_POST['head_of_account']);
+            
+                    $totalresult=$expensesclass->totalamountDayEMP($_POST['head_of_account']);
+            
+                }
+                if($_POST['duration'] == date('M')){
+            
+                    $expenseschartbox = $expensesclass->expensesEMPmonth($_POST['head_of_account']);
+            
+                    $totalresult=$expensesclass->totalamountMonthEMP($_POST['head_of_account']);
+            
+                }
+            
+                if($_POST['duration'] == date('Y')){
+            
+                    $expenseschartbox = $expensesclass->expensesEMPyear($_POST['head_of_account']);
+            
+                    $totalresult=$expensesclass->totalamountYearEMP($_POST['head_of_account']);
+            
+                }
+            
+                if($_POST['duration'] == "Total"){
+            
+                    $expenseschartbox = $expensesclass->displayEMP($_POST['head_of_account']);
+            
+                    $totalresult=$expensesclass->totalamountEMP($_POST['head_of_account']);
+            
+                }
+                
+                }
+
+
+
+
+                if($_POST['select_typpe'] == "cancel"){
+            
+                    if($_POST['duration'] == date("l")){
+        
+                        $expenseschartbox = $expensesclass->expensesCANday();
+                
+                        $totalresult=$expensesclass->totalamountDayCAN();
+                
+                    }
+                    if($_POST['duration'] == date('M')){
+                
+                        $expenseschartbox = $expensesclass->expensesCANmonth();
+                
+                        $totalresult=$expensesclass->totalamountMonthCAN();
+                
+                    }
+                
+                    if($_POST['duration'] == date('Y')){
+                
+                        $expenseschartbox = $expensesclass->expensesCANyear();
+                
+                        $totalresult=$expensesclass->totalamountYearCAN();
+                
+                    }
+                
+                    if($_POST['duration'] == "Total"){
+                
+                        $expenseschartbox = $expensesclass->displayCAN();
+                
+                        $totalresult=$expensesclass->totalamountCAN();
+                
+                    }
+                    
+                    }
+
+
+    
+        }
 
     $result = $expenses->instituteShow();
+    
 
-
-
+                             
+    
 ?>
 
 <!DOCTYPE html>
@@ -119,9 +269,7 @@ $expenses = new  InstituteDetails();
     <link href="https://fonts.gstatic.com" rel="preconnect" />
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
 
@@ -161,7 +309,7 @@ $expenses = new  InstituteDetails();
   * License: https://bootstrapmade.com/license/
 
   ======================================================== -->
-  <style>
+    <style>
     th,
     p,
     h4,
@@ -212,17 +360,75 @@ $expenses = new  InstituteDetails();
 
                             <h4 class="ps-4">Expenses Report</h4>
 
-                            <h6 class="ps-4">Expenses - <?php if(isset($_GET['dayreport'])){echo $_GET['dayreport'];};   
+                            <h6 class="ps-4">Expenses - <?php 
+                                if(isset($_GET['dayreport'])){echo $_GET['dayreport'];};   
 
-                                                     if(isset($_GET['monthreport'])){echo $_GET['monthreport'];};
+                                if(isset($_GET['monthreport'])){echo $_GET['monthreport'];};
 
-                                                     if(isset($_GET['yearreport'])){echo $_GET['yearreport'];}; 
+                                if(isset($_GET['yearreport'])){echo $_GET['yearreport'];}; 
 
-                                                     if(isset($_GET['totalreport'])){echo $_GET['totalreport'];}; ?>
+                                if(isset($_GET['totalreport'])){echo $_GET['totalreport'];}; 
 
-                                                     <?php if(isset($_GET['fromDate'])){echo $_GET['fromDate'];}; ?><br><?php if(isset($_GET['toDate'])){echo $_GET['toDate'];};
+                                if(isset ($_POST['duration']) && isset ($_POST['head_of_account']) && isset ($_POST['select_typpe'])){
 
-                                                     ?>
+                                if(isset($_POST['duration']))
+                                {
+                                if($_POST['duration'] == date("l")){
+
+                                echo "Today ". $_POST['duration']."<br>";
+                                }
+                                if($_POST['duration'] == date("M")){
+
+                                echo "Month ". $_POST['duration']."<br>";
+                                }
+                                if($_POST['duration'] == date("Y")){
+
+                                echo "Year ". $_POST['duration']."<br>";
+                                }
+
+                                if($_POST['duration'] == "Total"){
+
+                                echo "Total"."<br>";
+                                }
+                                }; 
+
+
+                                if($_POST['select_typpe'] == "HFA"){
+                                foreach($hfadata as $row)
+                                {
+                                echo "Head Of Accounts / ".$row['category'];
+                                }
+                                };
+                                
+                                if($_POST['select_typpe'] == "VendorsNAME"){
+                                   
+                                    echo "Vendor Name - ".$_POST['head_of_account'];
+                                   
+                                };
+                                
+                                if($_POST['select_typpe'] == "Employee"){
+                                   
+                                    echo "Expenses By - ".$_POST['head_of_account'];
+                                   
+                                }
+                                
+                                if($_POST['select_typpe'] == "cancel"){
+                                   
+                                    echo "Expenses - ".$_POST['head_of_account'];
+                                   
+                                }
+                                
+                                ;}
+
+                                if(isset($_GET['fromDate'])){
+                                echo $_GET['fromDate']."<br>";
+                                }; 
+
+                                if(isset($_GET['toDate'])){
+                                echo $_GET['toDate'];
+                                };
+
+                                ?>
 
                             </h6>
 
@@ -333,13 +539,13 @@ $expenses = new  InstituteDetails();
 
                         <tr>
 
-                            <th>Bill_No</th>
+                            <th>Voucher No</th>
 
-                            <th>Purpose</th>
+                            <th>Paid By</th>
 
-                            <th>Type</th>
+                            <th>Paid To</th>
 
-                            <th>added_by</th>
+                            <th>Payment Mode</th>
 
                             <th>Amount</th>
 
@@ -357,15 +563,15 @@ $expenses = new  InstituteDetails();
 
                    foreach ($expenseschartbox as $showStudentDetailsshow) {
 
-                    $showbill_no = $showStudentDetailsshow['bill_no'];
+                    $showbill_no = $showStudentDetailsshow['voucher_no'];
 
                     $showamount = $showStudentDetailsshow['amount'];
 
                     $showamounts   = number_format($showamount, 2);
 
-                    $showadded_by = $showStudentDetailsshow['added_by'];
+                    $showpaid_by = $showStudentDetailsshow['paid_by'];
 
-                    $showpurpore = $showStudentDetailsshow['purpore'];
+                    $showpaid_to = $showStudentDetailsshow['paid_to'];
 
                     $showstupayment_type = $showStudentDetailsshow['payment_type'];
 
@@ -377,11 +583,11 @@ $expenses = new  InstituteDetails();
 
                   <td>'.$showbill_no.'</td>
 
-                  <td>'.$showpurpore.'</td>
+                  <td>'.$showpaid_by.'</td>
+
+                  <td>'.$showpaid_to.'</td>
 
                   <td>'.$showstupayment_type.'</td>
-
-                  <td>'.$showadded_by.'</td>
 
                   <td>'.$showamounts.'</td>
 
@@ -399,8 +605,6 @@ $expenses = new  InstituteDetails();
 
 
 
-
-
                     <tr>
 
                         <th></th>
@@ -408,6 +612,7 @@ $expenses = new  InstituteDetails();
                         <th></th>
 
                         <th></th>
+
 
                         <th> Total </th>
 
@@ -419,14 +624,14 @@ $expenses = new  InstituteDetails();
 
 
 
-                    
+
 
 
 
                 </table>
                 <p class="ps-4 pt-4">date: <?php echo date("d.m.y");?></p>
             </div>
-           
+
         </div>
 
         <?php
@@ -454,7 +659,6 @@ $expenses = new  InstituteDetails();
 
 
     <script>
-
     `//get DIV content as clone
 
     var divContents = $("#DIVNAME").clone();
@@ -482,7 +686,6 @@ $expenses = new  InstituteDetails();
     //attach original body
 
     body.appendTo($("html"));`
-
     </script>
 
 

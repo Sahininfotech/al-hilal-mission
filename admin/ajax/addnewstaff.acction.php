@@ -35,8 +35,6 @@ require_once '../../classes/employee.class.php';
 
     $hashpass           = password_hash($Password, PASSWORD_DEFAULT);
 
- 
-
       $result = $employees->staffInsert($name, $email, $address, $contactno, $gender, $qualification, $experience, $joinin_date, $post_office, $sdo_or_bdo, $police_station, $district, $pin_code, $state, $status, $hashpass, $image, $RoleName);
       
       if($result){

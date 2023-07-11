@@ -703,7 +703,7 @@ class FeesAccount extends DatabaseConnection{
 
     }
 
-
+    
 
     function schowAmount($showstuid){
 
@@ -731,6 +731,152 @@ class FeesAccount extends DatabaseConnection{
             }
         }
         return $data;
+
+    }
+
+
+
+
+    function admissiondata($student_id, $purpose, $amount){
+
+
+
+        $sql = "INSERT INTO `admission_fees_dtls` (`student_id`, `account_id`, `amount`)
+
+                                            VALUES
+
+                                            ('$student_id','$purpose', '$amount')";
+
+
+
+        $res = $this->conn->query($sql);
+
+        return $res;
+
+
+
+    }
+
+
+
+    function addMonthlyFees($className, $amount, $added_by){
+
+        $sql = "SELECT * FROM `monthly_fees_dtls` WHERE `monthly_fees_dtls`.`class_id` = '$className'";
+
+         $selectdata   = $this->conn->query($sql);
+ 
+         $rows = $selectdata->num_rows;
+
+         if ($rows == 0) {
+
+                $sql = "INSERT INTO `monthly_fees_dtls` (`class_id`, `amount`, `added_by`)
+                VALUES
+                ('$className', '$amount', '$added_by')";
+
+                $res = $this->conn->query($sql);
+                return $res;
+
+           }
+
+             else
+
+             {   
+                 $sqledit = "UPDATE  `monthly_fees_dtls` SET `class_id` = '$className', `amount` = '$amount', `modified_on` = now(), `added_by` = '$added_by' WHERE `monthly_fees_dtls`.`class_id` = '$className'";
+
+                 $result = $this->conn->query($sqledit);
+                 return $result;
+
+             }
+
+     }
+
+
+
+
+     function monthlyfees_structure(){
+
+
+
+        $data = array();
+
+        $sql = "SELECT * FROM `monthly_fees_dtls`";
+
+        $res = $this->conn->query($sql);
+
+        if ($res->num_rows > 0) {
+
+            while ($result = $res->fetch_array()) {
+
+                $data[] = $result;
+
+            }
+
+        }
+
+        return $data;
+
+
+
+    }
+
+
+
+    function monthlyfeesById($accId){
+
+
+
+        $data = array();
+
+        $sql = "SELECT * FROM `monthly_fees_dtls` WHERE `monthly_fees_dtls`.`id` = '$accId'";
+
+        $res = $this->conn->query($sql);
+
+        if ($res->num_rows > 0) {
+
+            while ($result = $res->fetch_array()) {
+
+                $data[] = $result;
+
+            }
+
+        }
+
+        return $data;
+
+
+
+    }
+
+
+
+    
+    function editMonthlyfees($amount,$Id){
+
+
+
+        $sql = "UPDATE  `monthly_fees_dtls` SET  `amount`= '$amount' WHERE `id` = '$Id'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+        
+
+
+    }
+
+
+
+
+    
+    function deleteMonFeesStur($accId){
+
+        $sql = "DELETE FROM `monthly_fees_dtls` WHERE `id` = $accId";
+
+        $res = $this->conn->query($sql);
+
+        return $res;
+
+
 
     }
 

@@ -67,6 +67,7 @@ class StudentDetails extends DatabaseConnection{
 
 
 
+        
         function previoustotalamount(){
 
             $data = array();    
@@ -79,7 +80,6 @@ class StudentDetails extends DatabaseConnection{
     
         }
         // end display
-
 
 
 
@@ -319,7 +319,6 @@ class StudentDetails extends DatabaseConnection{
 
     //order by ta 1234 por por korta studentmanagement-studentdetails
     function finalExampage($showstu, $year){
-       
         $empData = array();
 
         $sql = "SELECT * FROM `exam` WHERE `class_name` = '$showstu' and `year` = '$year' ORDER BY class_name";
@@ -463,26 +462,28 @@ class StudentDetails extends DatabaseConnection{
 
 
 
-         // revenue search w
 
-         function searchStudent($search_value){
 
-            $data = array();
-            $sql ="SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`name` LIKE '%$search_value%' or `student_fees_dtls`.`roll_no` LIKE '%$search_value%' or `student_fees_dtls`.`class` LIKE '%$search_value%'";
-            
-            $result = $this->conn->query($sql);
-            $rows = $result->num_rows;
-            if ($rows > 0) {
-                while ($row = $result->fetch_array()) {
-                    $data[] = $row;
-                }
+        // revenue search w
+
+    function searchStudent($search_value){
+
+        $data = array();
+        $sql ="SELECT * FROM `student_fees_dtls` WHERE `student_fees_dtls`.`name` LIKE '%$search_value%' or `student_fees_dtls`.`roll_no` LIKE '%$search_value%' or `student_fees_dtls`.`class` LIKE '%$search_value%'";
+        
+        $result = $this->conn->query($sql);
+        $rows = $result->num_rows;
+        if ($rows > 0) {
+            while ($row = $result->fetch_array()) {
+                $data[] = $row;
             }
-            return $data;
-            
-             
         }
+        return $data;
+        
+        
+    }
 
-      // revenue search end w
+    // revenue search end w
 
 
 
@@ -582,7 +583,7 @@ return $data;
 
 
 
-     // studentclass w
+     // studentclass-1 w
 
      function Studentmark($showstu){
         $sql = "SELECT * FROM `student` WHERE `student_id` = '$showstu'";
@@ -648,50 +649,50 @@ return $data;
 
 
 
-      
-        // student class 
+         
+    // student class 
 
-        function studentclass($student_id, $session){
+    function studentclass($student_id, $session){
 
-            $data = array();
-            $sql ="SELECT * FROM `student_class` WHERE `student_id` = '$student_id' and `session` = '$session'";
-            
-            $result = $this->conn->query($sql);
-            $rows = $result->num_rows;
-            if ($rows > 0) {
-                while ($row = $result->fetch_array()) {
-                    $data[] = $row;
-                }
+        $data = array();
+        $sql ="SELECT * FROM `student_class` WHERE `student_id` = '$student_id' and `session` = '$session'";
+        
+        $result = $this->conn->query($sql);
+        $rows = $result->num_rows;
+        if ($rows > 0) {
+            while ($row = $result->fetch_array()) {
+                $data[] = $row;
             }
-            return $data;
-            
-             
         }
+        return $data;
+        
+            
+    }
 
 
 
-
+    
     // Studentdata 
 
     function Studentdata($showstu, $class, $academic_year){
-    $sql = "SELECT * FROM `student_summary` WHERE `student_id` = '$showstu' and `class` = '$class' and `academic_year` = '$academic_year'";
+        $sql = "SELECT * FROM `student_summary` WHERE `student_id` = '$showstu' and `class` = '$class' and `academic_year` = '$academic_year'";
 
-    $studentTypeQuery = $this->conn->query($sql);
+        $studentTypeQuery = $this->conn->query($sql);
 
-    $rows = $studentTypeQuery->num_rows;
+        $rows = $studentTypeQuery->num_rows;
 
-    if ($rows == 0) {
-    return 0;
-    }else{
-    while ($result = $studentTypeQuery->fetch_array()) {
-    $data[] = $result;
-    }
-    return $data;
-    }
+        if ($rows == 0) {
+        return 0;
+        }else{
+        while ($result = $studentTypeQuery->fetch_array()) {
+        $data[] = $result;
+        }
+        return $data;
+        }
     }
     // end studentDetails function
 
-     
+
 
 }
 

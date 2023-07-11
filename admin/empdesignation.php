@@ -105,9 +105,7 @@ if(isset ($_POST["Updateyear"])){
      }
 
 
-     $techerdescription = "Presenting lessons in a comprehensive manner and use visual/audio means to
-     facilitate learning. Providing individualized instruction to each student by
-     promoting interactive learning. Creating and distributing educational content.";
+
 
 
 
@@ -295,12 +293,9 @@ if(isset ($_POST["Updateyear"])){
                                 </thead>
 
                                 <tbody>
-                                    <!-- <th scope="row">1</th>
-                                    <td>Teacher</td>
-                                    <td><?php    echo substr("$techerdescription",0,18)." ...";  ?></td>
-                                    <td>--</td> -->
+
                                     <?php
-                                    $i=2;
+                                    $i=1;
                                     $empresult = $empRole->RoleList();
                                     foreach($empresult as $row){
                                     $description        = $row['description'];
@@ -317,7 +312,8 @@ if(isset ($_POST["Updateyear"])){
 
                                         <td><?php    echo substr("$description",0,18)." ...";  ?></td>
 
-                                        <td> <?php if($designation_name == 'Teacher') {echo '--';} else{  ?>
+                                        <td>
+                                            <?php if($designation_name == 'Teacher') {echo '--';} else{  ?>
 
                                             <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
                                                 data-bs-target="#RoleFormModal" id="<?php echo $designation_id ?>"
@@ -328,7 +324,8 @@ if(isset ($_POST["Updateyear"])){
                                                 <i class="bi bi-trash" onclick="return deleteRole();"></i>
 
                                             </a>
-                                             <?php   }?>
+                                            <?php   }?>
+
                                         </td>
 
                                     </tr>

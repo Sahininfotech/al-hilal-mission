@@ -88,9 +88,9 @@ function revenueothersinsert($source, $amount, $date, $status, $added_by, $payme
 
     
 
-  function editdonation($name, $address, $amount, $status, $id,  $pin_code, $payment_type, $payment_id, $paid_by, $date){
+  function editdonation($name, $address, $amount, $status, $id,  $pin_code, $payment_type, $payment_id, $paid_by, $date, $description){
 
-
+    $descriptions = addslashes($description);
 
     $sqledit = "UPDATE  `revenue_donation`
 
@@ -112,7 +112,9 @@ function revenueothersinsert($source, $amount, $date, $status, $added_by, $payme
 
                 `paid_by`       = '$paid_by', 
 
-                `date`       = '$date'
+                `date`       = '$date',
+
+                `description` = '$descriptions'
 
                 WHERE
 
@@ -264,7 +266,7 @@ function othersfeesDay(){
 
 
 
-    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY DAY(amount);";
 
 
 
@@ -296,7 +298,7 @@ function othersfeesMonth(){
 
 
 
-    $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
+    $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY MONTH(amount);";
 
 
 
@@ -320,7 +322,7 @@ function othersfeesYear(){
 
 
 
-    $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
+    $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY YEAR(amount);";
 
 
 
@@ -513,7 +515,7 @@ function donationsDay(){
 
 
 
-    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY DAY(amount);";
 
 
 
@@ -569,7 +571,7 @@ function donationsMonth(){
 
 
 
-    $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
+    $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY MONTH(amount);";
 
 
 
@@ -593,7 +595,7 @@ function donationsYear(){
 
 
 
-    $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
+    $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY YEAR(amount);";
 
 
 
@@ -1595,7 +1597,7 @@ function revenuereport($donation_chart){
 
 
 
-    $sql = "SELECT * FROM `revenue_donation`  where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount)";
+    $sql = "SELECT * FROM `revenue_donation`  where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY DAY(amount)";
 
 
 
@@ -1645,7 +1647,7 @@ function donationreport($month_chart){
 
 
 
-    $sql = "SELECT * FROM `revenue_donation`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
+    $sql = "SELECT * FROM `revenue_donation`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY MONTH(amount)";
 
 
 
@@ -1693,7 +1695,7 @@ function donationyearreport($year_chart){
 
 
 
-    $sql = "SELECT * FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount)";
+    $sql = "SELECT * FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY YEAR(amount)";
 
 
 
@@ -1733,7 +1735,7 @@ function donationtotalamount(){
 
 
 
-    $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation`";
+    $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where `status` LIKE 'active'";
 
 
 
@@ -1765,7 +1767,7 @@ function donationtotalamount(){
 
 
 
-    $sql = "SELECT * FROM `revenue_donation` order by id desc ";
+    $sql = "SELECT * FROM `revenue_donation` where `status` LIKE 'active' order by id desc ";
 
 
 
@@ -1837,7 +1839,7 @@ function showedonationDetails($searchdonation1, $searchdonation){
 
 
 
-    $sql = "SELECT * FROM `revenue_donation` WHERE concat(`date`)  between '$searchdonation1' and '$searchdonation'";
+    $sql = "SELECT * FROM `revenue_donation` WHERE concat(`date`)  between '$searchdonation1' and '$searchdonation' and `status` LIKE 'active'";
 
 
 
@@ -1887,7 +1889,7 @@ function finddonation($searchdonation1, $searchdonation){
 
 
 
-$sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` WHERE concat(`date`)  between '$searchdonation1' and '$searchdonation'";
+$sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` WHERE concat(`date`)  between '$searchdonation1' and '$searchdonation' and `status` LIKE 'active'";
 
 
 
@@ -1928,9 +1930,6 @@ return $result;
 
 
 
-
-
-
 //updatePage start w
 
 
@@ -1939,11 +1938,7 @@ function otherdayreport($day_chart){
 
     // $empData = array();
 
-
-
-    $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount)";
-
-
+    $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY DAY(amount)";
 
     $studentTypeQuery = $this->conn->query($sql);
 
@@ -1989,7 +1984,7 @@ function revenueotherreport($month_chart){
 
 
 
-    $sql = "SELECT * FROM `revenue_others`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
+    $sql = "SELECT * FROM `revenue_others`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY MONTH(amount)";
 
 
 
@@ -2035,7 +2030,7 @@ function otheryearreport($year_chart){
 
 
 
-    $sql = "SELECT * FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount)";
+    $sql = "SELECT * FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'active' ORDER BY YEAR(amount)";
 
 
 
@@ -2085,7 +2080,7 @@ function otheryearreport($year_chart){
 
 
 
-    $sql = "SELECT * FROM `revenue_others` order by id desc ";
+    $sql = "SELECT * FROM `revenue_others` where `status` LIKE 'active' order by id desc ";
 
 
 
@@ -2123,7 +2118,7 @@ function otherstotalamount(){
 
 
 
-    $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others`";
+    $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where `status` LIKE 'active'";
 
 
 
@@ -2189,7 +2184,7 @@ function showerevenuesDetails($search_others1, $search_others){
 
 
 
-    $sql = "SELECT * FROM `revenue_others` WHERE concat(`date`)  between '$search_others1' and '$search_others'";
+    $sql = "SELECT * FROM `revenue_others` WHERE concat(`date`)  between '$search_others1' and '$search_others' and `status` LIKE 'active'";
 
 
 
@@ -2243,7 +2238,7 @@ function finddataothers($search_others1, $search_others){
 
 
 
-    $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` WHERE concat(`date`)  between '$search_others1' and '$search_others'";
+    $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` WHERE concat(`date`)  between '$search_others1' and '$search_others' and `status` LIKE 'active'";
 
 
 
@@ -2549,2237 +2544,663 @@ function showStatus(){
 
           
 
+// ############################################### head of accounts revenue ###################################################
+
+
+
+//    ==============================Today==============================
+
+
+function revenueHOAday($revenue_HFA){
+
+    $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountDayHOA($revenue_HFA){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+//    ==============================MONTH==============================
+
+
+function revenueHOAmonth($revenue_HFA){
+
+    $sql = "SELECT * FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountMonthHOA($revenue_HFA){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+//    ==============================YEAR==============================
+
+
+function revenueHOAyear($revenue_HFA){
+
+    $sql = "SELECT * FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalamountYearHOA($revenue_HFA){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayHOA($revenue_HFA){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `revenue_others` where `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active' order by id desc ";
+
+        $hfaQuery = $this->conn->query($sql);
+
+        while($row      = $hfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalamountHOA($revenue_HFA){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where `revenue_others`.`source`= '$revenue_HFA' and `status` LIKE 'active'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
+
+
+
+
+  
+// ############################################### Vendors expenses ###################################################
+
+
+
+//    ==============================Today==============================
+
+
+function vendorchartday($expenses_chart){
+
+
+
+    $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `vendor_id` = '$expenses_chart' and `status` LIKE 'active' ORDER BY DAY(amount)";
+
+
+
+    $vendorTypeQuery = $this->conn->query($sql);
+
+    $rows = $vendorTypeQuery->num_rows;
+
+    if ($rows == 0) {
+
+    return 0;
+
+    }else{
+
+    while ($result = $vendorTypeQuery->fetch_array()) {
+
+    $data[] = $result;
+
+    }
+
+    return $data;
+
+    }
+
+}
+
+
+
+function totalamountDay($vendor_total){
+
+
+
+    $sql="SELECT vendor_id, SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `vendor_id` = '$vendor_total' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+
+
+    $result = $this->conn->query($sql);
+
+
+
+    return $result;
+
+
+
+
+
+}
+
+
+//    ==============================MONTH==============================
+
+
+function vendorchartmonth($month_chart){
+
+    $sql = "SELECT * FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `vendor_id` = '$month_chart' and `status` LIKE 'active' ORDER BY MONTH(amount)";
+
+    $vendorTypeQuery = $this->conn->query($sql);
+
+    $rows = $vendorTypeQuery->num_rows;
+
+    if ($rows == 0) {
+
+    return 0;
+
+    }else{
+
+    while ($result = $vendorTypeQuery->fetch_array()) {
+
+    $data[] = $result;
+
+    }
+
+    return $data;
+
+    }
+
+}
 
 
 
 
 
 
+function vendortotalMonth($month_total){
 
 
+
+    $sql="SELECT vendor_id, SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `vendor_id` = '$month_total' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+
+
+    $result = $this->conn->query($sql);
+
+
+
+    return $result;
+
+
+
+}
+
+
+
+//    ==============================YEAR==============================
+
+function vendorchartyear($expenses_chart){
+
+
+    $sql = " SELECT * FROM `revenue_others` WHERE year(DATE)=(SELECT YEAR(CURDATE())) and `vendor_id` = '$expenses_chart' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+    $vendorTypeQuery = $this->conn->query($sql);
+
+    $rows = $vendorTypeQuery->num_rows;
+
+    if ($rows == 0) {
+
+    return 0;
+
+    }else{
+
+    while ($result = $vendorTypeQuery->fetch_array()) {
+
+    $data[] = $result;
+
+    }
+
+    return $data;
+
+    }
+
+}
+
+
+
+function ventotalamountYear($vendor_total){
+
+
+
+    // total $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `vendor` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
+
+    $sql = "SELECT vendor_id,`amount`, SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `vendor_id` = '$vendor_total' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+
+
+    $result = $this->conn->query($sql);
+
+
+
+    return $result;
+
+
+
+}
+
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+function vendisplay($vendortotal){
+
+    $empData = array();
+
+    $sql = "SELECT * FROM `revenue_others` WHERE `vendor_id` = '$vendortotal' and `status` LIKE 'active'";
+
+    $insertVenQuery = $this->conn->query($sql);
+
+    while($row      = $insertVenQuery->fetch_array()){    
+
+    $empData[]	    = $row;
+
+    }
+
+    return $empData;
+
+}
+
+  
+
+
+    function totalamount($vendor_chart){
+
+        $sql="SELECT vendor_id, SUM(amount) AS 'Total' FROM `revenue_others` where `vendor_id` = '$vendor_chart' and `status` LIKE 'active'";
     
-
+        $result = $this->conn->query($sql);
     
-
-//     function donationsDay(){
-
-
-
-//         $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-//     function donationsMonth(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-// w
-
-
-
-//     function donationsYear(){
-
-
-
-//         $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-//     #############################################################################################################
-
-//     #                                                                                                           #
-
-//     #                                            OTHER REVENUE FUNCTIONS                                        #
-
-//     #                                                                                                           #
-
-//     #############################################################################################################
-
-
-
-
-
+        return $result;
     
-
-//     addOtherRevenue start
-
-//     function addOtherRevenue($source, $amount, $date, $status, $added_by, $payment_type, $payment_id, $paid, $others_paid){
-
-
-
-//         $sql = "INSERT INTO `revenue_others` ( `source`, `amount`, `date`, `status`, `added_by`, `payment_type`, `payment_id`, `paid`, `others_paid`) VALUES ('$source', '$amount', '$date', '$status', '$added_by', '$payment_type', '$payment_id', '$paid', '$others_paid')";
-
-
-
-//         $res = $this->conn->query($sql);
-
-//         return $res;
-
-
-
-//     }
-
-//     eof
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-    
-
-
-
-//     otherRevenueCancel start
-
-//     function otherRevenueCancel($id){
-
-
-
-//         $sql2 = "UPDATE  `revenue_others` SET `status` = '0' WHERE `revenue_others`.`id` = '{$id}'";
-
-//         $result2 = $this->conn->query($sql2);
-
-//         return $result2;
-
-
-
-//     } eof
-
-
-
-
-
-
-
-
-
-//     function othersfeesDay(){
-
-
-
-//         $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-//   w
-
-
-
-//     function othersfeesMonth(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-//   w
-
-
-
-//     function othersfeesYear(){
-
-
-
-//         $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-//     function otherstotalamount(){
-
-
-
-//         $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others`";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-//       inshat dada start w
-
-
-
-//     function revenuefeesinsert($name, $roll_no, $amount, $class, $date, $address, $status, $added_by, $payment_type, $payment_id, $paid, $others_paid){
-
-
-
-//         $sql = "INSERT INTO `student_payment_dtls` ( `name`, `roll_no`, `amount`, `class`,`date`, `address`, `status`, `added_by`, `payment_type`, `payment_id`, `paid`, `others_paid`) VALUES ('$name', '$roll_no', '$amount', '$class', '$date', '$address', '$status', '$added_by', '$payment_type','$payment_id', '$paid','$others_paid')";
-
-
-
-//         $insertrevenuefees = $this->conn->query($sql);
-
-
-
-//     }
-
-
-
-//     inshat data end
-
-
-
-
-
-
-
-
-
-//       revenue year chat w
-
-
-
-// function revenuesbarchat(){
-
-
-
-//     $sql=" SELECT MONTHNAME(date) as chatname, SUM(amount) as amount FROM `student_payment_dtls` where year(DATE)=(SELECT YEAR(CURDATE())) GROUP BY chatname";
-
-
-
-//     $result = $this->conn->query($sql);
-
-
-
-//     return $result;
-
-
-
-// }
-
-
-
-
-
-
-
-
-
-//     display start w
-
-//     function revenueStudentdisplay(){
-
-
-
-//         $empData = array();
-
-
-
-//         $sql = "SELECT * FROM `student_payment_dtls` order by id desc";
-
-
-
-//         $empQuery   = $this->conn->query($sql);
-
-
-
-//         while($row  = $empQuery->fetch_array()){    
-
-
-
-//         $empData[]	= $row;
-
-//         }
-
-
-
-//         return $empData;
-
-
-
-//     }
-
-//     end display
-
-
-
-
-
-//     function studentfeesDay(){
-
-
-
-//         $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-
-
-//     }
-
-
-
-
-
-
-
-    
-
-
-
-//   w
-
-
-
-//   function studentfeesMonth(){
-
-
-
-//     $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//     $result = $this->conn->query($sql);
-
-
-
-//     return $result;
-
-
-
-// }
-
-
-
-// w
-
-
-
-// function studentfeesYear(){
-
-
-
-//     $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//     $result = $this->conn->query($sql);
-
-
-
-//     return $result;
-
-
-
-// }
-
-
-
-
-
-
-
-
-
-// curd total amount end..............
-
-
-
-
-
-
-
-//     display start w
-
-//     function revenueDonationdisplay(){
-
-
-
-//         $empData = array();
-
-
-
-//         $sql = "SELECT * FROM `revenue_donation` order by id desc";
-
-
-
-//         $empQuery   = $this->conn->query($sql);
-
-
-
-//         while($row  = $empQuery->fetch_array()){    
-
-
-
-//         $empData[]	= $row;
-
-//         }
-
-
-
-//         return $empData;
-
-
-
-//     }
-
-//     end display
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     display start w
-
-
-
-//     function revenueothersdisplay(){
-
-
-
-//         $empData = array();
-
-
-
-//         $sql = "SELECT * FROM `revenue_others` order by id desc";
-
-
-
-//         $empQuery   = $this->conn->query($sql);
-
-
-
-//         while($row  = $empQuery->fetch_array()){    
-
-
-
-//         $empData[]	= $row;
-
-//         }
-
-
-
-//         return $empData;
-
-
-
-//     }
-
-
-
-//     end display
-
-
-
-
-
-
-
-
-
-
-
-//     curd total amount start others revenue w..............
-
-
-
-//     function revenuetotalamountDay(){
-
-
-
-//         $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-
-
-//     }
-
-
-
-
-
-
-
-//     function revenuetotalamountWeek(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where date > DATE_SUB(DATE(NOW()), INTERVAL 1 WEEK) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-
-
-//     }   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     function revenuetotalamountMonth(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-//     function revenuetotalamountYear(){
-
-
-
-//         $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-//     curd total amount end..............
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     curd total amount start student w..............
-
-
-
-//     function revenuestudenttotalamountDay(){
-
-
-
-//         $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     function revenuestudenttotalamountMonth(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-//     function revenuestudenttotalamountYear(){
-
-
-
-//         $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-    
-
-//     function revenuetotalamount(){
-
-
-
-//         $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls`;";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-//     curd total amount end..............
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     curd total amount start donation w..............
-
-
-
-//     function revenuedonationtotalamountDay(){
-
-
-
-//         $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-//     function revenuedonationtotalamountWeek(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where date > DATE_SUB(DATE(NOW()), INTERVAL 1 WEEK) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     function revenuedonationtotalamountMonth(){
-
-
-
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-//     function revenuedonationtotalamountYear(){
-
-
-
-//         $sql="SELECT YEAR(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-//     curd total amount end..............
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     function displaydata1(){
-
-
-
-//         $sql = "SELECT * FROM `student`";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-//     delete start
-
-
-
-//     function deleteEmp($deleteEmpId){
-
-
-
-//         $stu_id = $_GET['id'];
-
-
-
-//         $sqldal = "DELETE FROM `staff_atten` WHERE  `id` = {$stu_id}";
-
-
-
-//         $result1 = $this->conn->query($sqldal);
-
-
-
-//         return $result1;
-
-//     }
-
-    
-
-//     end deleteDocCat function
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     update start
-
-
-
-//     function update( $id, $name, $address, $contactno, $email, $gender, $qualification){
-
-
-
-//         $sqledit1 = "UPDATE  `staff` SET `id` = '{$id}', `name`= '{$name}', `address` = '{$address}', `contactno` = '{$contactno}', `email` = '{$email}', `gender` = '{$gender}', `qualification` = '{$qualification}' WHERE `staff`.`id` = '{$id}'";
-
-
-
-//         $result1 = $this->conn->query($sqledit1);
-
-
-
-//         return $result1;
-
-//     }
-
-    
-
-//     end updateEmp function
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     notice inshat data start 
-
-
-
-//     function noticeInsert( $notice){
-
-
-
-//         $sql = "INSERT INTO `forum` ( `notice`) VALUES ( '$notice')";
-
-
-
-//         $insertEmpQuery = $this->conn->query($sql);
-
-
-
-//     }
-
-
-
-//     notice inshat data end
-
-
-
-
-
-
-
-
-
-
-
-
-
-//     function updatePage($userId){
-
-
-
-//         $sql = "SELECT * FROM staff WHERE `staff`.`user_id` = '$userId'";
-
-
-
-//         $result1 = $this->conn->query($sql);
-
-
-
-//         return $result1;
-
-//     }
-
-
-
-
-
-
-
-//     student report start....w.......
-
-
-
-
-
-
-
-//     updatePage start w
-
-
-
-//     function revenuechartday($expenses_chart){
-
-
-
-//         $sql = "SELECT * FROM `student_payment_dtls` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount);";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-
-
-//     }
-
-
-
-//     end updatePage
-
-
-
-
-
-
-
-
-
-
-
-//     function studentreportmonth($expenses_chart){
-
-
-
-//         $sql = "SELECT * FROM `student_payment_dtls` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount);";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     }  
-
-
-
-
-
-
-
-
-
-//     function studentreportyear($expenses_chart){
-
-
-
-//         $sql = "SELECT * FROM `student_payment_dtls` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount);";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     } 
-
-
-
-
-
-// display start w
-
-
-
-// function studenttotalreport(){
-
-
-
-//     $empData = array();
-
-
-
-//     $sql = "SELECT * FROM `student_payment_dtls` order by id desc ";
-
-
-
-//     $insertEmpQuery = $this->conn->query($sql);
-
-
-
-//     while($row      = $insertEmpQuery->fetch_array()){    
-
-
-
-//     $empData[]	    = $row;
-
-
-
-//     }
-
-
-
-//     return $empData;
-
-
-
-// }
-
-// end display
-
-
-
-
-
-
-
-
-
-
-
-//     student report end .........._ _ _
-
-
-
-
-
-
-
-
-
-
-
-//     function ajax($userId){
-
-
-
-//         $sql = "SELECT * FROM student WHERE `student`.`student_id` = '$userId'";
-
-
-
-//         $result1 = $this->conn->query($sql);
-
-
-
-//         return $result1;
-
-        
-
-//     }
-
-
-
-
-
-
-
-
-
-    
-
-//     updatePage start w
-
-
-
-//     function updatestudentrevenue($Id){
-
-
-
-//         $sql = "SELECT * FROM student_payment_dtls WHERE `student_payment_dtls`.`id` = '$Id'";
-
-
-
-//         $result1 = $this->conn->query($sql);
-
-
-
-//         return $result1;
-
-
-
-//     }
-
-
-
-//     end updatePage
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-//     departnemt action update start w
-
-
-
-//     function studentrevenueE($name, $roll_no, $address, $class, $amount, $id, $status){
-
-
-
-//         $sqledit = "UPDATE  `student_payment_dtls` SET `name` = '{$name}', `roll_no` = '{$roll_no}', `address`= '{$address}', `class`= '{$class}', `amount`= '{$amount}', `id`= '{$id}', `status` = '{$status}'  WHERE `student_payment_dtls`.`id` = '{$id}'";
-
-
-
-//         $result1 = $this->conn->query($sqledit);
-
-
-
-//         return $result1;
-
-
-
-//     }
-
-
-
-//     end updateEmp function
-
-
-
-
-
-
-
-
-
-//     update start w
-
-
-
-//     function studentfeescancel($id){
-
-
-
-//         $sql2 = "UPDATE  `student_payment_dtls` SET `status` = '0' WHERE `student_payment_dtls`.`id` = '{$id}'";
-
-
-
-//         $result2 = $this->conn->query($sql2);
-
-
-
-//         return $result2;
-
-//     }
-
-        
-
-//     end updateEmp function
-
-
-
-
-
-
-
-
-
-
-
-
-
-//       ================================== DonationReport Start====================================
-
-
-
-        
-
-//     updatePage start w
-
-
-
-//     function revenuereport($donation_chart){
-
-
-
-//         $sql = "SELECT * FROM `revenue_donation`  where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount)";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-        
-
-
-
-//     }
-
-
-
-
-
-
-
-    
-
-
-
-    
-
-    
-
-
-
-//     function donationreport($month_chart){
-
-
-
-//         $sql = "SELECT * FROM `revenue_donation`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     }
-
-
-
+    }
     
 
 
 
 
-
-
-
-
-
-//     updatePage start w
-
-
-
-//     function donationyearreport($year_chart){
-
-
-
-//         $sql = "SELECT * FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount)";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     }
-
-
-
-//     end updatePage
-
-
-
-
-
-//     function donationtotalamount(){
-
-
-
-//         $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation`";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-//      display start w
-
-
-
-//      function donationtotalreport(){
-
-
-
-//         $empData = array();
-
-
-
-//         $sql = "SELECT * FROM `revenue_donation` order by id desc ";
-
-
-
-//         $insertEmpQuery = $this->conn->query($sql);
-
-
-
-//         while($row      = $insertEmpQuery->fetch_array()){    
-
-
-
-//         $empData[]	    = $row;
-
-
-
-//         }
-
-
-
-//         return $empData;
-
-
-
-//     }
-
-//     end display
-
-
-
-
-
-
-
-//         search start w
-
-
-
-//         function donationsearchdata($searchdonation, $searchdonation1){
-
-
-
-//             $sqldal = "SELECT * FROM `revenue_donation` WHERE concat(`date`) between '$searchdonation' to '$searchdonation1'";
-
-    
-
-//             $result1 = $this->conn->query($sqldal);
-
-    
-
-//             return $result1;
-
-    
-
-//         }
-
-        
-
-//         end search function
-
-
-
-
-
-//                find from date to date w
-
-
-
-//     function showedonationDetails($searchdonation1, $searchdonation){
-
-
-
-//         $sql = "SELECT * FROM `revenue_donation` WHERE concat(`date`)  between '$searchdonation1' and '$searchdonation'";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-
-
-//         $rows = $studentTypeQuery->num_rows;
-
-
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     }
-
-
-
-//     end find function
-
-
-
-
-
-
-
-//    expenses serch total data start
-
-
-
-//    function finddonation($searchdonation1, $searchdonation){
-
-
-
-//     $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` WHERE concat(`date`)  between '$searchdonation1' and '$searchdonation'";
-
-
-
-//     $result = $this->conn->query($sql);
-
-
-
-//     return $result;
-
-
-
-// }
-
-
-
-// end
-
-
-
-
-
-
-
-
-
-
-
-//       ================================== DonationReport End====================================
-
-
-
-
-
-
-
-//       ================================== OthersReport Start====================================
-
-
-
-
-
-
-
-//     updatePage star/t w
-
-
-
-//     function otherdayreport($day_chart){
 
        
-
-
-
-//         $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY DAY(amount)";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//             $rows = $studentTypeQuery->num_rows;
-
-//             if ($rows == 0) {
-
-//             return 0;
-
-//             }else{
-
-//             while ($result = $studentTypeQuery->fetch_array()) {
-
-//             $data[] = $result;
-
-//             }
-
-//             return $data;
-
-//             }
-
-//     }
-
-
-
-//     end updatePage
-
-
-
-
-
-
-
-   
-
-
-
-//     updatePage start w
-
-
-
-//     function revenueotherreport($month_chart){
-
-
-
-//         $sql = "SELECT * FROM `revenue_others`  where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY MONTH(amount)";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     }
-
-
-
-//       end updatePage
-
-
-
-
-
-
-
-//        updatePage start w
-
-
-
-//     function otheryearreport($year_chart){
-
-
-
-//         $sql = "SELECT * FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) ORDER BY YEAR(amount)";
-
-
-
-//         $studentTypeQuery = $this->conn->query($sql);
-
-//         $rows = $studentTypeQuery->num_rows;
-
-//         if ($rows == 0) {
-
-//         return 0;
-
-//         }else{
-
-//         while ($result = $studentTypeQuery->fetch_array()) {
-
-//         $data[] = $result;
-
-//         }
-
-//         return $data;
-
-//         }
-
-
-
-//     }
-
-
-
-//     end updatePage
-
-
-
-
-
-
-
-//       display start w
-
-
-
-//       function othertotalreport(){
-
-
-
-//         $empData = array();
-
-
-
-//         $sql = "SELECT * FROM `revenue_others` order by id desc ";
-
-
-
-//         $insertEmpQuery = $this->conn->query($sql);
-
-
-
-//         while($row      = $insertEmpQuery->fetch_array()){    
-
-
-
-//         $empData[]	    = $row;
-
-
-
-//         }
-
-
-
-//         return $empData;
-
-
-
-//     }
-
-//     end display
-
-
-
-
-
-
-
-//     function totalamount(){
-
-
-
-//         $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others`";
-
-
-
-//         $result = $this->conn->query($sql);
-
-
-
-//         return $result;
-
-
-
-//     }
-
-
-
-
-
-
-
-
-
-
-
-//     search start w
-
-
-
-//     function otherssearchdata($search_others, $search_others1){
-
-
-
-//             $sqldal = "SELECT * FROM `revenue_others` WHERE concat(`date`) between '$search_others' to '$search_others1'";
-
     
+// ############################################### Employee revenue_others by ###################################################
 
-//             $result1 = $this->conn->query($sqldal);
 
-    
 
-//             return $result1;
+//    ==============================Today==============================
 
-    
 
-//     }
+function revenueEMPday($revenue_EMP){
 
-        
+    $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY DAY(amount)";
 
-//     end search function
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
 
 
+function totalamountDayEMP($revenue_EMP){
 
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY DAY(amount)";
 
+    $result = $this->conn->query($sql);
 
+    return $result;
 
 
-//     find from date to date w
+}
 
 
 
-//     function showerevenuesDetails($search_others1, $search_others){
+//    ==============================MONTH==============================
 
 
+function revenueEMPmonth($revenue_EMP){
 
-//         $sql = "SELECT * FROM `revenue_others` WHERE concat(`date`)  between '$search_others1' and '$search_others'";
+    $sql = "SELECT * FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY MONTH(amount)";
 
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
-//         $studentTypeQuery = $this->conn->query($sql);
 
 
+function totalamountMonthEMP($revenue_EMP){
 
-//         $rows = $studentTypeQuery->num_rows;
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY MONTH(amount)";
 
+    $result = $this->conn->query($sql);
 
+    return $result;
 
-//         if ($rows == 0) {
 
-//         return 0;
+}
 
-//         }else{
 
-//         while ($result = $studentTypeQuery->fetch_array()) {
 
-//         $data[] = $result;
 
-//         }
+//    ==============================YEAR==============================
 
-//         return $data;
 
-//         }
+function revenueEMPyear($revenue_EMP){
 
+    $sql = "SELECT * FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY YEAR(amount)";
 
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
-//     }
 
 
 
-//     end find function
+function totalamountYearEMP($revenue_EMP){
 
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY YEAR(amount)";
 
+    $result = $this->conn->query($sql);
 
+    return $result;
 
 
+}
 
 
 
 
 
+//    ==============================TOTAL==============================
 
-//     expenses serch total data start
 
+    function displayEMP($revenue_EMP){
 
+        $empData = array();
 
-//     function finddataothers($search_others1, $search_others){
+        $sql = "SELECT * FROM `revenue_others` where `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' order by id desc ";
 
+        $HfaQuery = $this->conn->query($sql);
 
+        while($row      = $HfaQuery->fetch_array()){    
 
-//         $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` WHERE concat(`date`)  between '$search_others1' and '$search_others'";
+        $empData[]	    = $row;
 
+        }
 
+        return $empData;
 
-//         $result = $this->conn->query($sql);
+    }
+  
 
 
 
-//         return $result;
+    function totalamountEMP($revenue_EMP){
 
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where `revenue_others`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active'";
 
+        $result = $this->conn->query($sql);
 
-//     }
+        return $result;
 
+    }
 
 
-//     end
 
 
 
-//     ================================== OthersReport End====================================
 
+    // ############################################### Cencel Data revenue_others by ###################################################
 
 
 
+//    ==============================Today==============================
 
 
+function revenueCANday(){
 
+    $sql = "SELECT * FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY DAY(amount)";
 
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
 
 
+function totalamountDayCAN(){
 
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY DAY(amount)";
 
+    $result = $this->conn->query($sql);
 
+    return $result;
 
 
-//     search start w
+}
 
 
 
-//     function studentsearchdata($searchstudents, $searchstudents1){
+//    ==============================MONTH==============================
 
 
+function revenueCANmonth(){
 
-//         $sqldal = "SELECT * FROM `student_payment_dtls` WHERE concat(`date`) between '$searchstudents' to '$searchstudents1'";
+    $sql = "SELECT * FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY MONTH(amount)";
 
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
-//         $result1 = $this->conn->query($sqldal);
 
 
+function totalamountMonthCAN(){
 
-//         return $result1;
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY MONTH(amount)";
 
+    $result = $this->conn->query($sql);
 
+    return $result;
 
-//     }
 
-    
+}
 
-//     end search function
 
 
 
-//     find from date to date w
+//    ==============================YEAR==============================
 
 
+function revenueCANyear(){
 
-//     function studentDetails($searchstudents1, $searchstudents){
+    $sql = "SELECT * FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY YEAR(amount)";
 
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
-//         $sql = "SELECT * FROM `student_payment_dtls` WHERE concat(`date`)  between '$searchstudents1' and '$searchstudents'";
 
 
+function totalamountYearCAN(){
 
-//         $studentTypeQuery = $this->conn->query($sql);
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY YEAR(amount)";
 
+    $result = $this->conn->query($sql);
 
+    return $result;
 
-//         $rows = $studentTypeQuery->num_rows;
 
+}
 
 
-//         if ($rows == 0) {
 
-//         return 0;
 
-//         }else{
 
-//         while ($result = $studentTypeQuery->fetch_array()) {
+//    ==============================TOTAL==============================
 
-//         $data[] = $result;
 
-//         }
+    function displayCAN(){
 
-//         return $data;
+        $empData = array();
 
-//         }
+        $sql = "SELECT * FROM `revenue_others` where `status` LIKE 'inactive' order by id desc ";
 
-    
+        $HfaQuery = $this->conn->query($sql);
 
-//     }
+        while($row      = $HfaQuery->fetch_array()){    
 
-    
+        $empData[]	    = $row;
 
-// end find function
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalamountCAN(){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_others` where `status` LIKE 'inactive'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
 
 
 
@@ -4788,34 +3209,303 @@ function showStatus(){
 
 
         
-
-// expenses serch total data start
-
-
-
-// function findstudentfees($searchstudents1, $searchstudents){
+// ############################################### Employee Donation by ###################################################
 
 
 
-//     $sql="SELECT MONTHNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `student_payment_dtls` WHERE concat(`date`)  between '$searchstudents1' and '$searchstudents'";
+//    ==============================Today==============================
+
+
+function revenuedonationEMPday($revenue_EMP){
+
+    $sql = "SELECT * FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
 
-//     $result = $this->conn->query($sql);
+
+function totalDayEMPDonation($revenue_EMP){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
 
 
 
-//     return $result;
+//    ==============================MONTH==============================
+
+
+function revenuedonationEMPmonth($revenue_EMP){
+
+    $sql = "SELECT * FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
 
 
 
-// }
+
+function totalMonthEMPDonation($revenue_EMP){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
 
 
 
-// end
+
+//    ==============================YEAR==============================
 
 
+function revenuedonationEMPyear($revenue_EMP){
+
+    $sql = "SELECT * FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalYearEMPDonation($revenue_EMP){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) and `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayEMPDonation($revenue_EMP){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `revenue_donation` where `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active' order by id desc ";
+
+        $HfaQuery = $this->conn->query($sql);
+
+        while($row      = $HfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalEMPDonation($revenue_EMP){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where `revenue_donation`.`paid_by`= '$revenue_EMP' and `status` LIKE 'active'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
+
+
+
+
+
+
+    
+    // ############################################### cancel Donation ###################################################
+
+
+
+//    ==============================Today==============================
+
+
+function revenuedonationCANday(){
+
+    $sql = "SELECT * FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY DAY(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalDayCANDonation(){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where day(DATE)=(SELECT day(CURDATE())) and month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY DAY(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+//    ==============================MONTH==============================
+
+
+function revenuedonationCANmonth(){
+
+    $sql = "SELECT * FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY MONTH(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalMonthCANDonation(){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where month(DATE)=(SELECT MONTH(CURDATE())) AND year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY MONTH(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+//    ==============================YEAR==============================
+
+
+function revenuedonationCANyear(){
+
+    $sql = "SELECT * FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE())) and `status` LIKE 'inactive' ORDER BY YEAR(amount)";
+
+    $TypeQuery = $this->conn->query($sql);
+    $rows = $TypeQuery->num_rows;
+    if ($rows == 0) {
+    return 0;
+    }else{
+    while ($result = $TypeQuery->fetch_array()) {
+    $data[] = $result;
+    }
+    return $data;
+    }
+}
+
+
+
+
+function totalYearCANDonation(){
+
+    $sql="SELECT DAYNAME(amount) AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where year(DATE)=(SELECT YEAR(CURDATE()))  and `status` LIKE 'inactive' ORDER BY YEAR(amount)";
+
+    $result = $this->conn->query($sql);
+
+    return $result;
+
+
+}
+
+
+
+
+
+//    ==============================TOTAL==============================
+
+
+    function displayCANDonation(){
+
+        $empData = array();
+
+        $sql = "SELECT * FROM `revenue_donation` where `status` LIKE 'inactive' order by id desc ";
+
+        $HfaQuery = $this->conn->query($sql);
+
+        while($row      = $HfaQuery->fetch_array()){    
+
+        $empData[]	    = $row;
+
+        }
+
+        return $empData;
+
+    }
+  
+
+
+
+    function totalCANDonation(){
+
+        $sql="SELECT  amount AS 'amount', SUM(amount) AS 'Total' FROM `revenue_donation` where `status` LIKE 'inactive'";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+
+    }
 
 
 

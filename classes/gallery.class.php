@@ -1,7 +1,5 @@
 <?php
 
-
-
 class Photos extends DatabaseConnection{
 
 
@@ -82,7 +80,6 @@ function getPhoto($pagename){
 }
 
 // end deleteDocCat
-
 
 
 

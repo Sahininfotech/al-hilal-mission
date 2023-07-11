@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 $page = "Student Details";
@@ -20,7 +19,6 @@ require_once '../classes/student.class.php';
 
 require_once '../includes/constant.php';
 
-
 $Admin                  = new Admin();
 
 $Institute              = new InstituteDetails();                                
@@ -29,9 +27,7 @@ $StudentDetails         = new StudentDetails();
 
 $FeesAccount            = new FeesAccount();
 
-$Student                = new  Student();
-
-
+$Student     = new  Student();
 
 $insertEmpQuery=false;
 
@@ -93,15 +89,14 @@ $insertEmpQuery=false;
 
     $student_id     = "STUD".$code;
 
-  }
 
+  }
 
 $result                 = $Institute->instituteShow();
 
 $feesAccounts           = $FeesAccount->showAccount($class);
 
 $Tolatfees              = $FeesAccount->showTotalamount($class);
-
 ?>
 
 <!DOCTYPE html>
@@ -188,7 +183,7 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
                         </a></li>
 
-                    <li class="breadcrumb-item active">Add fees</li>
+                    <li class="breadcrumb-item active">Add Fees</li>
 
                 </ol>
 
@@ -234,7 +229,7 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                 foreach($feesAccounts as $feeAcc){
 
                                   $myuid     = uniqid('inp');
-
+                             
                                   $autoid    = $feeAcc['purpose'].$myuid;
 
                                   $feeAccs   = $feeAcc['purpose'];
@@ -246,7 +241,7 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                   $amount = $feesAcc['totalamount'];
 
                                   }
-
+                            
                                     ?>
 
                                 <input type="hidden" class="form-control" name="student_id"
@@ -421,52 +416,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
                                 </div>
 
-
-
-                                <!-- <div class="row m-0 p-0 mb-3">
-
-                                    <label for="inputText" class="col-6 form-label" id="purpose"
-
-                                        style="display: none;">purpose :</label>
-
-                                    <div class="col-6 p-0" id="purposes" style="display: none;">
-
-                                        <select class="form-select" id="form-select" onclick="Func_a()"
-
-                                            aria-label="Default select example" name="purpose" >
-
-                                            <option >Select data</option>
-
-
-
-                                            
-
-                                            foreach($feesAccounts as $feeAcc){
-
-
-
-                                            $feeAccs = $feeAcc['purpose'];
-
-
-
-                                            echo '<option value="'.$feeAccs.'">'.$feeAccs.'</option>';
-
-
-
-                                            }
-
-                                            ?
-
-                                        </select>
-
-                                    </div>
-
-                                </div> -->
-
-
-
-
-
                                 <div class="row m-0 p-0 mb-3">
 
                                     <label for="inputText" class="col-6 form-label" id="issues"
@@ -480,10 +429,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                     </div>
 
                                 </div>
-
-
-
-
 
                                 <hr>
 
@@ -500,8 +445,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
 
                                 </div>
 
-
-
                                 <div class="row m-0 p-0 mb-3">
 
                                     <label for="inputText" class="col-6 form-label" id="after"
@@ -514,10 +457,6 @@ $Tolatfees              = $FeesAccount->showTotalamount($class);
                                     </div>
 
                                 </div>
-
-
-
-
 
                                 <div class="row mb-3 m-0 p-0" style="margin-top: 2.5rem;">
 

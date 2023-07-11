@@ -86,9 +86,7 @@ $Expenses = new Expenses();
 
 
 
-                $billNo             = $expenses['bill_no'];
-
-                $hfa_sub_category_id= $expenses['hfa_sub_category_id'];
+                $billNo             = $expenses['voucher_no'];
 
                 $billAmount         = $expenses['amount'];
 
@@ -109,7 +107,7 @@ $Expenses = new Expenses();
 
                 $showupload_bill    = $expenses['upload_bill'];
 
-
+                $showstatus         = $expenses['status'];
 
                 $img =  "../image/".$showupload_bill;
 
@@ -213,34 +211,35 @@ $Expenses = new Expenses();
             </div>
 
 
+            <div class="row mb-3 p-0 m-0">
+                <label class="col-sm-2 col-form-label">Status :</label>
+                <div class="col-sm-4">
+                    <?php   $status  = $Expenses->displayStatus();                            
+                        foreach ($status as $row) {
+                        $showId           = $row['id'];
+                        $showName         = $row['name'];
+                        $showstatus_id    = $row['status_id'];
+                        ?>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="status" id="gridRadios1"
+                            value="<?php  echo $showstatus_id ?>" required
+                            <?php if($showstatus == $showstatus_id){ echo 'checked';}?>>
+                        <label class="form-check-label" for="gridRadios1">
+                            <?php  echo $showName ?>
+                        </label>
+                    </div>
+                    <?php } ?>
 
-
-
-            <div class="row mb-3">
-
-
-
+                </div>
                 <label for="inputText" class="col-sm-2 col-form-label">Amount :</label>
 
-
-
-                <div class="col-sm-10">
-
-
+                <div class="col-sm-4">
 
                     <input type="text" class="form-control" value="<?php echo $billAmount; ?>" name="amount">
 
-
-
                 </div>
 
-
-
             </div>
-
-
-
-
 
 
 
@@ -262,43 +261,47 @@ $Expenses = new Expenses();
 
                     <select class="form-select" name="payment_type" onchange="selectpayment(this.value)">
 
-
-
-                        <option selected value="<?php echo $showpayment_type; ?>"><?php echo $showpayment_type; ?>
-
-
-
                         </option>
 
-
-
-                        <option value="Cash">Cash</option>
-
-
-
-                        <option value="Credit">Credit</option>
+                        <option <?php if ($showpayment_type == "Cash") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Cash">Cash</option>
 
 
 
-                        <option value="UPI">UPI</option>
+                        <option <?php if ($showpayment_type == "Credit") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Credit">Credit</option>
 
 
 
-                        <option value="Credit-Card">Credit-Card</option>
+                        <option <?php if ($showpayment_type == "UPI") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="UPI">UPI</option>
 
 
 
-                        <option value="Debit-Card">Debit-Card</option>
+                        <option <?php if ($showpayment_type == "Credit-Card") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Credit-Card">Credit-Card</option>
 
 
 
-                        <option value="Internet-Banking">Internet-Banking</option>
+                        <option <?php if ($showpayment_type == "Debit-Card") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Debit-Card">Debit-Card</option>
 
 
 
-                        <option value="Others">Others</option>
+                        <option <?php if ($showpayment_type == "Internet-Banking") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Internet-Banking">Internet-Banking</option>
 
 
+
+                        <option <?php if ($showpayment_type == "Others") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Others">Others</option>
 
                     </select>
 
@@ -362,22 +365,37 @@ $Expenses = new Expenses();
                  ?>
                     <select class="form-select" id="form-select" onChange="selectpaidto(this.value)"
                         name="paid-to-select" required>
+                        <!-- <option value="Others" style="color: blue;">Others</option> -->
 
                         <?php
-
-                        echo '<option  style="color: blue;">'.$paidTo.'</option>';
-                    
-                        ?>
-                        <option value="Others" style="color: blue;">Others</option>
-                        <?php
-
-                        $vendorresult      = $vendors->vendordisplaydata();                            
+                        $count = 1;
+                        $vendorresult  = $vendors->vendordisplaydata();                            
                         foreach ($vendorresult as $showVendor) {
                         $showVen_id    = $showVendor['id'];
                         $showVen_name  = $showVendor['name'];
                         $showvendor_id = $showVendor['vendor_id'];
 
-                        echo ' <option value="'.$showVen_name.'">'.$showVen_name.'</option>';
+                        if($showVen_name == $paidTo){
+                        $count--;
+                        echo'<option value="Others" style="color: blue;">Others</option>';
+                        }
+
+                        }
+                        if($count == 1){
+
+                        echo'<option value="Others" style="color: blue;">'.$paidTo.' (Others)</option>';
+                        }
+                                                  
+                        foreach ($vendorresult as $showVendor) {
+                        $showVen_id    = $showVendor['id'];
+                        $showVen_name  = $showVendor['name'];
+                        $showvendor_id = $showVendor['vendor_id'];
+
+                        echo '<option value="' . $showVen_name . '"';
+                        if ($showVen_name == $paidTo) {
+                        echo 'selected style="color: blue;"';
+                        }
+                        echo '>' . $showVen_name. '</option>';
                         }
                         ?>
                     </select>
@@ -460,88 +478,51 @@ $Expenses = new Expenses();
 
                     <select class="form-select" id="form-select" onChange="selectOthers(this.value)"
                         name="paid-by-select" required>
-
-
-
-
-
-
-
                         <?php
+                        $count = 1;
+                        $emps = $Employee->showEmployees();
+
+                        foreach ($emps as $emp) {
+
+                        $empId   = $emp['id'];
+
+                        $empNames = $emp['name'];
+
+                        if($empNames == $paidBy){
+                        $count--;
+                        echo'<option value="Others" style="color: blue;">Others</option>';
+                        }
+
+                        }
+                        if($count == 1){
+
+                        echo'<option value="Others" style="color: blue;">'.$paidBy.' (Others)</option>';
+                        }          
+
+                            foreach ($emps as $emp) {
 
 
 
-                             
+                                $empId   = $emp['id'];
 
 
 
-                                echo '<option  style="color: blue;">'.$paidBy.'</option>';
+                                $empName = $emp['name'];
+                                                                                
+                                echo '<option value="' . $empName . '"';
+                                if ($empName == $paidBy) {
+                                echo 'selected style="color: blue;"';
+                                }                           
+                                echo '>' . $empName. '</option>';
+                            
 
-
-
-
-
-
+                            }
 
                         ?>
-
-
-
-                        <option value="Others" style="color: blue;">Others</option>
-
-
-
-                        <?php
-
-
-
-                                $emps = $Employee->showEmployees();
-
-
-
-
-
-
-
-                                foreach ($emps as $emp) {
-
-
-
-                                    $empId   = $emp['id'];
-
-
-
-                                    $empName = $emp['name'];
-
-
-
-                                    echo ' <option value="'.$empName.'">'.$empName.'</option>';
-
-
-
-                                }
-
-
-
-                        ?>
-
-
-
-
-
-
 
                     </select>
 
-
-
                 </div>
-
-
-
-
-
-
 
                 <div class="col-sm-6 <?php echo gettype($paidBy) != 'integer' ? 'd-none' : 'd-block'; ?>"
                     id="others-staff">
@@ -593,7 +574,7 @@ $Expenses = new Expenses();
                         $categorydata =$grocery->categoryById($head_of_accounts_id);                              
                         foreach($categorydata as $rows){ 
                         $category_name   = $rows['category'];
-                        echo '<option  style="color: blue;">'.$category_name.'</option>';
+                        echo '<option  style="color: blue;" value="'.$head_of_accounts_id.'">'.$category_name.'</option>';
                         }
                         $grocerydata =$grocery->parentCategory();                              
                         foreach($grocerydata as $row){ 
@@ -605,15 +586,15 @@ $Expenses = new Expenses();
 
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label" id="subdata">sub category:</label>
+                <label class="col-sm-2 col-form-label" id="subdata">Sub HOA:</label>
                 <div class="col-sm-4">
                     <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
                         name="sub-accounts-select">
                         <?php
-                        $categorydata =$grocery->categoryById($hfa_sub_category_id);                              
+                        $categorydata =$grocery->categoryById($head_of_accounts_id);                              
                         foreach($categorydata as $rows){ 
                         $category_name   = $rows['category'];
-                        echo '<option  style="color: blue;">'.$category_name.'</option>';
+                        echo '<option  style="color: blue;" value="'.$head_of_accounts_id.'">'.$category_name.'</option>';
                         }
                         ?>
 

@@ -327,7 +327,7 @@ $_SESSION['current-url'] = $Utility->currentUrl();
                                     ?>
                                     <div class="item" style="margin: 1%;">
                                         <img class='grid-item' id="<?php echo $showid;?>" src="<?php echo $img;?>" alt="gallery"
-                                            onClick="makeFullScreen(this.id)"  />
+                                            onClick="makeFullScreen(this.id)"/>
                                         <div class="caption">
                                             <a
                                                 href='ajax/photodelete.ajax.php?id=<?php    echo $showid  ?>&img=<?php    echo $showphotos  ?>'>

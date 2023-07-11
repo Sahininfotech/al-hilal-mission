@@ -18,23 +18,29 @@ $Expenses = new Expenses();
 
 
 
-   $id            = $_POST["id"];
+   $id             = $_POST["id"];
 
-   $bill_no       = $_POST["bill_no"];
+   $bill_no        = $_POST["bill_no"];
 
-   $amount        = $_POST["amount"];
+   $amount         = $_POST["amount"];
 
-   $payment_type  = $_POST["payment_type"];
+   $payment_type   = $_POST["payment_type"];
 
-   $description   = $_POST["description"];
+   $description    = $_POST["description"];
 
    $accountsSelect = $_POST["accounts-select"];
-   $subcategory    = '';
+
+   $status         = $_POST["status"];
+
    if (isset($_POST["sub-accounts-select"])) {
 
        $subcategory    = $_POST["sub-accounts-select"];
 
+   }else{
+       $subcategory    = $accountsSelect;
    }
+
+
 
    $payment_id = '';
 
@@ -101,7 +107,7 @@ $Expenses = new Expenses();
 
 
 
-   $update = $Expenses->expensesupdate($id, $bill_no, $amount, $payment_type, $date, $c_image, $payment_id, $paid_by, $paid_to, $description, $accountsSelect, $subcategory);
+   $update = $Expenses->expensesupdate($id, $bill_no, $amount, $payment_type, $date, $c_image, $payment_id, $paid_by, $paid_to, $description, $subcategory, $status);
 
 
 

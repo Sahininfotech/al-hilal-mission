@@ -105,6 +105,78 @@ $totalresult=$revenues->finddonation($_GET['searchdonations'] , $_GET['searchdon
 }
 
 
+if(isset ($_POST['duration_EMP']) && isset ($_POST['donation_data']) && isset ($_POST['typpe_data'])){
+
+    if($_POST['typpe_data'] == "Employee"){
+        if($_POST['duration_EMP'] == date("l")){
+
+        $revenuesbox = $revenues->revenuedonationEMPday($_POST['donation_data']);
+
+        $totalresult=$revenues->totalDayEMPDonation($_POST['donation_data']);
+
+    }
+    if($_POST['duration_EMP'] == date('M')){
+
+        $revenuesbox = $revenues->revenuedonationEMPmonth($_POST['donation_data']);
+
+        $totalresult=$revenues->totalMonthEMPDonation($_POST['donation_data']);
+
+    }
+
+    if($_POST['duration_EMP'] == date('Y')){
+
+        $revenuesbox = $revenues->revenuedonationEMPyear($_POST['donation_data']);
+
+        $totalresult=$revenues->totalYearEMPDonation($_POST['donation_data']);
+
+    }
+
+    if($_POST['duration_EMP'] == "Total"){
+
+        $revenuesbox = $revenues->displayEMPDonation($_POST['donation_data']);
+
+        $totalresult=$revenues->totalEMPDonation($_POST['donation_data']);
+
+    }
+}
+
+
+    if($_POST['typpe_data'] == "cancel"){
+        if($_POST['duration_EMP'] == date("l")){
+
+        $revenuesbox = $revenues->revenuedonationCANday();
+
+        $totalresult=$revenues->totalDayCANDonation();
+
+    }
+    if($_POST['duration_EMP'] == date('M')){
+
+        $revenuesbox = $revenues->revenuedonationCANmonth();
+
+        $totalresult=$revenues->totalMonthCANDonation();
+
+    }
+
+    if($_POST['duration_EMP'] == date('Y')){
+
+        $revenuesbox = $revenues->revenuedonationCANyear();
+
+        $totalresult=$revenues->totalYearCANDonation();
+
+    }
+
+    if($_POST['duration_EMP'] == "Total"){
+
+        $revenuesbox = $revenues->displayCANDonation();
+
+        $totalresult=$revenues->totalCANDonation();
+
+    }
+        
+    
+    }}
+
+
 
 require_once '../classes/institutedetails.class.php';
 
@@ -185,9 +257,7 @@ $result=$expensesclass->instituteShow();
     <link href="https://fonts.gstatic.com" rel="preconnect" />
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
 
@@ -249,8 +319,11 @@ $result=$expensesclass->instituteShow();
   ======================================================== -->
 
     <style>
-    th,p,h4,h6{
-    text-transform: capitalize;
+    th,
+    p,
+    h4,
+    h6 {
+        text-transform: capitalize;
     }
     </style>
 
@@ -264,7 +337,7 @@ $result=$expensesclass->instituteShow();
 
     <section>
 
-                    <?php
+        <?php
 
                              
 
@@ -274,7 +347,7 @@ $result=$expensesclass->instituteShow();
 
                             ?>
 
-    
+
 
         <div class="custom-container">
 
@@ -304,11 +377,11 @@ $result=$expensesclass->instituteShow();
 
 
 
-                            <?php    echo $row['address']  ?> 
+                                <?php    echo $row['address']  ?>
 
 
 
-                              </p>
+                            </p>
 
 
 
@@ -324,27 +397,66 @@ $result=$expensesclass->instituteShow();
 
 
 
-                            <h6 class="ps-4">Donation / <?php if(isset($_GET['todayreport'])){echo $_GET['todayreport'];};  
+                            <h6 class="ps-4">Donation /
+                                <?php 
+                                if(isset($_GET['todayreport'])){echo $_GET['todayreport'];};  
+
+                                if(isset($_GET['monthreport'])){echo $_GET['monthreport'];};
+
+                                if(isset($_GET['yearreport'])){echo $_GET['yearreport'];}; 
+
+                                if(isset($_GET['totalreport'])){echo $_GET['totalreport'];}; 
+
+                                if(isset ($_POST['duration_EMP']) && isset ($_POST['donation_data']) && isset ($_POST['typpe_data'])){
+
+                                if(isset($_POST['duration_EMP']))
+                                {
+                               
+                                if($_POST['duration_EMP'] == date("l")){
+
+                                echo "Today ". $_POST['duration_EMP']."<br>";
+                                }
+                                if($_POST['duration_EMP'] == date("M")){
+
+                                echo "Month ". $_POST['duration_EMP']."<br>";
+                                }
+                                if($_POST['duration_EMP'] == date("Y")){
+
+                                echo "Year ". $_POST['duration_EMP']."<br>";
+                                }
+
+                                if($_POST['duration_EMP'] == "Total"){
+
+                                echo "Total"."<br>";
+                                }
+                                }
+                            
+                                if($_POST['typpe_data'] == "Employee"){
+                                   
+                                    echo "Donation / ".$_POST['donation_data'];
+                                   
+                                } 
+                               
+                                if($_POST['typpe_data'] == "cancel"){
+                                   
+                                    echo "Donation - ".$_POST['donation_data'];
+                                   
+                                }
+                            
+                              };
+                                if(isset($_GET['searchdonation'])){
+                                echo $_GET['searchdonation']."<br>";
+                                }; 
+
+                                if(isset($_GET['searchdonations'])){
+                                echo $_GET['searchdonations'];
+                                };
+
+                                ?>
 
 
 
-                                                         if(isset($_GET['monthreport'])){echo $_GET['monthreport'];};
-
-
-
-                                                         if(isset($_GET['yearreport'])){echo $_GET['yearreport'];}; 
-
-
-
-                                                         if(isset($_GET['totalreport'])){echo $_GET['totalreport'];}; ?>
-
-
-
-                                    <?php if(isset($_GET['searchdonation'])){echo $_GET['searchdonation'];}; ?><br><?php if(isset($_GET['searchdonations'])){echo $_GET['searchdonations'];}; ?>
-
-
-
-                                </h6>
+                            </h6>
 
 
                         </div>
@@ -367,11 +479,11 @@ $result=$expensesclass->instituteShow();
 
 
 
-                   <!-- 
+                <!-- 
 
                 <div class="row  mt-5"> -->
 
-                    <!-- <div class="col-lg-8 m-auto mt-2">
+                <!-- <div class="col-lg-8 m-auto mt-2">
 
                         <div class="card">
 
@@ -427,7 +539,7 @@ $result=$expensesclass->instituteShow();
 
                     </div> -->
 
-                    
+
 
                 <!-- </div> -->
 
@@ -475,51 +587,29 @@ $result=$expensesclass->instituteShow();
 
                     <thead>
 
-                  
+
 
                         <tr>
 
+                            <th>Name</th>
 
+                            <th>Date</th>
 
-                        <th >Name</th>
+                            <th>Added By</th>
 
-
-
-                        <th>Date</th>
-
-
-
-                        <th>Added By</th>
-
-
-
-                        <th>Amount</th>
-
-                                    
+                            <th>Amount</th>
 
                         </tr>
 
-
-
                     </thead>
-
-
 
                     <tbody>
 
-
-
-                    <?php 
-
-
+                        <?php 
 
                          foreach ($revenuesbox as $showStudentDetailsshow) {
 
-
-
                           $showname = $showStudentDetailsshow['name'];
-
-
 
                           $showamount = $showStudentDetailsshow['amount'];
 
@@ -567,51 +657,51 @@ $result=$expensesclass->instituteShow();
 
                                                                   
 
-                                                                  ?>  
+                                                                  ?>
 
 
 
                     </tbody>
 
-                    
-
-                  
-
-                  <tr>
 
 
 
-                  <th ></th>
+
+                    <tr>
 
 
 
-                  <th></th>
+                        <th></th>
 
 
 
-                                 
-
-                                  <th> Total </th> 
+                        <th></th>
 
 
 
-                                  <th>₹ <?php echo ($row->Total) ?></th>
+
+
+                        <th> Total </th>
 
 
 
-                              
-
-                  </tr>
+                        <th>₹ <?php echo ($row->Total) ?></th>
 
 
 
-              
 
-                    
+
+                    </tr>
+
+
+
+
+
+
 
                 </table>
 
-                
+
 
 
 
@@ -627,7 +717,7 @@ $result=$expensesclass->instituteShow();
 
         </div>
 
-         <?php
+        <?php
 
 
 
@@ -665,17 +755,14 @@ $result=$expensesclass->instituteShow();
 
         <button class="btn btn-primary shadow mx-2" onclick="window.print()">Print </button>
 
-        
+
 
     </div>
 
 
 
- <script>
-
-
-
-       `//get DIV content as clone
+    <script>
+    `//get DIV content as clone
 
     var divContents = $("#DIVNAME").clone();
 
@@ -702,10 +789,7 @@ $result=$expensesclass->instituteShow();
     //attach original body
 
     body.appendTo($("html"));`
-
-
-
- </script>
+    </script>
 
 
 

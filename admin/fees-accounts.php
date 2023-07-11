@@ -107,6 +107,43 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <?php require_once 'require/headerLinks.php';?>
 
 
+    <style>
+    .addnewbtncss {
+
+        margin: auto;
+
+        display: flex;
+
+        align-items: center;
+
+        margin-right: 1rem;
+
+        margin-top: -3rem;
+
+
+
+    }
+
+
+
+    @media (min-width:150px) and (max-width:359px) {
+
+        .addnewbtncss {
+
+            margin: 0rem;
+
+            display: flex;
+
+            align-items: center;
+
+            margin-right: 0rem;
+
+            margin-top: 0rem;
+
+        }
+
+    }
+    </style>
 
 
 
@@ -182,6 +219,13 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                             <h5 class="card-title mb-0 mt-0">Fees Accounts </h5>
 
+                            <button type="button" class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal"
+                                data-bs-target="#addAccountModal" onclick="addAccount();">
+
+                                Add Accounts
+
+                            </button>
+
                             <table class="table datatable">
 
                                 <thead>
@@ -204,7 +248,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                     <?php
 
-                                    $sl = 1;
+                                        $sl = 1;
 
                                         $accs = $FeesAccount->showAccounts();
 
@@ -223,9 +267,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                         <td>
 
                                             <i class="bi bi-eye-fill pe-2" data-bs-toggle="modal"
-
                                                 data-bs-target="#accountModal" id="<?php echo $acc['id']  ?>"
-
                                                 onclick="accountShow(this.id);"></i>
 
                                             <a href='ajax/fees-acc.delete.ajax.php?data=<?php echo $acc['id']  ?>'>
@@ -258,43 +300,88 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                 <div class="col-lg-6">
 
-                    <div class="card m-0 ">
+                    <div class="card recent-sales overflow-auto">
 
-                        <div class="card-body p-3">
+                        <div class="card-body">
 
-                            <h5 class="card-title">Add Accounts</h5>
+                            <h5 class="card-title mb-0 mt-0">Fees Structure </h5>
 
-                            <form method="POST" action="./ajax/fees-acc.add.ajax.php" class="row needs-validation  m-0"
+                            <button type="button" class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal"
+                                data-bs-target="#addfeesModal" onclick="addFees();">
 
-                                novalidate>
+                                Add Fees Structure
 
-                                <div class="row m-0 p-0 mb-3">
+                            </button>
 
-                                    <label for="inputText" class="col-sm-4 col-form-label">Account :</label>
+                            <table class="table datatable">
 
-                                    <div class="col-sm-8">
+                                <thead>
 
-                                        <input type="text" maxlength="55" class="form-control" name="account_name"
+                                    <tr>
 
-                                            required>
+                                        <th scope="col">SL. NO.</th>
 
-                                    </div>
+                                        <th scope="col">Class</th>
 
-                                </div>
+                                        <th scope="col">Account Name</th>
 
-                                <div class="row mb-3 p-0 m-0">
+                                        <th scope="col">Amount</th>
 
-                                    <div class="col-sm-12  d-flex justify-content-center align-items-center">
+                                        <th scope="col">Action</th>
 
-                                        <button type="submit" name="add" class="btn btn-primary">Add
+                                    </tr>
 
-                                        </button>
+                                </thead>
 
-                                    </div>
+                                <tbody>
 
-                                </div>
+                                    <?php
+                                    $sl = 1;
+                                    foreach($feesStructure as $acc){
+                                    $amount = $acc['amount'];
+                                    $amount   = number_format($amount, 2);
+                                    $feesDetails = $FeesAccount->schowAccountById($acc['purpose']);   
+                                                
+                                    foreach($feesDetails as $feesacc){
 
-                            </form>
+                                        $acc_name = $feesacc['account_name'];
+                                    
+                                    ?>
+
+                                    <tr>
+
+                                        <th><?php echo $sl;             ?></th>
+
+                                        <td><?php echo $acc['class_id'] ?></td>
+
+                                        <td><?php echo $acc_name  ?></td>
+
+                                        <td><?php echo $amount   ?></td>
+
+                                        <td>
+
+                                            <i class="bi bi-eye-fill pe-2" data-bs-toggle="modal"
+                                                data-bs-target="#accountFeesModal" id="<?php echo $acc['id']  ?>"
+                                                onclick="accountFees(this.id);"></i>
+
+                                            <a href='ajax/fees-stur.delete.ajax.php?Feesdata=<?php echo $acc['id']  ?>'>
+
+                                                <i class="bi bi-trash" onclick="return deleteFeestur();"></i></a>
+
+                                        </td>
+
+                                    </tr>
+
+                                    <?php
+                                    $sl++;
+                                    }}
+                                    ?>
+
+                                </tbody>
+
+                            </table>
+
+                            <!-- End Table with stripped rows -->
 
                         </div>
 
@@ -320,7 +407,14 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                         <div class="card-body">
 
-                            <h5 class="card-title mb-0 mt-0">Fees Structure </h5>
+                            <h5 class="card-title mb-0 mt-0">Monthly Fees Structure </h5>
+
+                            <button type="button" class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal"
+                                data-bs-target="#addmonthfeesModal" onclick="addmonthlyFees();">
+
+                                Add Monthly Fees
+
+                            </button>
 
                             <table class="table datatable">
 
@@ -330,11 +424,9 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                         <th scope="col">SL. NO.</th>
 
-                                        <th scope="col">Class Id</th>
+                                        <th scope="col">Class</th>
 
-                                        <th scope="col">Account Name</th>
-
-                                        <th scope="col">Amount</th>
+                                        <th scope="col">Monthly Amount</th>
 
                                         <th scope="col">Action</th>
 
@@ -346,13 +438,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                     <?php
 
-                                    $sl = 1;
-
-                                        
-
-                                        foreach($feesStructure as $acc){
-                                            $amount = $acc['amount'];
-                                            $amount   = number_format($amount, 2);
+                                    $sl = 1;     
+                                    $monthlyFees    = $FeesAccount->monthlyfees_structure();
+                                    foreach($monthlyFees as $monthacc){
+                                    $amount = $monthacc['amount'];
+                                    $amount   = number_format($amount, 2);
 
                                     ?>
 
@@ -360,23 +450,20 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                         <th><?php echo $sl;             ?></th>
 
-                                        <td><?php echo $acc['class_id'] ?></td>
+                                        <td><?php echo $monthacc['class_id'] ?></td>
 
-                                        <td><?php echo $acc['purpose']  ?></td>
-
-                                        <td><?php echo $amount   ?></td>
+                                        <td><?php echo $amount  ?></td>
 
                                         <td>
 
                                             <i class="bi bi-eye-fill pe-2" data-bs-toggle="modal"
+                                                data-bs-target="#addmontheditfeesModal" id="<?php echo $monthacc['id']  ?>"
+                                                onclick="accountmonthlyFees(this.id);"></i>
 
-                                                data-bs-target="#accountFeesModal" id="<?php echo $acc['id']  ?>"
+                                            <a
+                                                href='ajax/monthly-fees.delete.ajax.php?Feesdata=<?php echo $monthacc['id']  ?>'>
 
-                                                onclick="accountFees(this.id);"></i>
-
-                                            <a href='ajax/fees-stur.delete.ajax.php?Feesdata=<?php echo $acc['id']  ?>'>
-
-                                                <i class="bi bi-trash" onclick="return deleteFeestur();"></i></a>
+                                                <i class="bi bi-trash" onclick="return deletemonFeestur();"></i></a>
 
                                         </td>
 
@@ -402,127 +489,9 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                 </div>
 
-                <div class="col-lg-6">
 
-                    <div class="card m-0 ">
 
-                        <div class="card-body p-3">
 
-                            <h5 class="card-title">Add Fees Structure</h5>
-
-                            <form method="POST" action="./ajax/fees-acc.add.ajax.php" class="row needs-validation  m-0"
-
-                                novalidate>
-
-
-
-
-
-                                <div class="row m-0 p-0 mb-3">
-
-                                    <label class="col-sm-4 col-form-label">Class Name :</label>
-
-                                    <div class="col-sm-8 p-0">
-
-                                        <select class="form-select" aria-label="Default select example" name="class_id"
-
-                                            required>
-
-                                            <option selected disabled value>Select Class Name</option>
-
-                                            <?php
-
-                                                    $allClass = $Classes->classesList();
-
-                                                    foreach ($allClass as $class) {
-
-                                                        echo ' <option value="'.$class['id'].'">'.$class['classname'].'</option>';
-
-                                                    }
-
-                                                ?>
-
-                                        </select>
-
-                                    </div>
-
-                                </div>
-
-
-
-                                <?php
-
-
-
-                                    foreach($feesAccounts as $feeAcc){
-
-                                    $myuid = uniqid('inp');
-
-
-
-                                    $autoid    = $feeAcc['account_name'].$myuid;
-
-                                    $feeAccs   = $feeAcc['account_name'];
-
-
-
-                                ?>
-
-
-
-                                <div class="row m-0 p-0 mb-3">
-
-                                    <label for="inputText" class="col-4 form-label"><?php echo $feeAccs; ?> :</label>
-
-                                    <div class="col-8 p-0">
-
-
-
-
-
-                                        <input type="hidden" id="<?php  echo $autoid  ?>"
-
-                                            value="<?php echo $feeAccs; ?>" class="form-control" name="purpose[]"
-
-                                            required>
-
-
-
-                                        <input type="text" id="<?php  echo $autoid  ?>" class="form-control"
-
-                                            name="amount[]" onkeyup='totalItem(this.value)' required>
-
-                                    </div>
-
-                                </div>
-
-                                <?php  } ?>
-
-
-
-                                <div class="row mb-3 m-0 p-0" style="margin-top: 2.5rem;">
-
-
-
-                                    <div class="col-xl-12 col-lg-12  d-flex justify-content-center align-items-center">
-
-                                        <button type="submit" class="btn btn-primary" name="submitdata">Submit
-
-                                        </button>
-
-                                    </div>
-
-                                </div>
-
-
-
-                            </form>
-
-                        </div>
-
-                    </div>
-
-                </div>
 
             </div>
 
@@ -580,11 +549,12 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-<!-- model 2 -->
+    <!-- model 2 -->
 
 
 
-    <div class="modal fade" id="accountFeesModal" tabindex="-1" aria-labelledby="accountFeesModalLabel" aria-hidden="true">
+    <div class="modal fade" id="accountFeesModal" tabindex="-1" aria-labelledby="accountFeesModalLabel"
+        aria-hidden="true">
 
         <div class="modal-dialog modal-lg">
 
@@ -615,15 +585,142 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     <!-- accountModal end -->
 
 
+    <!-- Modal -->
+
+    <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+
+                <div class="modal-body addAccount-modal-body">
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- modal end -->
+
+
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="addfeesModal" tabindex="-1" aria-labelledby="addfeesModal" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+
+                <div class="modal-body addfees-modal-body">
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- modal end -->
+
+
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="addmonthfeesModal" tabindex="-1" aria-labelledby="addmonthfeesModal" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+
+                <div class="modal-body addmonthfees-modal-body">
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- modal end -->
+
+
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="addmontheditfeesModal" tabindex="-1" aria-labelledby="addmontheditfeesModal"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                </div>
+
+                <div class="modal-body addmontheditfees-modal-body">
+
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- modal end -->
+
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
-
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 
 
     <script>
-
     const accountShow = (id) => {
 
 
@@ -660,7 +757,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
     }
 
-    
+
 
 
 
@@ -672,9 +769,9 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-
-
     
+
+
 
     const deleteFeestur = () => {
 
@@ -683,6 +780,68 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     };
 
 
+    const deletemonFeestur = () => {
+
+        return confirm("DO YOU REALLY WANT TO DELETE THIS MONTHLY FEES STRUCTURE CONTENTS ?")
+
+    };
+
+
+
+    const addAccount = () => {
+
+        let url = 'ajax/account.add.ajax.php';
+
+        $(".addAccount-modal-body").html(
+
+            '<iframe width="100%%" height="200px" frameborder="0" allowtransparency="true" src="' + url +
+
+            '"></iframe>')
+
+
+
+    }
+
+
+    const addFees = () => {
+
+        let url = 'ajax/feesstructure.add.ajax.php';
+
+        $(".addfees-modal-body").html(
+
+            '<iframe width="100%%" height="500px" frameborder="0" allowtransparency="true" src="' + url +
+
+            '"></iframe>')
+
+
+
+    }
+
+    const addmonthlyFees = () => {
+
+        let url = 'ajax/monthlyfees.add.ajax.php';
+
+        $(".addmonthfees-modal-body").html(
+
+            '<iframe width="100%%" height="200px" frameborder="0" allowtransparency="true" src="' + url +
+
+            '"></iframe>')
+
+
+
+    }
+
+    const accountmonthlyFees = (id) => {
+
+        let url = 'ajax/monthlyfees.edit.ajax.php?feesdata=' + id;
+
+        $(".addmontheditfees-modal-body").html(
+
+            '<iframe width="100%" height="265px" frameborder="0" allowtransparency="true" src="' + url +
+
+            '"></iframe>')
+
+    }
 
     // Example starter JavaScript for disabling form submissions if there are invalid fields
 
@@ -723,7 +882,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
             })
 
     })()
-
     </script>
 
 

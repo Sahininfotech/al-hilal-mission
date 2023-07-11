@@ -18,16 +18,12 @@
  $Admin      = new Admin();
 
  $_SESSION['current-url'] = $Utility->currentUrl();
-  
-if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
-  header("Location: login.php");
-  exit;
-}
+
 //  $expensesQuery=false;
 
   if(isset ($_POST["submit"])){
  // if($_SERVER['REQUEST METHOD'] == 'POST'){
-    $bill_no        = $_POST["bill_no"];
+    $bill_no        = $_POST["voucher_no"];
     $amount         = $_POST["amount"];
     $payment_type   = $_POST["payment_type"];
     $description    = $_POST["description"];
@@ -41,11 +37,13 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
     $otherspaid_to  = $_POST["Otherspaid_to"];
 
     $accountsSelect = $_POST["accounts-select"];
-    $subcategory    = '';
+    // $subcategory    = '';
     if (isset($_POST["sub-accounts-select"])) {
 
         $subcategory    = $_POST["sub-accounts-select"];
 
+    }else{
+        $subcategory    = $accountsSelect;
     }
 
     $status         = 1;
@@ -75,7 +73,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
         move_uploaded_file( $image_tmp_name, $image_folter );
 
-        $added = $Expenses->expensesInsert($bill_no, $amount, $payment_type, $description, $date ,$image, $status,$added_by,$payment_id, $paidBy, $paidTo, $accountsSelect, $subcategory);
+        $added = $Expenses->expensesInsert($bill_no, $amount, $payment_type, $description, $date ,$image, $status,$added_by,$payment_id, $paidBy, $paidTo, $subcategory);
       
         if($added){
 
@@ -130,7 +128,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                     <label for="inputaddress" class="col-sm-2 col-form-label">Voucher No:</label>
                     <div class="col-sm-10">
-                        <input type="address" class="form-control" name="bill_no" required />
+                        <input type="address" class="form-control" name="voucher_no" required />
                     </div>
                 </div>
 
@@ -255,7 +253,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                         </select>
                     </div>
-                    <label class="col-sm-2 col-form-label" id="subdata" style="display: none;">sub category:</label>
+                    <label class="col-sm-2 col-form-label" id="subdata" style="display: none;">Sub HFA:</label>
                     <div class="col-sm-4">
                         <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
                             name="sub-accounts-select" style="display: none;">

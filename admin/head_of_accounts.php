@@ -296,7 +296,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                         <th scope="col ">Head Of Accounts</th>
 
-                                        <th scope="col ">parent Category</th>
+                                        <th scope="col ">parent HOA</th>
 
                                         <th scope="col ">Description</th>
 
@@ -311,9 +311,11 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
                                     <?php
 
                                     $sl = 1;
-                                    $grocerydata =$grocery->showCategory();                              
+                                    $grocerydata = $grocery->showCategory();                              
                                     foreach($grocerydata as $row){                                
                                         $description = $row['description'];
+                                        $parentdata  = $row['parent_category'];
+                                       
                                     ?>
 
                                     <tr>
@@ -324,7 +326,20 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                         <td><?php echo $row['category']; ?></td>
 
-                                        <td><?php echo $row['parent_category']; ?></td>
+                                        <td>
+                                            <?php
+                                            if($parentdata == 0){
+                                            echo '0';
+                                            } else{
+                                            $grocerys    = $grocery->categoryById($parentdata);                              
+                                            foreach($grocerys as $rows){                                
+                                            $parentCate  = $rows['category'];
+
+                                            echo $parentCate; 
+                                            }  
+                                            }
+                                            ?>
+                                        </td>
 
                                         <td><?php echo substr("$description",0,10)." ...";?></td>
 
@@ -389,7 +404,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                 <div class="row m-0 p-0 mb-3">
 
-                                    <label class="col-sm-4 col-form-label">Parent Category Name :</label>
+                                    <label class="col-sm-4 col-form-label">Parent HOA Name :</label>
 
                                     <div class="col-sm-8 p-0">
 
@@ -402,7 +417,7 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
                                             foreach($grocerydata as $row){  
 
-                                            echo ' <option value="'.$row['category'].'">'.$row['category'].'</option>';
+                                            echo ' <option value="'.$row['category_id'].'">'.$row['category'].'</option>';
 
                                             }
 

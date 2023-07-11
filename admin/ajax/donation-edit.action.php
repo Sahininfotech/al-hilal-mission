@@ -33,7 +33,7 @@ $Revenue = new  Revenue();
     $date             = $_POST["date"];
 
 
-
+    $description      = $_POST["description"];
 
 
 
@@ -64,7 +64,7 @@ $Revenue = new  Revenue();
 
 
    
-    $update = $Revenue->editdonation($name, $address, $amount, $status, $id,  $pin_code, $payment_type, $payment_id, $paid_by, $date);
+    $update = $Revenue->editdonation($name, $address, $amount, $status, $id,  $pin_code, $payment_type, $payment_id, $paid_by, $date, $description);
 
     
 

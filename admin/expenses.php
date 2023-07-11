@@ -18,13 +18,21 @@
 
     require_once '../classes/head_of_accounts.class.php';
 
-    $grocery    = new HeadOfAccounts();
+    require_once '../classes/vendor.class.php';
+
+    require_once '../classes/employee.class.php';
+  
+    $vendors    = new Vendor();
 
     $Utility    = new Utility(); 
 
     $Admin      = new Admin();
 
     $Expenses   = new Expenses();
+
+    $HFA        = new HeadOfAccounts();
+
+    $Employee   = new Employee();
 
 
 
@@ -490,12 +498,6 @@
 
 
 
-
-
-
-
-
-
         <!-- End Sales Card -->
 
         <!-- date-selector start -->
@@ -577,13 +579,115 @@
 
 
 
+        <section>
 
+            <div class="card p-3 justify-content-center">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <h5 class="card-title">Details Of Expenses</h5>
+
+
+                        <div class="col-lg-2 col-md-2">
+
+                            <form action="expenses-report.php" method="POST">
+
+                                <div class="row mb-3 ">
+
+                                    <div>
+
+                                        <select class="form-select" aria-label="Default select example" name="duration"
+                                            id="duration" required>
+                                            <option disabled selected value>Select Duration</option>
+
+                                            <option value="<?php echo date("l") ?>">Today
+                                            </option>
+                                            <option value="<?php echo date('M') ?>">Last Month
+                                            </option>
+                                            <option value="<?php echo date('Y') ?>">Last Year
+                                            </option>
+                                            <option value="Total">Total
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example"
+                                        onclick="getcategory(this.value)" name="select_typpe" id="select_typpe"
+                                        required>
+                                        <option disabled selected value>Select Type</option>
+
+                                        <option value="HFA">Head Of Accounts</option>
+                                        <option value="VendorsNAME">Vendors </option>
+                                        <option value="Employee">Employee (Expenses By)</option>
+                                        <option value="cancel">Cancel Data</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="head_of_account" id="head_of_account" required>
+                                        <option disabled selected value>Select Type First</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+
+                            <div class="row mb-3">
+
+                                <button type="text" class="btn btn-primary"
+                                    style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Show</button>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+        </section>
 
 
 
         <!-- date-selector end -->
 
-        <section class="section dashboard">
+        <section class="section dashboard" style="margin-top: 2rem;">
 
             <div class="col-lg-12">
 
@@ -624,17 +728,17 @@
 
                                     <th scope="col">S.No</th>
 
-                                    <th scope="col">Bill_No</th>
+                                    <th scope="col">Voucher No</th>
 
                                     <th scope="col">Date</th>
 
                                     <th scope="col">Head Of Accounts</th>
 
-                                    <th scope="col">HFA Sub Category</th>
+                                    <th scope="col">Payment Mode</th>
 
-                                    <th scope="col">Type</th>
+                                    <th scope="col">Paid By</th>
 
-                                    <th scope="col">Added_by</th>
+                                    <th scope="col">Paid To</th>
 
                                     <th scope="col">Amount</th>
 
@@ -653,8 +757,7 @@
                                     $i=1;
 
                                     foreach($revenueresult as $row){      
-                                        $head_of_accounts_id = $row['head_of_accounts_id'];
-                                        $hfa_sub_category_id = $row['hfa_sub_category_id'];
+                                        $head_of_accounts_id = $row['head_of_accounts_id'];                               
 
                                     ?>
 
@@ -670,21 +773,12 @@
 
                                     <td><?php    echo $i  ?></td>
 
-                                    <td><?php    echo $row['bill_no']  ?></td>
+                                    <td><?php    echo $row['voucher_no']  ?></td>
 
                                     <td><?php    echo date("d-m-Y", strtotime($row['date']));  ?></td>
 
                                     <td>
-                                        <?php $categorydata =$grocery->categoryById($head_of_accounts_id);                              
-                                        foreach($categorydata as $rows){ 
-                                        $category_name   = $rows['category'];
-                                        echo $category_name;
-                                        }
-                                        ?>
-                                    </td>
-
-                                    <td>
-                                        <?php $categorydata =$grocery->categoryById($hfa_sub_category_id);                              
+                                        <?php $categorydata =$HFA->categoryById($head_of_accounts_id);                              
                                         foreach($categorydata as $rows){ 
                                         $category_name   = $rows['category'];
                                         echo $category_name;
@@ -694,7 +788,9 @@
 
                                     <td><?php    echo $row['payment_type']  ?></td>
 
-                                    <td><?php    echo $row['added_by']  ?></td>
+                                    <td><?php    echo $row['paid_by']  ?></td>
+
+                                    <td><?php    echo $row['paid_to']  ?></td>
 
                                     <td><?php   $row['amount']  = number_format($row['amount'], 2);
                                        echo $row['amount']  ?></td>
@@ -912,7 +1008,7 @@
 
         $(".edit-modal-body").html(
 
-            '<iframe width="100%" height="660px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%" height="690px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 
@@ -931,6 +1027,32 @@
             '"></iframe>')
 
 
+
+    }
+
+
+    const getcategory = (value) => {
+        subcategoryList = document.getElementById("head_of_account");
+        console.log(value);
+        // alert(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+
+            //==================== SubCategory List ====================
+            subcategory = 'ajax/getcategory.ajax.php?category=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+            // if (xmlhttp.responseText != "") {
+            //     subcategoryList.style.display = 'block';
+            //     document.getElementById("subdata").style.display = 'block';
+            // } else {
+            //     subcategoryList.style.display = 'none';
+            //     document.getElementById("subdata").style.display = 'none';
+            // }
+        }
 
     }
     </script>

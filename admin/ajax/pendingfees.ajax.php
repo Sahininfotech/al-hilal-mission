@@ -431,7 +431,6 @@ $showStudentDetails   = $Student->studentfeesId($_GET['feespending']);
                         // }elseif($showtotal_amount > $showamount) {
                         // $pendingamount  = number_format($pendingamount, 2);
                         // echo $pendingamount; }else{
-                        
                         // }
                         if($pendingamount == "0"){
                             echo '<span class="badge bg-success">Paid</span>';

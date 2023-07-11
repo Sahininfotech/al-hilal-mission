@@ -8,27 +8,20 @@ require_once '../../classes/employee.class.php';
 
 require_once '../../classes/vendor.class.php';
 
+require_once '../../classes/head_of_accounts.class.php';
+
+$grocery  = new HeadOfAccounts();
+
 $vendors             = new  Vendor();
-
-
 
 $Employee            = new Employee();
 
-
-
 $Revenue             = new  Revenue(); 
-
-
 
 $vendorresult        = $vendors->vendordisplaydata();
 
 
-
-
-
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-    $source       = $_POST["source"];
 
     $amount       = $_POST["amount"];
 
@@ -56,6 +49,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     }
 
+    $accountsSelect = $_POST["accounts-select"];
+    if (isset($_POST["sub-accounts-select"])) {
+
+        $source    = $_POST["sub-accounts-select"];
+ 
+    }else{
+        $source    = $accountsSelect;
+    }
  
 
     $paid_by           = $_POST["paid-by-select"];
@@ -102,8 +103,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 <script>
-
-alert('Others Details Updated!');
+alert('Revenue Details Updated!');
 
 
 
@@ -116,7 +116,6 @@ let myid = document.getElementById('feesId').value;
 
 
 location.href = `others-revenue-edit.ajax.php?editothers=${myid}`;
-
 </script>
 
 
@@ -138,7 +137,6 @@ location.href = `others-revenue-edit.ajax.php?editothers=${myid}`;
 
 
 <script>
-
 alert('Failed!');
 
 
@@ -148,7 +146,6 @@ let myid = document.getElementById('feesId').value;
 
 
 location.href = `others-revenue-edit.ajax?editothers=${myid}`;
-
 </script>
 
 
@@ -224,9 +221,7 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
 
@@ -347,31 +342,9 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
                 <input type="hidden" class="form-control" value="<?php echo $showid; ?>" name="id">
 
-                <h5 class="card-title d-flex justify-content-center text-center mt-0 p-0 mb-3"> Others 
+                <h5 class="card-title d-flex justify-content-center text-center mt-0 p-0 mb-3"> Others
 
                     Edit Form</h5>
-
-                <div class="row mb-3 p-0 m-0">
-
-
-
-                    <label for="inputAddress" class="col-sm-2 col-form-label">Name :</label>
-
-
-
-                    <div class="col-sm-10 ">
-
-
-
-                        <input type="text" class="form-control" value="<?php echo $showsource; ?>" name="source">
-
-
-
-                    </div>
-
-
-
-                </div>
 
 
 
@@ -417,71 +390,23 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
                         <select class="form-select" name="vendor_id" onchange="selectpayment(this.value)">
 
-
-
                             <?php
-
-
 
                         foreach ($vendorresult as $showVendor) {
 
-
-
                         $showclass = $showVendor['id'];
-
-
-
-                        $showVendor_name = $showVendor['name'];
-
-
-
-                        $showVen_id = $showVendor['vendor_id'];
-
-
-
-                        if( $showvendor_id == $showVen_id)
-
-
-
-                        echo '<option selected value="'.$showvendor_id.'" ?>'.$showVendor_name.'';
-
-
-
-
-
-                            }?>
-
-
-
-
-
-                            <?php
-
-
-
-                        foreach ($vendorresult as $showVendor) {
-
-
-
-                        $showclass = $showVendor['id'];
-
-
 
                         $showVendor_names = $showVendor['name'];
 
-
-
                         $showvendor_ids = $showVendor['vendor_id'];
 
-
-
-                        echo ' <option value="'.$showvendor_ids.'">'.$showVendor_names.'</option>';
-
-
+                        echo '<option value="' . $showvendor_ids . '"';
+                        if ($showvendor_id == $showvendor_ids) {
+                        echo 'selected style="color: blue;"';
+                        }
+                        echo '>' . $showVendor_names. '</option>';
 
                         }?>
-
-
 
                         </select>
 
@@ -515,7 +440,7 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
 
-                            <option selected value="<?php echo $showpayment_type; ?>"><?php echo $showpayment_type; ?>
+                            <!-- <option selected value="<?php echo $showpayment_type; ?>"><?php echo $showpayment_type; ?> -->
 
 
 
@@ -523,31 +448,45 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
 
-                            <option value="Cash">Cash</option>
+                            <option <?php if ($showpayment_type == "Cash") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Cash">Cash</option>
 
 
 
-                            <option value="Credit">Credit</option>
+                            <option <?php if ($showpayment_type == "Credit") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Credit">Credit</option>
 
 
 
-                            <option value="UPI">UPI</option>
+                            <option <?php if ($showpayment_type == "UPI") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="UPI">UPI</option>
 
 
 
-                            <option value="Credit-Card">Credit-Card</option>
+                            <option <?php if ($showpayment_type == "Credit-Card") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Credit-Card">Credit-Card</option>
 
 
 
-                            <option value="Debit-Card">Debit-Card</option>
+                            <option <?php if ($showpayment_type == "Debit-Card") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Debit-Card">Debit-Card</option>
 
 
 
-                            <option value="Internet-Banking">Internet-Banking</option>
+                            <option <?php if ($showpayment_type == "Internet-Banking") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Internet-Banking">Internet-Banking</option>
 
 
 
-                            <option value="Others">Others</option>
+                            <option <?php if ($showpayment_type == "Others") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Others">Others</option>
 
 
 
@@ -568,7 +507,6 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
                         <div class=" row <?php echo ($showpayment_type == 'Cash') ? ( 'd-none'):('d') ?> "
-
                             id="payment_id_bx">
 
 
@@ -582,7 +520,6 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
                                 <input type="number" class="form-control" value="<?php echo $showpayment_id; ?>"
-
                                     name="payment_id">
 
 
@@ -613,70 +550,49 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
                 <div class="row mb-3 p-0 m-0">
 
-
-
                     <label class="col-sm-2 col-form-label">Paid By :</label>
-
-
-
-
 
                     <div class="col-sm-4  ">
 
-
-
-
-
                         <select class="form-select" id="form-select" onChange="selectOthers(this.value)"
-
                             name="paid-by-select" required>
 
-
-
-                            <?php
-
-                         
-
-                            echo '<option  style="color: blue;">'.$paidBy.'</option>';
-
-
-
-                    ?>
-
-
-
-                            <option value="Others" style="color: blue;">Others</option>
-
-
+                            <!-- <option value="Others" style="color: blue;">Others</option> -->
 
                             <?php
-
-
-
+                            $count = 1;
                             $emps = $Employee->showEmployees();
-
-
 
                             foreach ($emps as $emp) {
 
-
-
                                 $empId   = $emp['id'];
-
-
 
                                 $empName = $emp['name'];
 
-
-
-                                echo ' <option value="'.$empName.'">'.$empName.'</option>';
-
-
-
+                            if($empName == $paidBy){
+                            $count--;
+                            echo'<option value="Others" style="color: blue;">Others</option>';
                             }
 
+                            }
+                            if($count == 1){
 
+                            echo'<option value="Others" style="color: blue;">'.$paidBy.' (Others)</option>';
+                            }
 
+                            foreach ($emps as $emp) {
+
+                                $empId   = $emp['id'];
+
+                                $empName = $emp['name'];
+
+                                echo '<option value="' . $empName . '"';
+                                if ($empName == $paidBy) {
+                                echo 'selected style="color: blue;"';
+                                }
+                                echo '>' . $empName. '</option>';
+
+                            }                       
                     ?>
 
 
@@ -694,7 +610,6 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
                     <div class="col-sm-6  <?php echo gettype($paidBy) != 'integer' ? 'd-none' : 'd-block'; ?>"
-
                         id="others-staff">
 
 
@@ -712,7 +627,6 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
                                 <input type="text" class="form-control" name="others_paid"
-
                                     value="<?php echo $paidBy; ?>">
 
 
@@ -735,68 +649,86 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
 
-
-
-
-
-
-
-
-
-
-
                 <div class="row mb-3 p-0 m-0">
+                    <label class="col-sm-2 col-form-label">Head Of Accounts :</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="form-selectaccount" aria-label="Default select example"
+                            onclick="getsubcategory(this.value)" name="accounts-select" required>
 
+                            <?php
+                        // $categorydata =$grocery->categoryById($showsource);                              
+                        // foreach($categorydata as $rows){ 
+                        // $category_name   = $rows['category'];
+                        // echo '<option  style="color: blue;" value="'.$showsource.'">'.$category_name.'</option>';
+                        // }
+                        // $grocerydata =$grocery->parentCategory();                              
+                        // foreach($grocerydata as $row){ 
+                        // $category   = $row['category'];
+                        // $categoryId = $row['category_id'];                                                                                 
+                        // echo '<option value="'.$categoryId.'">'.$category.'</option>';
+                        // }
+                       
+                        $grocerydata =$grocery->parentCategory();                              
+                        foreach($grocerydata as $row){  
+                        echo '<option value="' . $row['category_id'] . '"';
+                        if ($row['category_id'] == $showsource) {
+                        echo 'selected style="color: blue;"';
+                        }
+                        echo '>' . $row['category'] . '</option>';
+                        }
+                        ?>
 
-
-                    <label for="inputText" class="col-sm-2 col-form-label">status :</label>
-
-
-                    <div class="col-sm-10">
-
-                    <select class="form-select" name="status">
-
-                    <option selected value="<?php echo $showstatus; ?>"><?php echo $showstatus; ?>
-
-                    </option>
-
-                    <option value="active">Active</option>
-
-                    <option value="inactive">Inactive</option>
-                    </select>
-
+                        </select>
                     </div>
+                    <label class="col-sm-2 col-form-label" id="subdata">Sub HOA:</label>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
+                            name="sub-accounts-select">
+                            <?php
+                        $categorydata =$grocery->categoryById($showsource);                              
+                        foreach($categorydata as $rows){ 
+                        $category_name   = $rows['category'];
+                        echo '<option  style="color: blue;" value="'.$showsource.'">'.$category_name.'</option>';
+                        }
+                        ?>
 
-
+                        </select>
+                    </div>
                 </div>
+
+
+
 
                 <div class="row mb-3 p-0 m-0">
-
-                <label for="inputaddress" class="col-sm-2 col-form-label">Date :</label>
-
-                <div class="col-sm-10">
-
-                <input type="text" class="form-control" id="edit2" value="<?php echo $datetring; ?>">
-
+                    <label class="col-sm-2 col-form-label">Status :</label>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="gridRadios1" value="active"
+                                required <?php if($showstatus == 'active'){ echo 'checked';}?>>
+                            <label class="form-check-label" for="gridRadios1">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="gridRadios2" value="inactive"
+                                required <?php if($showstatus == 'inactive'){ echo 'checked';}?>>
+                            <label class="form-check-label" for="gridRadios2">
+                                Inactive
+                            </label>
+                        </div>
+                    </div>
+                    <label class="col-sm-2 col-form-label" id="subdata">Date:</label>
+                    <div class="col-sm-4">
+                        <input type="date" class="form-control" id="edit2" value="<?php echo $showdate; ?>" name="date">
+                    </div>
                 </div>
 
-                </div>
-                <div class="row mb-3 p-0 m-0">
-
-                <label for="inputaddress" class="col-sm-2 col-form-label">Update Date:</label>
-
-                <div class="col-sm-10">
-
-                <input type="date" class="form-control" id="edit2" value="<?php echo $showdate; ?>" name="date">
-
-                </div>
-
-                </div>
 
                 <div class="row mb-3 p-0 m-0">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Description :</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" style="height: 68px" name="description" required><?php echo $showdescription; ?></textarea>
+                        <textarea class="form-control" style="height: 68px" name="description"
+                            required><?php echo $showdescription; ?></textarea>
                     </div>
                 </div>
 
@@ -808,11 +740,12 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
 
-                    <div class="col-sm-12 " >
+                    <div class="col-sm-12 ">
 
 
 
-                        <button type="submit" class="btn btn-primary d-flex justify-content-center m-auto" style="width: 105px" name="submit">  Update </button>
+                        <button type="submit" class="btn btn-primary d-flex justify-content-center m-auto"
+                            style="width: 105px" name="submit"> Update </button>
 
 
 
@@ -881,7 +814,6 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
 
     <script>
-
     function selectpayment(mode) {
 
 
@@ -946,6 +878,32 @@ location.href = `others-revenue-edit.ajax?editothers=${myid}`;
 
     }
 
+
+
+    const getsubcategory = (value) => {
+        subcategoryList = document.getElementById("form-selectaccountsub");
+        console.log(value);
+        // alert(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+
+            //==================== SubCategory List ====================
+            subcategory = 'getsubcategory.ajax.php?subcategory=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+            if (xmlhttp.responseText != "") {
+                subcategoryList.style.display = 'block';
+                document.getElementById("subdata").style.display = 'block';
+            } else {
+                subcategoryList.style.display = 'none';
+                document.getElementById("subdata").style.display = 'none';
+            }
+        }
+
+    }
     </script>
 
 

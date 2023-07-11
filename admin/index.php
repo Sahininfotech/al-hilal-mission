@@ -78,10 +78,7 @@ $revenuetotal         = $revenues->studentfeesTotal();
 
 $amounttotal          = $StudentDetails->Studenttotalamount();
 
-
 $previousfees         = $StudentDetails->previoustotalamount();
-
-
 
 $revenueamounts       = $revenues->totalDue();
 
@@ -304,6 +301,15 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                             <a href="./studentdetails.php">
 
+                                <?php
+               
+
+                             
+
+
+
+                            ?>
+
                                 <div class="card-body">
 
                                     <h5 class="card-title">Total Students </h5>
@@ -324,30 +330,30 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                             <h6>
 
-                                            <?php 
+                                                <?php 
                                                 
-                                                foreach($total as $rowsession){
+                                                    foreach($total as $rowsession){
 
 
 
-                                                $session      = $rowsession['session'];
+                                                    $session      = $rowsession['session'];
 
 
 
-                                                $studentcount = $StudentDetails->countStudentrow($session);
+                                                    $studentcount = $StudentDetails->countStudentrow($session);
 
-                                                $totalstudent = 00;
+                                                    $totalstudent = 00;
 
-                                                if ($studentcount != null || $studentcount != '') {
+                                                    if ($studentcount != null || $studentcount != '') {
 
-                                                $totalstudent = count($studentcount);
+                                                    $totalstudent = count($studentcount);
 
-                                                }
+                                                    }
 
-                                                echo $totalstudent;  
+                                                    echo $totalstudent;  
 
-                                                }
-                                            ?>
+                                                    }
+                                                ?>
 
                                             </h6>
 
@@ -403,37 +409,24 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                             <?php
 
+                                        foreach($previousfees as $amountfees){
 
-                                    foreach($previousfees as $amountfees){
+                                        $pre_tolatamounts      = $amountfees['pre_Total'];
 
-                                    $pre_tolatamounts      = $amountfees['pre_Total'];
+                                        foreach($amounttotal as $amountrow){
 
-                                    foreach($amounttotal as $amountrow){
+                                        $tolatamounts      = $amountrow['Total'];
 
+                                        while ($row = $revenuetotal ->fetch_object()):
 
+                                        while ($rows = $revenueamounts ->fetch_object()):
 
-                                    $tolatamounts      = $amountrow['Total'];
-
-                                   
-
-                                    while ($row = $revenuetotal ->fetch_object()):
-
+                                        $now_tolatamount = $rows->Total;                                 
 
 
-                                    while ($rows = $revenueamounts ->fetch_object()):
+                                        $tolatamount   =  $pre_tolatamounts + $now_tolatamount;
 
-
-
-                                    $now_tolatamount = $rows->Total;                                 
-                             
-
-                                    $tolatamount   =  $pre_tolatamounts + $now_tolatamount;
-
-                                ?>
-
-
-
-
+                                    ?>
 
                             <a href="./pending_studentdetails.php">
 
@@ -457,9 +450,9 @@ $showStudentDetails   = $StudentDetails->showStudent();
 
                                             <h6 style="color: red;">₹
                                                 <?php 
-                                                $tolatamount  = number_format($tolatamount, 2);
-                                                echo $tolatamount ; if ($tolatamount== 0) echo 0;
-                                                ?>
+                                                        $tolatamount  = number_format($tolatamount, 2);
+                                                        echo $tolatamount ; if ($tolatamount== 0) echo 0;
+                                                    ?>
                                             </h6>
 
                                         </div>

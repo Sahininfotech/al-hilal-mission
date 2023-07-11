@@ -222,9 +222,9 @@
 
 
 
-        <!-- start accountant -->
+          <!-- start accountant -->
 
-        <li
+          <li
             class="nav-item <?php if($page == "Expenses" || $page == "Revenue" || $page == "Head Of Accounts"){echo "active";} ?>">
 
             <a class="nav-link <?php if($page == "Expenses" || $page == "Revenue" || $page == "Head Of Accounts"){echo "noaction";} else {

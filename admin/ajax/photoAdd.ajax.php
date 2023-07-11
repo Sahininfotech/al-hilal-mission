@@ -261,20 +261,18 @@
                             _this.removeAllFiles();
                             alert("Image Uploaded Successfully");
                         }
-                       
                         list_image();
                     });
                 },
             };
 
-            list_image();
+            // list_image();
 
             // function list_image() {
             //     $.ajax({
             //         url: "photoupload.php",
             //         success: function(data) {
             //             $('#preview').html(data);
-                       
             //         }
             //     });
             // }
@@ -289,21 +287,11 @@
             //         },
             //         success: function(data) {
             //             list_image();
-            //             alert(data);
             //         }
             //     })
             // });
 
         });
-
-        //         Dropzone.options.uploadWidget = {
-        //   init: function() {
-        //     this.on('success', function( file, resp ){
-        //        alert("Success");
-        //     });
-        //   },
-        //   ...
-        // };
         </script>
     </body>
 

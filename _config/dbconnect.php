@@ -81,14 +81,14 @@ class DatabaseConnection{
 
 
 
-    
-        $this->servername = 'localhost';
+        $this->servername = 'localhost';      
 
         $this->username = 'root';
 
         $this->password = '';
 
-        $this->dbname = 'activaga_al_hilal';
+        $this->dbname = 'al_hilal_mission';
+
 
 
         $this->conn = new mysqli($this->servername, $this->username, $this->password, $this->dbname);

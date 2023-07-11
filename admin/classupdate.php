@@ -12,7 +12,6 @@ require_once '../classes/student.class.php';
 require_once '../includes/constant.php';
 
 
-
 $Admin                  = new Admin();
 $Institute              = new InstituteDetails();                                
 $StudentDetails         = new StudentDetails();

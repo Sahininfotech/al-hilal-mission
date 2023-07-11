@@ -1,5 +1,0 @@
-[06-Jan-2023 23:26:14 America/Boise] PHP Warning:  require_once(includes/constant.inc.php): Failed to open stream: No such file or directory in /home3/activaga/public_html/alhilalmission/experimental/test-mail.php on line 10
-[06-Jan-2023 23:26:14 America/Boise] PHP Fatal error:  Uncaught Error: Failed opening required 'includes/constant.inc.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home3/activaga/public_html/alhilalmission/experimental/test-mail.php:10
-Stack trace:
-#0 {main}
-  thrown in /home3/activaga/public_html/alhilalmission/experimental/test-mail.php on line 10

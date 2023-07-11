@@ -14,11 +14,23 @@ require_once '../classes/utility.class.php';
 
 require_once '../includes/constant.php';
 
+require_once '../classes/vendor.class.php';
+
+require_once '../classes/head_of_accounts.class.php';
+
+require_once '../classes/employee.class.php';
+
+$vendors    = new Vendor();
+
 $Utility    = new Utility();
 
 $Admin      = new Admin();
 
 $revenues   = new Revenue();
+
+$HFA        = new HeadOfAccounts();
+
+$Employee   = new Employee();
 
 $_SESSION['current-url'] = $Utility->currentUrl();
 
@@ -93,7 +105,6 @@ $othersdata    = $revenues->revenueothersdisplay();
   ======================================================== -->
 
     <style>
-
     .addnewbtncss {
 
         margin: auto;
@@ -167,7 +178,6 @@ $othersdata    = $revenues->revenueothersdisplay();
         }
 
     }
-
     </style>
 
 </head>
@@ -221,8 +231,8 @@ $othersdata    = $revenues->revenueothersdisplay();
         <!-- Card Div for report -->
 
 
-
         <section class="section dashboard">
+            <h5 class="card-title" style="color: #0d6efd;">STUDENT FEES</h5>
 
             <div class="col-sm-12">
 
@@ -249,7 +259,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -305,7 +314,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -360,7 +368,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -413,7 +420,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -466,7 +472,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                                 <div>
 
                                                     <input type="date" class="form-control" name="searchstudent"
-
                                                         value="<?php if(isset($_GET['searchstudent'])){echo $_GET['searchstudent']; }?>">
 
                                                 </div>
@@ -484,7 +489,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                             <div>
 
                                                 <input type="date" class="form-control" name="searchstudents"
-
                                                     value="<?php if(isset($_GET['searchstudents'])){echo $_GET['searchstudents']; }?>" />
 
                                             </div>
@@ -498,7 +502,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <div class="row mb-3 pt-4">
 
                                             <button type="text" class="btn btn-primary"
-
                                                 style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Find</button>
 
                                         </div>
@@ -538,7 +541,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <h5 class="card-title">Student Fees </h5>
 
                         <button type="button" class="btn btn-primary mb-4 addnewbtncss" data-bs-toggle="modal"
-
                             data-bs-target="#revenuestudentModalLabel" onclick="addFeesRevenue();"> Add Student Fees
 
                         </button>
@@ -548,7 +550,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Modal -->
 
                         <div class="modal fade" id="revenuestudentModalLabel" tabindex="-1"
-
                             aria-labelledby="revenuestudentModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog modal-xl">
@@ -558,7 +559,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="modal-header">
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-
                                             aria-label="Close"></button>
 
                                     </div>
@@ -614,7 +614,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                 ?>
 
                                 <tr
-
                                     <?php if ($row['status']== 'active') echo ' style="color: black"' ; if ($row['status']== 'inactive') echo 'style="color: red"' ;?>>
 
                                     <td><?php    echo $i  ?></td>
@@ -635,15 +634,12 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <td>
 
                                         <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
-
                                             data-bs-target="#feesRevenueModal" id="<?php    echo $row['id']  ?>"
-
                                             onclick="feesRevenue(this.id);"></i>
 
                                         <!-- Modal -->
 
                                         <div class="modal fade" id="feesRevenueModal" tabindex="-1"
-
                                             aria-labelledby="feesRevenueModalLabel" aria-hidden="true">
 
                                             <div class="modal-dialog modal-lg">
@@ -653,7 +649,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                                     <div class="modal-header">
 
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-
                                                             aria-label="Close"></button>
 
                                                     </div>
@@ -671,11 +666,9 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <!-- modal end -->
 
                                         <a
-
                                             href='../admin/ajax/revenuefeescancel.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-x-lg" onclick="return cancel();"
-
                                                 <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
 
                                             </i>
@@ -683,11 +676,9 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         </a>
 
                                         <a style="color: #35dc59"
-
                                             href='../admin/ajax/revenuefeesactive.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-check-lg " onclick="return activerevenuefees();"
-
                                                 <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
 
                                             </i>
@@ -714,6 +705,8 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         <section class="section dashboard">
 
+            <h5 class="card-title" style="color: #0d6efd;">DONATION</h5>
+
             <div class="col-sm-12">
 
                 <div class="row">
@@ -739,7 +732,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -792,7 +784,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -845,7 +836,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -900,7 +890,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -959,7 +948,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div>
 
                                         <input type="date" class="form-control" name="searchdonations"
-
                                             value="<?php if(isset($_GET['searchdonations'])){echo $_GET['searchdonations']; }?>">
 
                                     </div>
@@ -977,7 +965,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                 <div>
 
                                     <input type="date" class="form-control" name="searchdonation"
-
                                         value="<?php if(isset($_GET['searchdonation'])){echo $_GET['searchdonation']; }?>" />
 
                                 </div>
@@ -991,7 +978,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                             <div class="row mb-3 pt-4">
 
                                 <button type="text" class="btn btn-primary"
-
                                     style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Find</button>
 
                             </div>
@@ -1010,8 +996,143 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         <!-- date-selector end -->
 
-        <!-- date-selector end -->
 
+        <section>
+
+            <div class="card p-3 justify-content-center">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <h5 class="card-title">Details Of Donation</h5>
+
+
+                        <div class="col-lg-2 col-md-2">
+
+                            <form action="revenueDonation-report.php" method="POST">
+
+                                <div class="row mb-3 ">
+
+                                    <div>
+
+                                        <select class="form-select" aria-label="Default select example"
+                                            name="duration_EMP" id="duration_EMP" required>
+                                            <option disabled selected value>Select Duration</option>
+
+                                            <option value="<?php echo date("l") ?>">Today
+                                            </option>
+                                            <option value="<?php echo date('M') ?>">Last Month
+                                            </option>
+                                            <option value="<?php echo date('Y') ?>">Last Year
+                                            </option>
+                                            <option value="Total">Total
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+
+
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example"
+                                        onclick="getcategoryDonation(this.value)" name="typpe_data" id="typpe_data"
+                                        required>
+                                        <option disabled selected value>Select Type</option>
+                                        <option value="Employee">Employee (Donation Through)</option>
+                                        <option value="cancel">Cancel Data</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="donation_data" id="donation_data" required>
+                                        <option disabled selected value>Select Type First</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+                        <!-- <div class="col-lg-4 col-md-4">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example" name="employee"
+                                        id="employee" required>
+                                        <option disabled selected value>Select Employee</option>
+
+                                        <?php
+                             $emps =$Employee->showEmployees();
+
+                             foreach ($emps as $emp) {
+                                 $empId   = $emp['user_id'];
+                                 $empName = $emp['name'];
+                                 echo ' <option value="'.$empName.'">'.$empName.'</option>';
+                             }
+                            ?>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div> -->
+
+
+                        <div class="col-lg-4 col-md-4">
+
+                            <div class="row mb-3">
+
+                                <button type="text" class="btn btn-primary"
+                                    style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Show</button>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+        <!-- date-selector end -->
+     
         <section class="section dashboard">
 
             <!-- Recent Sales -->
@@ -1027,7 +1148,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Button trigger modal -->
 
                         <button type="button" class="btn btn-primary mb-4 addnewbtncss1" data-bs-toggle="modal"
-
                             data-bs-target="#donationModalLabel" onclick="revenuedonation();"> Add Donation
 
                         </button>
@@ -1035,7 +1155,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Modal -->
 
                         <div class="modal fade" id="donationModalLabel" tabindex="-1"
-
                             aria-labelledby="donationModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog modal-lg">
@@ -1045,7 +1164,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="modal-header">
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-
                                             aria-label="Close"></button>
 
                                     </div>
@@ -1093,7 +1211,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     $i=1;
 
                                     foreach($donationdata as $row){ 
-
+                                        $description = $row['description'];
                                         $showdonationdate =  $row['date'];
 
                                         $donationdatetring = date("d-m-Y", strtotime($showdonationdate));
@@ -1101,7 +1219,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     ?>
 
                                 <tr
-
                                     <?php if ($row['status']== 'active') echo ' style="color: black"' ; if ($row['status']== 'inactive') echo 'style="color: red"' ;?>>
 
                                     <td><?php    echo $i  ?></td>
@@ -1110,7 +1227,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
                                     <td><?php    echo $row['address']  ?></td>
 
-                                    <td><?php    echo $row['description']  ?></td>
+                                    <td><?php    echo substr("$description",0,18)." ...";  ?></td>
 
                                     <td><?php   $rowamount = $row['amount'];
                                                 $rowamount  = number_format($rowamount, 2);
@@ -1121,15 +1238,12 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <td>
 
                                         <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
-
                                             data-bs-target="#editdonationModalLabel" id="<?php    echo $row['id']  ?>"
-
                                             onclick="editrevenuedonation(this.id);"></i>
 
                                         <!-- Modal -->
 
                                         <div class="modal fade" id="editdonationModalLabel" tabindex="-1"
-
                                             aria-labelledby="editdonationModalLabel" aria-hidden="true">
 
                                             <div class="modal-dialog modal-lg">
@@ -1139,7 +1253,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                                     <div class="modal-header">
 
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-
                                                             aria-label="Close"></button>
 
                                                     </div>
@@ -1159,9 +1272,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <a href='ajax/donationcancel.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-x-lg" data-bs-toggle="modal"
-
                                                 data-bs-target="#deleteformModal" onclick="return canceldonation();"
-
                                                 <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
 
                                             </i>
@@ -1169,13 +1280,10 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         </a>
 
                                         <a style="color: #35dc59"
-
                                             href='../admin/ajax/donationactive.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-check-lg " data-bs-toggle="modal"
-
                                                 data-bs-target="#deleteformModal" onclick="return activedonation();"
-
                                                 <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
 
                                             </i>
@@ -1199,8 +1307,10 @@ $othersdata    = $revenues->revenueothersdisplay();
             </div>
 
         </section>
-
+       
         <section class="section dashboard">
+
+            <h5 class="card-title" style="color: #0d6efd;">OTHER REVENUE</h5>
 
             <div class="col-sm-12">
 
@@ -1227,7 +1337,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1280,7 +1389,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1333,7 +1441,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1386,7 +1493,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="d-flex align-items-center">
 
                                         <div
-
                                             class="card-icon rounded-circle d-flex align-items-center justify-content-center">
 
                                             <i class="bi bi-cart"></i>
@@ -1445,7 +1551,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div>
 
                                         <input type="date" class="form-control" name="searchother"
-
                                             value="<?php if(isset($_GET['searchother'])){echo $_GET['searchother']; }?>">
 
                                     </div>
@@ -1463,7 +1568,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                 <div>
 
                                     <input type="date" class="form-control" name="searchothers"
-
                                         value="<?php if(isset($_GET['searchothers'])){echo $_GET['searchothers']; }?>">
 
                                 </div>
@@ -1477,7 +1581,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                             <div class="row mb-3 pt-4">
 
                                 <button type="text" class="btn btn-primary"
-
                                     style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Find</button>
 
                             </div>
@@ -1496,6 +1599,117 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         <!-- date-selector end -->
 
+
+
+
+
+        <section>
+
+            <div class="card p-3 justify-content-center">
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <h5 class="card-title">Details Of Other Revenue</h5>
+
+
+                        <div class="col-lg-2 col-md-2">
+
+                            <form action="revenueOthers-report.php" method="POST">
+
+                                <div class="row mb-3 ">
+
+                                    <div>
+
+                                        <select class="form-select" aria-label="Default select example" name="duration"
+                                            id="duration" required>
+                                            <option disabled selected value>Select Duration</option>
+
+                                            <option value="<?php echo date("l") ?>">Today
+                                            </option>
+                                            <option value="<?php echo date('M') ?>">Last Month
+                                            </option>
+                                            <option value="<?php echo date('Y') ?>">Last Year
+                                            </option>
+                                            <option value="Total">Total
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example"
+                                        onclick="getcategory(this.value)" name="select_typpe" id="select_typpe"
+                                        required>
+                                        <option disabled selected value>Select Type</option>
+
+                                        <option value="HFA">Head Of Accounts</option>
+                                        <option value="Vendors">Vendors </option>
+                                        <option value="Employee">Employee (Other Revenue Through)</option>
+                                        <option value="cancel">Cancel Data</option>
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+
+                            <div class="row mb-3 ">
+
+                                <div>
+
+                                    <select class="form-select" aria-label="Default select example"
+                                        name="head_of_account" id="head_of_account" required>
+                                        <option disabled selected value>Select Type First</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-4 col-md-4">
+
+                            <div class="row mb-3">
+
+                                <button type="text" class="btn btn-primary"
+                                    style="margin: auto; display: inline-flex; width: 68%;justify-content: center; ">Show</button>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
         <!-- Other Revenues Section Start -->
 
         <section class="section dashboard">
@@ -1513,7 +1727,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Button trigger modal -->
 
                         <button type="button" class="btn btn-primary mb-4 addnewbtncss1" data-bs-toggle="modal"
-
                             data-bs-target="#addotherrevenuModal" onclick="addOtherRevenue();">
 
                             Add Other Revenue
@@ -1523,7 +1736,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                         <!-- Modal -->
 
                         <div class="modal fade" id="addotherrevenuModal" tabindex="-1"
-
                             aria-labelledby="addotherrevenuModalLabel" aria-hidden="true">
 
                             <div class="modal-dialog modal-lg">
@@ -1533,7 +1745,6 @@ $othersdata    = $revenues->revenueothersdisplay();
                                     <div class="modal-header">
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-
                                             aria-label="Close"></button>
 
                                     </div>
@@ -1558,7 +1769,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
                                     <th scope="col">S.No</th>
 
-                                    <th scope="col">Source</th>
+                                    <th scope="col">Head Of Accounts</th>
 
                                     <th scope="col">Amount</th>
 
@@ -1583,35 +1794,42 @@ $othersdata    = $revenues->revenueothersdisplay();
                                             $showothersdate =  $row['date'];
 
                                             $othersdatetring = date("d-m-Y", strtotime($showothersdate));
-
+                                          
                                         ?>
 
                                 <tr
-
                                     <?php if ($row['status']== 'active') echo ' style="color: black"' ; if ($row['status']== 'inactive') echo 'style="color: red"' ;?>>
 
                                     <td><?php    echo $i  ?></td>
 
-                                    <td><?php    echo $row['source']  ?></td>
+                                    <td>
+                                        <?php $categorydata =$HFA->categoryById($row['source']);                              
+                                        foreach($categorydata as $rows){ 
+                                        $category_name   = $rows['category'];
+                                        echo $category_name;
+                                        }
+                                        ?>
+                                    </td>
 
-                                    <td><?php   $rowamount = $row['amount'];
+                                    <td>
+                                        <?php   $rowamount = $row['amount'];
                                                 $rowamount  = number_format($rowamount, 2);
-                                                echo $rowamount;  ?></td>
+                                                echo $rowamount;  ?>
+                                    </td>
 
-                                    <td><?php    echo $othersdatetring  ?></td>
+                                    <td>
+                                        <?php    echo $othersdatetring  ?>
+                                    </td>
 
                                     <td>
 
                                         <i class="bi bi-eye-fill pe-4" data-bs-toggle="modal"
-
                                             data-bs-target="#editothersModalLabel" id="<?php    echo $row['id']  ?>"
-
                                             onclick="editOthersRevenue(this.id);"></i>
 
                                         <!-- Modal -->
 
                                         <div class="modal fade" id="editothersModalLabel" tabindex="-1"
-
                                             aria-labelledby="editothersModalLabel" aria-hidden="true">
 
                                             <div class="modal-dialog modal-lg">
@@ -1623,7 +1841,6 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-
                                                             aria-label="Close"></button>
 
                                                     </div>
@@ -1647,9 +1864,7 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         <a href='../admin/ajax/otherscancel.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-x-lg " data-bs-toggle="modal"
-
                                                 data-bs-target="#deleteformModal" onclick="return cancelothers();"
-
                                                 <?php  if ($row['status']== 'inactive') echo 'style="display: none;"' ;?>>
 
                                             </i>
@@ -1657,13 +1872,10 @@ $othersdata    = $revenues->revenueothersdisplay();
                                         </a>
 
                                         <a style="color: #35dc59"
-
                                             href='../admin/ajax/othersactive.action.php?id=<?php    echo $row['id']  ?>'>
 
                                             <i class="bi bi-check-lg " data-bs-toggle="modal"
-
                                                 data-bs-target="#deleteformModal" onclick="return activeOthers();"
-
                                                 <?php if ($row['status']== 'active') echo ' style="display: none;"' ;?>>
 
                                             </i>
@@ -1729,7 +1941,6 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
     <div class="modal fade" id="revenuestudentModalLabel" tabindex="-1" aria-labelledby="revenuestudentModalLabel"
-
         aria-hidden="true">
 
 
@@ -1807,7 +2018,6 @@ $othersdata    = $revenues->revenueothersdisplay();
     <!-- Modal -->
 
     <div class="modal fade" id="feesRevenueModal" tabindex="-1" aria-labelledby="feesRevenueModalLabel"
-
         aria-hidden="true">
 
 
@@ -1887,7 +2097,6 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"
-
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous">
 
     </script>
@@ -1895,7 +2104,6 @@ $othersdata    = $revenues->revenueothersdisplay();
 
 
     <script>
-
     function cancel() {
 
 
@@ -1909,7 +2117,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     function activerevenuefees() {
 
-       return confirm("DO YOU REALLY WANT TO ACTIVE REVENUE CONTENTS OF THIS STUDENT ?")
+        return confirm("DO YOU REALLY WANT TO ACTIVE REVENUE CONTENTS OF THIS STUDENT ?")
 
     };
 
@@ -1926,7 +2134,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     };
 
-    
+
 
     function cancelothers() {
 
@@ -1938,7 +2146,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     };
 
-    
+
 
     function activeOthers() {
 
@@ -1946,7 +2154,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     };
 
-    
+
 
     function activedonation() {
 
@@ -2052,7 +2260,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         $(".otherrevenu-modal-body").html(
 
-            '<iframe width="100%" height="520px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%" height="550px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 
@@ -2070,7 +2278,7 @@ $othersdata    = $revenues->revenueothersdisplay();
 
         $(".editothers-modal-body").html(
 
-            '<iframe width="100%" height="655px" frameborder="0" allowtransparency="true" src="' + url +
+            '<iframe width="100%" height="590px" frameborder="0" allowtransparency="true" src="' + url +
 
             '"></iframe>')
 
@@ -2078,6 +2286,52 @@ $othersdata    = $revenues->revenueothersdisplay();
 
     }
 
+
+
+    const getcategory = (value) => {
+        subcategoryList = document.getElementById("head_of_account");
+        console.log(value);
+        // alert(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+
+            //==================== SubCategory List ====================
+            subcategory = 'ajax/getcategory.ajax.php?category=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+            // if (xmlhttp.responseText != "") {
+            //     subcategoryList.style.display = 'block';
+            //     document.getElementById("subdata").style.display = 'block';
+            // } else {
+            //     subcategoryList.style.display = 'none';
+            //     document.getElementById("subdata").style.display = 'none';
+            // }
+        }
+
+    }
+
+
+
+    const getcategoryDonation = (value) => {
+        subcategoryList = document.getElementById("donation_data");
+        console.log(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+
+            //==================== SubCategory List ====================
+            subcategory = 'ajax/getcategory.ajax.php?category=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+          
+        }
+
+    }
     </script>
 
 

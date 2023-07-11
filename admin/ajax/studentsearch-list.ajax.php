@@ -73,7 +73,6 @@ echo "
           <td>".$row['roll_no']."</td>
           <td>".$row['gurdian_name']."</td>
           <td style='visibility: hidden;'>".$row['student_id']."</td>
-         
       </tr>
   </tbody>
  ";

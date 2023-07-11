@@ -17,6 +17,7 @@ class Event extends DatabaseConnection{
 
 
 
+
     
     
 // display DESIGNATION
@@ -72,7 +73,6 @@ function getEvent(){
 
 
 
-
 // display DESIGNATION
 
 function EventdataById($id){
@@ -101,7 +101,6 @@ function eventUpdate($eventname, $description, $eventdate, $eventtime, $id, $c_i
     return $result;
 
 }
-
 
 
 

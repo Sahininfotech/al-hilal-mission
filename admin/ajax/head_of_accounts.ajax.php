@@ -110,27 +110,40 @@ $hfa = $Grocery->accountById($_GET['accounttype']);
                     <label for="inputText" class="col-sm-3 col-form-label">Parent Category Name :</label>
                     <div class="col-sm-9">
                         <select class="form-select" id="form-select" aria-label="Default select example"
-                            name="parent_name">
-
-                            <?php     
-                             if ($showparent_category == 0) {echo'<option>None</option>'; 
-                             }else{
-                                echo '<option>'.$showparent_category.'</option>';
-                             }
-                            ?>
-                            <option value="0">None</option>
+                            name="parent_name";>
+                          
+                          
                             <?php
-                                    $grocerydata =$Grocery->showCategory();  
-                                    foreach($grocerydata as $row){  
-                                       
-                                echo ' 
-                                <option value="'.$row['category'].'">'.$row['category'].'</option>';
+                            if ($showparent_category == 0) {echo'<option value="0">Already Parent HOA</option>'; 
 
-                                }
+                            // $grocerydata =$Grocery->showCategory();  
+                            // foreach($grocerydata as $row){  
+                            // echo '<option value="' . $row['category_id'] . '"';
+                            // if ($row['category_id'] == $showparent_category) {
+                            // echo 'selected';
+                            // }
+                            // echo '>' . $row['category'] . '</option>';
+                            // }
+                            }else{
+                            echo" <option value='0'>None</option>";
+
+
+
+                            $grocerydata =$Grocery->showCategory();  
+                            foreach($grocerydata as $row){  
+                            echo '<option value="' . $row['category_id'] . '"';
+                            if ($row['category_id'] == $showparent_category) {
+                            echo 'selected';
+                            }
+                            echo '>' . $row['category'] . '</option>';
+                            }
+                            }
+
                             ?>
                         </select>
                     </div>
                 </div>
+
 
 
                 <div class="row mb-3">
@@ -189,8 +202,19 @@ $hfa = $Grocery->accountById($_GET['accounttype']);
 
     <!-- Template Main JS File -->
 
-
-
+<script>
+//     $(document).ready(function() {
+//     $('#form-select').css('color','gray');
+//     $('#form-select').change(function() {
+//        var current = $('#form-select').val();
+//        if (current != 'null') {
+//            $('#form-select').css('color','black');
+//        } else {
+//            $('#form-select').css('color','gray');
+//        }
+//     }); 
+// });
+</script>
 </body>
 
 

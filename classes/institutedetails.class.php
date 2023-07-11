@@ -124,8 +124,8 @@ class InstituteDetails extends DatabaseConnection{
 
 
 
+ 
     // princple details update start 
-
 
 
     function princpleupdate($address,  $name, $qualification, $email,  $contact_no, $c_image){
@@ -202,12 +202,7 @@ class InstituteDetails extends DatabaseConnection{
 
 
 
-
-
-
-
-
-
+    
     //   class inshat data start w
 
 
@@ -229,12 +224,6 @@ class InstituteDetails extends DatabaseConnection{
 
 
     // inshat data end
-
-
-
-
-
-
 
 
 

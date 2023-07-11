@@ -2,6 +2,7 @@
 <html lang="en">
 
 <?php  
+session_start();
 require_once '../includes/constant.php';
 require_once '../classes/contact.class.php';
 $Contact              = new Contact();
@@ -587,7 +588,7 @@ $qurymessage          = $Contact->searchquerydata();
 
 
 
-        // console.log(student_id);
+        //console.log(student_id);
 
 
 

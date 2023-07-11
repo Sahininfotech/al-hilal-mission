@@ -51,9 +51,7 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
     <link href="https://fonts.gstatic.com" rel="preconnect" />
 
     <link
-
         href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-
         rel="stylesheet" />
 
 
@@ -104,9 +102,9 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
 
                 $showid         = $donation['id'];
 
-                $paidBy             = $donation['paid_by'];
+                $paidBy         = $donation['paid_by'];
 
-              
+                $showdescription= $donation['description'];
 
                 $showpin_code   = $donation['pin_code'];
 
@@ -199,23 +197,47 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
 
                         <select class="form-select" name="payment_type" onchange="selectpayment(this.value)">
 
-                            <option selected value="<?php echo $showpayment_type; ?>"><?php echo $showpayment_type; ?>
-
                             </option>
 
-                            <option value="Cash">Cash</option>
+                            <option <?php if ($showpayment_type == "Cash") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Cash">Cash</option>
 
-                            <option value="Credit">Credit</option>
 
-                            <option value="UPI">UPI</option>
 
-                            <option value="Credit-Card">Credit-Card</option>
+                            <option <?php if ($showpayment_type == "Credit") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Credit">Credit</option>
 
-                            <option value="Debit-Card">Debit-Card</option>
 
-                            <option value="Internet-Banking">Internet-Banking</option>
 
-                            <option value="Others">Others</option>
+                            <option <?php if ($showpayment_type == "UPI") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="UPI">UPI</option>
+
+
+
+                            <option <?php if ($showpayment_type == "Credit-Card") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Credit-Card">Credit-Card</option>
+
+
+
+                            <option <?php if ($showpayment_type == "Debit-Card") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Debit-Card">Debit-Card</option>
+
+
+
+                            <option <?php if ($showpayment_type == "Internet-Banking") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Internet-Banking">Internet-Banking</option>
+
+
+
+                            <option <?php if ($showpayment_type == "Others") {
+                                echo 'selected style="color: blue;"';
+                                }?> value="Others">Others</option>
 
                         </select>
 
@@ -228,7 +250,6 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
                     <div class="col-sm-6">
 
                         <div class=" row <?php echo ($showpayment_type == 'Cash') ? ( 'd-none'):('d') ?> "
-
                             id="payment_id_bx">
 
                             <label for="inputAddress" class="col-sm-4 col-form-label">Payment Id:</label>
@@ -236,7 +257,6 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
                             <div class="col-sm-8">
 
                                 <input type="number" class="form-control" value="<?php echo $showpayment_id; ?>"
-
                                     name="payment_id">
 
                             </div>
@@ -266,28 +286,43 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
                     ?>
 
                         <select class="form-select" id="form-select" onChange="selectOthers(this.value)"
-
                             name="paid-by-select" required>
 
-                            <?php
-
-                                echo '<option  style="color: blue;">'.$paidBy.'</option>';
-
-                        ?>
-
-                            <option value="Others" style="color: blue;">Others</option>
+                            <!-- <option value="Others" style="color: blue;">Others</option> -->
 
                             <?php
 
+
+                                $count = 1;
                                 $emps = $Employee->showEmployees();
 
                                 foreach ($emps as $emp) {
 
+                                $empId   = $emp['id'];
+
+                                $empNames = $emp['name'];
+
+                                if($empNames == $paidBy){
+                                $count--;
+                                echo'<option value="Others" style="color: blue;">Others</option>';
+                                }
+
+                                }
+                                if($count == 1){
+
+                                echo'<option value="Others" style="color: blue;">'.$paidBy.' (Others)</option>';
+                                }
+
+                                foreach ($emps as $emp) {
                                     $empId   = $emp['id'];
 
                                     $empName = $emp['name'];
 
-                                    echo ' <option value="'.$empName.'">'.$empName.'</option>';
+                                    echo '<option value="' . $empName . '"';
+                                    if ($empName == $paidBy) {
+                                    echo 'selected style="color: blue;"';
+                                    }
+                                    echo '>' . $empName. '</option>';
 
                                 }
 
@@ -298,7 +333,6 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
                     </div>
 
                     <div class="col-sm-6 <?php echo gettype($paidBy) != 'integer' ? 'd-none' : 'd-block'; ?>"
-
                         id="others-staff">
 
                         <div class="row">
@@ -308,7 +342,6 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
                             <div class="col-sm-8">
 
                                 <input type="text" class="form-control" name="others_paid"
-
                                     value="<?php echo $paidBy; ?>">
 
                             </div>
@@ -319,55 +352,38 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
 
                 </div>
 
-
-
-
-
-
-
-                <div class="row mb-3">
-
-                    <label for="inputStatus" class="col-sm-2 col-form-label">status :</label>
-
-                    <div class="col-sm-10">
-
-                    <select class="form-select" name="status">
-
-                    <option selected value="<?php echo $showstatus; ?>"><?php echo $showstatus; ?>
-
-                    </option>
-
-                    <option value="active">Active</option>
-
-                    <option value="inactive">Inactive</option>
-                    </select>
-
+                <div class="row mb-3 p-0 m-0">
+                    <label class="col-sm-2 col-form-label">Status :</label>
+                    <div class="col-sm-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="gridRadios1" value="active"
+                                required <?php if($showstatus == 'active'){ echo 'checked';}?>>
+                            <label class="form-check-label" for="gridRadios1">
+                                Active
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="status" id="gridRadios2" value="inactive"
+                                required <?php if($showstatus == 'inactive'){ echo 'checked';}?>>
+                            <label class="form-check-label" for="gridRadios2">
+                                Inactive
+                            </label>
+                        </div>
                     </div>
-
-
-                </div>
-
-                <div class="row mb-3">
-
-                <label for="inputaddress" class="col-sm-2 col-form-label">Date :</label>
-
-                <div class="col-sm-10">
-
-                <input type="text" class="form-control" id="edit2" value="<?php echo $datetring; ?>">
-
-                </div>
-
-                </div>
-                <div class="row mb-3">
-
-                    <label for="inputaddress" class="col-sm-2 col-form-label">Update Date:</label>
-
-                    <div class="col-sm-10">
-
+                    <label class="col-sm-2 col-form-label" id="subdata">Date:</label>
+                    <div class="col-sm-4">
                         <input type="date" class="form-control" id="edit2" value="<?php echo $showdate; ?>" name="date">
-
                     </div>
+                </div>
 
+
+
+                <div class="row mb-3 p-0 m-0">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Description :</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" style="height: 68px" name="description"
+                            required><?php echo $showdescription; ?></textarea>
+                    </div>
                 </div>
 
                 <div class="row mb-3">
@@ -423,7 +439,6 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
 
 
     <script>
-
     function selectpayment(mode) {
 
         // alert(mode);
@@ -465,7 +480,6 @@ $showDonation = $Revenue->showDonationById($_GET['data']);
 
 
     }
-
     </script>
 
 </body>

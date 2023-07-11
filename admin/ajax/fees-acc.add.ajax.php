@@ -32,29 +32,25 @@ require_once '../../classes/fees-accounts.class.php';
 
             ?>
 
-            <script>
+<script>
+alert("Account Added!");
 
-                alert("Account Added!");
+document.location = "account.add.ajax.php";
+</script>
 
-                document.location = "../fees-accounts.php";
-
-            </script>
-
-            <?php
+<?php
 
         }else{
 
             ?>
 
-            <script>
+<script>
+alert("Failed to add new account!");
 
-                alert("Failed to add new account!");
+document.location = "account.add.ajax.php";
+</script>
 
-                document.location = "../fees-accounts.php";
-
-            </script>
-
-            <?php
+<?php
 
         }
 
@@ -88,52 +84,96 @@ require_once '../../classes/fees-accounts.class.php';
 
         for ($i = 0; $i < count($amounts); $i++)  {
 
-       
-
-
 
            $amount = $amounts[$i];
            $purpose = $purposes[$i];
 
-        
-
+    
         $addfee = $FeesAccount->classFees($class_id, $purpose, $amount); 
 
     }}
 
-        if($addfee){
+        if(!$addfee){
 
             ?>
 
-            <script>
+<script>
+alert("Fee Added!");
 
-                alert("Fee Added!");
+document.location = "feesstructure.add.ajax.php";
+</script>
 
-                document.location = "../fees-accounts.php";
-
-            </script>
-
-            <?php
+<?php
 
         }else{
 
             ?>
 
+<script>
+alert("Failed to add new Fee!");
+
+document.location = "feesstructure.add.ajax.php";
+</script>
+
+<?php
+
+        }
+
+
+
+        }
+
+
+
+
+
+
+
+
+        if(isset ($_POST["submitmonthfees"])){
+
+            $className   = $_POST["class_id"];
+    
+            $amount      = $_POST['amount'];
+
+            $added_by    = $_POST['added_by'];
+       
+            $added = $FeesAccount->addMonthlyFees($className, $amount, $added_by); 
+    
+            if($added){
+
+            ?>
+
             <script>
+            alert("Account Added!");
 
-                alert("Failed to add new Fee!");
-
-                document.location = "../fees-accounts.php";
-
+            document.location = "monthlyfees.add.ajax.php";
             </script>
 
             <?php
 
+            }else{
+
+            ?>
+
+            <script>
+            alert("Failed to add new account!");
+
+            document.location = "monthlyfees.add.ajax.php";
+            </script>
+
+            <?php
+    
+            }
+    
+    
+    
         }
+    
 
 
 
-        }
+
 
     
 

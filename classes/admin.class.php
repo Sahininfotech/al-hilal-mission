@@ -7,11 +7,8 @@ class Admin extends DatabaseConnection{
 
 
     function adminInsert($name,  $email, $username, $pwd_hashed, $ph_no, $profession, $address, $country, $image){
-        // echo $pwd_hashed;
-        // exit;
 
-        $sql = "INSERT INTO `admins` ( `profession`, `name`, `email`, `username`, `password`, `ph_no`, `address`, `country`, `Profile_image`)
-         VALUES ( '$profession', '$name',  '$email', '$username', '$pwd_hashed', '$ph_no', '$address', '$country','$image')";
+        $sql = "INSERT INTO `admins` ( `profession`, `name`, `email`, `username`, `password`, `ph_no`, `address`, `country`, `Profile_image`) VALUES ( '$profession', '$name',  '$email', '$username', '$pwd_hashed', '$ph_no', '$address', '$country','$image')";
 
         $insertEmpQuery = $this->conn->query($sql);
 
@@ -61,7 +58,7 @@ class Admin extends DatabaseConnection{
 
 
 
-    // update start w
+    // update start 
     function update($id, $name, $country, $email, $ph_no, $address, $institute, $profession, $c_image){
 
         $sqledit1 = "UPDATE  `admins` SET `id`= '$id', `country`= '$country', `profession`= '$profession', `institute`= '$institute', `name`= '$name', `address` = '$address', `ph_no` = '$ph_no', `email` = '$email', `Profile_image` = '$c_image' WHERE `admins`.`id` = '$id'";
@@ -79,9 +76,9 @@ class Admin extends DatabaseConnection{
 
 
 
-    // update start
+      // update start
 
-    function updatepassword($id, $hashpass){
+      function updatepassword($id, $hashpass){
 
         $sql = "UPDATE  `admins` SET `id`= '$id', `password`= '$hashpass' WHERE `admins`.`id` = '$id'";
         $result = $this->conn->query($sql);
@@ -96,7 +93,7 @@ class Admin extends DatabaseConnection{
 
 
 
-    // login start w
+    // login start 
 
     function logIn($username){
 

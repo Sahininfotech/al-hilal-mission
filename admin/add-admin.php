@@ -1,5 +1,4 @@
 <?php
-
 $page = "Register";
 
 require_once '../_config/dbconnect.php';
@@ -48,13 +47,8 @@ $Admin = new  Admin();
 
       move_uploaded_file( $image_tmp_name, $image_folter );
       $pwd_hashed = password_hash($v_pass, PASSWORD_DEFAULT);
-// $pwd_hashed           = password_hash($v_pass, PASSWORD_DEFAULT);
-// add_user_to_database($username, $pwd_hashed);
 
-        //   echo $pwd_hashed;
-        //   exit;
-
-            $result = $Admin->adminInsert($name,  $email, $username, $pwd_hashed, $ph_no, $profession, $address, $country, $image);
+      $result = $Admin->adminInsert($name,  $email, $username, $pwd_hashed, $ph_no, $profession, $address, $country, $image);
 
             
 

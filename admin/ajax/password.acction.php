@@ -14,7 +14,6 @@
     $update   = $employees->updatepassword($id, $hashpass);
 
   }
-
   if(!$update){
     echo "<script>alert('Password Not Updated!');
     document.location = '../users-profile.php'</script>";

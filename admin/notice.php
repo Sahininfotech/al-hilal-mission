@@ -151,7 +151,6 @@ if($resultdata){
                                         id="floatingTextarea2" style="height: 200px " name="notice" required></textarea>
                                     <label for="floatingTextarea2">Comments</label>
                                 </div>
-
                                 <div class="row m-0 p-0 mb-3">
                                     <label for="upload-signature" class="form-label"> Upload previous signature of
                                         In-Charge:
@@ -162,7 +161,6 @@ if($resultdata){
 
                                 </div>
                                 <?php  }?>
-
                                 <div class="mb-3">
                                     <label for="upload-signature" class="form-label">Upload the signature of In-Charge:
                                     </label>
@@ -307,7 +305,6 @@ if($resultdata){
     <!-- modal end -->
 
 
-
     <!-- Modal -->
     <div class="modal fade" id="previousimgModalLabel" tabindex="-1" aria-labelledby="previousimgModalLabel"
         aria-hidden="true">
@@ -352,6 +349,7 @@ if($resultdata){
         <!-- modal end -->
 
 
+
         <!-- ======= Footer ======= -->
         <?php require_once 'require/addfooter.php'; ?>
         <script src="https://code.jquery.com/jquery-3.6.0.js"
@@ -365,8 +363,6 @@ if($resultdata){
                 '"></iframe>')
 
         }
-
-
 
         function deleteNOTICE() {
 
@@ -397,7 +393,6 @@ if($resultdata){
                 })
         })()
         </script>
-
 
         <script>
         function imagedata(id) {

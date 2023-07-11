@@ -450,13 +450,6 @@ if (!isset($_SESSION['user_name']) && !isset($_SESSION['loggedin']) ) {
 
 
 
-
-
-
-
-
-
-
     <script>
 
 

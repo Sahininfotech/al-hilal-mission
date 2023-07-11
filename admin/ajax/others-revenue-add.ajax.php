@@ -1,26 +1,17 @@
 <?php
-
-
-
 session_start();
-
-
 
 require_once '../../_config/dbconnect.php';
 
-
-
 require_once '../../classes/revenue.class.php';
-
-
 
 require_once '../../classes/employee.class.php';
 
+require_once '../../classes/head_of_accounts.class.php';
 
+$grocery    = new HeadOfAccounts();
 
 $Revenue    = new Revenue();
-
-
 
 $Employee   = new Employee();
 
@@ -54,51 +45,35 @@ require_once '../../classes/vendor.class.php';
 
     if(isset ($_POST["submit"])){
 
+        $amount         = $_POST["amount"];
 
+        $date           = $_POST["date"];
 
-        $source       = $_POST["source"];
+        $status         = $_POST["status"];
 
+        $added_by       = $_POST["added_by"];
 
+        $payment_type   = $_POST["payment_type"];
 
-        $amount       = $_POST["amount"];
+        $payment_id     = $_POST["payment_id"];
 
+        $vendor_id      = $_POST["vendor_id"];
 
+        $description    = $_POST["description"];
 
-        $date         = $_POST["date"];
+        $paidBySelect   = $_POST["paid-by-select"];
 
+        $others_paid    = $_POST["others_paid"];
 
+        $accountsSelect = $_POST["accounts-select"];
 
-        $status       = $_POST["status"];
-
-
-
-        $added_by     = $_POST["added_by"];
-
-
-
-        $payment_type = $_POST["payment_type"];
-
-
-
-        $payment_id   = $_POST["payment_id"];
-
-
-
-        $vendor_id    = $_POST["vendor_id"];
-
-
-        $description  = $_POST["description"];
-
-
-        $paidBySelect = $_POST["paid-by-select"];
-
-
-
-        $others_paid  = $_POST["others_paid"];
-
-
-
-
+        if (isset($_POST["sub-accounts-select"])) {
+    
+            $source   = $_POST["sub-accounts-select"];
+    
+        }else{
+            $source    = $accountsSelect;
+        }
 
 
 
@@ -280,39 +255,11 @@ if(!$insertrevenueothers){
 
 
 
-                <input type="hidden" value="<?php echo $_SESSION['user_name'] ?>" name="added_by" required>
+                <input type="hidden" value="<?php echo $_SESSION['user_name'] ?>" name="added_by">
 
 
 
                 <h5 class="card-title d-flex justify-content-center p-0 mt-0 mb-3">Other Revenues Form</h5>
-
-
-
-                <div class="row mb-3 m-0 p-0">
-
-
-
-                    <label for="inputText" class="col-sm-2 col-form-label">Source  :</label>
-
-
-
-                    <div class="col-sm-10 p-0">
-
-
-
-                        <input type="name" class="form-control" name="source" required>
-
-
-
-                    </div>
-
-
-
-                </div>
-
-
-
-
 
 
 
@@ -573,6 +520,37 @@ if(!$insertrevenueothers){
 
 
 
+                <div class="row mb-3 m-0 p-0">
+                    <label class="col-sm-2 col-form-label">Head Of Accounts :</label>
+                    <div class="col-sm-4 p-0">
+                        <select class="form-select" id="form-selectaccount" aria-label="Default select example"
+                            onchange="getsubcategory(this.value)" name="accounts-select" required>
+                            <option disabled selected value>Select Name</option>
+
+                            <?php
+                                     $grocerydata =$grocery->parentCategory();                              
+                                     foreach($grocerydata as $row){ 
+                                      $category   = $row['category'];
+                                      $categoryId = $row['category_id'];                                                                                 
+                                    echo '<option value="'.$categoryId.'">'.$category.'</option>';
+                                     }
+                        ?>
+
+                        </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label" id="subdata" style="display: none;">Sub HFA:</label>
+                    <div class="col-sm-4 p-0">
+                        <select class="form-select" id="form-selectaccountsub" aria-label="Default select example"
+                            name="sub-accounts-select" style="display: none;">
+                            <option disabled selected value="">Select Name</option>
+
+
+                        </select>
+                    </div>
+                </div>
+
+
+
 
 
 
@@ -748,6 +726,32 @@ if(!$insertrevenueothers){
         }
 
 
+
+    }
+
+
+    const getsubcategory = (value) => {
+        subcategoryList = document.getElementById("form-selectaccountsub");
+        console.log(value);
+        // alert(value);
+        var xmlhttp = new XMLHttpRequest();
+        if (value != "") {
+            // subcategoryList.style.display = 'block';
+            //==================== SubCategory List ====================
+            subcategory = 'getsubcategory.ajax.php?subcategory=' + value;
+            // alert(url);
+            xmlhttp.open("GET", subcategory, false);
+            xmlhttp.send(null);
+            subcategoryList.innerHTML = xmlhttp.responseText;
+            console.log(xmlhttp.responseText);
+            if (xmlhttp.responseText != "") {
+                subcategoryList.style.display = 'block';
+                document.getElementById("subdata").style.display = 'block';
+            } else {
+                subcategoryList.style.display = 'none';
+                document.getElementById("subdata").style.display = 'none';
+            }
+        }
 
     }
 

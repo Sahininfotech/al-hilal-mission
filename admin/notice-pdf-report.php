@@ -171,7 +171,6 @@ session_start();
                    
                         <button class="btn btn-primary shadow mx-2" id="pdf" type="submit" name="datapdf">Download
                         </button>
-                        <a href="staffnotice.php">  <button class="btn btn-primary shadow mx-2" >Go Back</button></a>
                     </div>
                 </div>
             </div>
