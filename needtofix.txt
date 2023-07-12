@@ -3,3 +3,43 @@
 
 
 2. Staff Management
+
+
+TRUNCATE admission_fees_dtls;
+TRUNCATE admission_query;
+TRUNCATE class;
+TRUNCATE class_subject;
+TRUNCATE contact_send;
+TRUNCATE departments;
+TRUNCATE employee_designation;
+TRUNCATE event;
+TRUNCATE examHide;
+TRUNCATE expenses;
+TRUNCATE fees_accounts;
+TRUNCATE fees_structure;
+TRUNCATE forum;
+TRUNCATE forum_staff;
+TRUNCATE gallery;
+TRUNCATE grade;
+TRUNCATE head_of_accounts;
+TRUNCATE institute_details;
+TRUNCATE monthly_fees_dtls;
+TRUNCATE pass_marks;
+TRUNCATE percentage_marks;
+TRUNCATE princple_details;
+TRUNCATE revenue_donation;
+TRUNCATE revenue_others;
+TRUNCATE staff;
+TRUNCATE staff_experience;
+TRUNCATE staff_message;
+TRUNCATE status;
+TRUNCATE student;
+TRUNCATE student_attendance;
+TRUNCATE student_class;
+TRUNCATE student_fees_dtls;
+TRUNCATE student_payment_dtls;
+TRUNCATE student_payment_summary;
+TRUNCATE student_stream;
+TRUNCATE student_summary;
+TRUNCATE subject_marks;
+TRUNCATE vendor;

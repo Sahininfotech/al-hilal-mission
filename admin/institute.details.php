@@ -4,8 +4,6 @@ session_start();
 
 $page = "Institute Details";
 
-
-
 require_once '../_config/dbconnect.php';
 
 require_once '../classes/institutedetails.class.php';
@@ -387,7 +385,7 @@ if(isset ($_POST["submit"])){
 
                                 <?php
 
-                    foreach($instDetails as $row){
+                    // foreach($instDetails as $row){
 
                                
 
@@ -477,7 +475,7 @@ if(isset ($_POST["submit"])){
 
                                 <?php
 
-                 }
+                //  }
 
                  ?>
 
@@ -653,7 +651,7 @@ if(isset ($_POST["submit"])){
 
                                 $result=$institute->princpledisplaydata();
 
-                                foreach($result as $row){
+                                // foreach($result as $row){
 
                                 
 
@@ -745,7 +743,7 @@ if(isset ($_POST["submit"])){
 
                  }
 
-                }
+                // }
 
                  ?>
 

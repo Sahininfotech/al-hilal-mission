@@ -6,7 +6,7 @@
             <p>Up Coming Events</p>
         </div>
 
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
+        <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
             <?php  
             $count = 1;
             $event 	= $Events->getEvent();  

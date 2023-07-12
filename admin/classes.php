@@ -720,6 +720,10 @@ if(isset ($_POST["Updateyear"])){
             alert("OOPS! Class Description needs Minimum 100 words .....");
             return false;
         }
+        if (s.length > 1555) {
+            alert("OOPS! Class Description Should be maximum 1555 characters.");
+            return false;
+        }
     }
     </script>
 
