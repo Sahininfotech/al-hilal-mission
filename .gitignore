@@ -6,4 +6,4 @@ error_log
 php.ini
 
 # CUSTOM FILES / PATHS / DIRECTORIES
-_config/dbconnect.php
+# _config/dbconnect.php
